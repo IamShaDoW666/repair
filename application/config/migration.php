@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | and disable it back when you're done.
 |
 */
-$config['migration_enabled'] = FALSE;
+$config['migration_enabled'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,15 +21,15 @@ $config['migration_enabled'] = FALSE;
 | Migration file names may be based on a sequential identifier or on
 | a timestamp. Options are:
 |
-|   'sequential' = Sequential migration naming (001_add_blog.php)
+|   'sequential' = Default migration naming (001_add_blog.php)
 |   'timestamp'  = Timestamp migration naming (20121031104401_add_blog.php)
 |                  Use timestamp format YYYYMMDDHHIISS.
 |
-| Note: If this configuration value is missing the Migration library
-|       defaults to 'sequential' for backward compatibility with CI2.
+| If this configuration value is missing the Migration library defaults
+| to 'sequential' for backward compatibility.
 |
 */
-$config['migration_type'] = 'timestamp';
+$config['migration_type'] = 'sequential';
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ $config['migration_auto_latest'] = FALSE;
 | be upgraded / downgraded to.
 |
 */
-$config['migration_version'] = 0;
+$config['migration_version'] = 317;
 
 /*
 |--------------------------------------------------------------------------

@@ -1,78 +1,76 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* Name:  Ion Auth Lang - English
+* Name:  Ion Auth Lang - Russian (UTF-8)
 *
 * Author: Ben Edmunds
-*         ben.edmunds@gmail.com
+* 		  ben.edmunds@gmail.com
 *         @benedmunds
+* Translation:  Petrosyan R.
+*             for@petrosyan.rv.ua
 *
 * Location: http://github.com/benedmunds/ion_auth/
 *
-* Created:  03.14.2010
+* Created:  03.26.2010
 *
-* Description:  English language file for Ion Auth messages and errors
+* Description:  Russian language file for Ion Auth messages and errors
 *
 */
 
 // Account Creation
-$lang['account_creation_successful']            = 'Account Successfully Created';
-$lang['account_creation_unsuccessful']          = 'Unable to Create Account';
-$lang['account_creation_duplicate_email']       = 'Email Already Used or Invalid';
-$lang['account_creation_duplicate_identity']    = 'Identity Already Used or Invalid';
-$lang['account_creation_missing_default_group'] = 'Default group is not set';
-$lang['account_creation_invalid_default_group'] = 'Invalid default group name set';
-
+$lang['account_creation_successful'] 	  	 = 'Учетная запись успешно создана';
+$lang['account_creation_unsuccessful'] 	 	 = 'Невозможно создать учетную запись';
+$lang['account_creation_duplicate_email'] 	 = 'Электронная почта используется или некорректна';
+$lang['account_creation_duplicate_username'] 	 = 'Имя пользователя существует или некорректно';
+$lang['account_creation_missing_default_group'] = 'Группа по умолчанию не установлена';
+$lang['account_creation_invalid_default_group'] = 'Группа по умолчанию задана некорректно';
 
 // Password
-$lang['password_change_successful']          = 'Password Successfully Changed';
-$lang['password_change_unsuccessful']        = 'Unable to Change Password';
-$lang['forgot_password_successful']          = 'Password Reset Email Sent';
-$lang['forgot_password_unsuccessful']        = 'Unable to Reset Password';
+$lang['password_change_successful'] 	 	 = 'Пароль успешно изменен';
+$lang['password_change_unsuccessful'] 	  	 = 'Пароль невозможно изменить';
+$lang['forgot_password_successful'] 	 	 = 'Пароль сброшен. На электронную почту отправлено сообщение';
+$lang['forgot_password_unsuccessful'] 	 	 = 'Невозможен сброс пароля';
 
 // Activation
-$lang['activate_successful']                 = 'Account Activated';
-$lang['activate_unsuccessful']               = 'Unable to Activate Account';
-$lang['deactivate_successful']               = 'Account De-Activated';
-$lang['deactivate_unsuccessful']             = 'Unable to De-Activate Account';
-$lang['activation_email_successful']         = 'Activation Email Sent';
-$lang['activation_email_unsuccessful']       = 'Unable to Send Activation Email';
+$lang['activate_successful'] 		  	 = 'Учетная запись активирована';
+$lang['activate_unsuccessful'] 		 	 = 'Не удалось активировать учетную запись';
+$lang['deactivate_successful'] 		  	 = 'Учетная запись деактивирована';
+$lang['deactivate_unsuccessful'] 	  	 = 'Невозможно деактивировать учетную запись';
+$lang['activation_email_successful'] 	  	 = 'Сообщение об активации отправлено';
+$lang['activation_email_unsuccessful']   	 = 'Сообщение об активации невозможно отправить';
+$lang['deactivate_current_user_unsuccessful']= 'You cannot De-Activate your self.';
 
 // Login / Logout
-$lang['login_successful']                    = 'Logged In Successfully';
-$lang['login_unsuccessful']                  = 'Incorrect Login';
-$lang['login_unsuccessful_not_active']       = 'Account is inactive';
-$lang['login_timeout']                       = 'Temporarily Locked Out.  Try again later.';
-$lang['logout_successful']                   = 'Logged Out Successfully';
+$lang['login_successful'] 		  	 = 'Авторизация прошла успешно';
+$lang['login_unsuccessful'] 		  	 = 'Логин/пароль не верен';
+$lang['login_unsuccessful_not_active'] 		 = 'Акаунт не активен';
+$lang['login_timeout']                       = 'В целях безопасности возможность входа временно заблокирована. Попробуйте зайти позже.';
+$lang['logout_successful'] 		 	 = 'Выход успешный';
 
 // Account Changes
-$lang['update_successful']                   = 'Account Information Successfully Updated';
-$lang['update_unsuccessful']                 = 'Unable to Update Account Information';
-$lang['delete_successful']                   = 'User Deleted';
-$lang['delete_unsuccessful']                 = 'Unable to Delete User';
+$lang['update_successful'] 		 	 = 'Учетная запись успешно обновлена';
+$lang['update_unsuccessful'] 		 	 = 'Невозможно обновить учетную запись';
+$lang['delete_successful'] 		 	 = 'Учетная запись удалена';
+$lang['delete_unsuccessful'] 		 	 = 'Невозможно удалить учетную запись';
 
 // Groups
-$lang['group_creation_successful']           = 'Group created Successfully';
-$lang['group_already_exists']                = 'Group name already taken';
-$lang['group_update_successful']             = 'Group details updated';
-$lang['group_delete_successful']             = 'Group deleted';
-$lang['group_delete_unsuccessful']           = 'Unable to delete group';
-$lang['group_delete_notallowed']             = 'Can\'t delete the administrators\' group';
-$lang['group_name_required']                 = 'Group name is a required field';
-$lang['group_name_admin_not_alter']          = 'Admin group name can not be changed';
-
+$lang['group_creation_successful']  = 'Группа создана успешно';
+$lang['group_already_exists']       = 'Группа с таким именем уже существует';
+$lang['group_update_successful']    = 'Данные группы обновлены успешно';
+$lang['group_delete_successful']    = 'Группа удалена';
+$lang['group_delete_unsuccessful'] 	= 'Не удалось удалить группу';
+$lang['group_delete_notallowed']    = 'Нельзя удалить группу администраторов';
+$lang['group_name_required'] 		= 'Имя группы обязательно к заполнению';
 // Activation Email
-$lang['email_activation_subject']            = 'Account Activation';
-$lang['email_activate_heading']              = 'Activate account for %s';
-$lang['email_activate_subheading']           = 'Please click this link to %s.';
-$lang['email_activate_link']                 = 'Activate Your Account';
-
+$lang['email_activation_subject']            = 'Активация учетной записи';
+$lang['email_activate_heading']    = 'Активировать акаунт с именем  %s';
+$lang['email_activate_subheading'] = 'Нажмите на ссылку %s.';
+$lang['email_activate_link']       = 'Активировать ваш акаунт';
 // Forgot Password Email
-$lang['email_forgotten_password_subject']    = 'Forgotten Password Verification';
-$lang['email_forgot_password_heading']       = 'Reset Password for %s';
-$lang['email_forgot_password_subheading']    = 'Please click this link to %s.';
-$lang['email_forgot_password_link']          = 'Reset Your Password';
-
+$lang['email_forgotten_password_subject']    = 'Проверка забытого пароля';
+$lang['email_forgot_password_heading']    = 'Сброс пароля для пользователя %s';
+$lang['email_forgot_password_subheading'] = 'Нажмите на ссылку для %s.';
+$lang['email_forgot_password_link']       = 'Восстановления пароля';
 // New Password Email
-$lang['email_new_password_subject']          = 'New Password';
-$lang['email_new_password_heading']          = 'New Password for %s';
-$lang['email_new_password_subheading']       = 'Your password has been reset to: %s';
+$lang['email_new_password_subject']          = 'Новый пароль';
+$lang['email_new_password_heading']    = 'Новый пароль для %s';
+$lang['email_new_password_subheading'] = 'Пароль изменён на: %s';

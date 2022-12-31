@@ -1,85 +1,144 @@
-<?php
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+* Name:  Auth Lang - English
+*
+* Author: Ben Edmunds
+* 		  ben.edmunds@gmail.com
+*         @benedmunds
+*
+* Author: Daniel Davis
+*         @ourmaninjapan
+*
+* Location: http://github.com/benedmunds/ion_auth/
+*
+* Created:  03.09.2013
+*
+* Description:  English language file for Ion Auth example views
+*
+*/
 
-defined('BASEPATH') or exit('No direct script access allowed');
+// Errors
+$lang['error_csrf'] = 'This form post did not pass our security checks.';
 
-$lang['users']                                               = 'Utilisateur';
-$lang['add_user']                                               = 'Ajouter utilisateur';
-$lang['notify_user_by_email']                                   = 'Notifier utilisateur par email';
-$lang['group']                                                  = 'Groupe';
-$lang['edit_user']                                              = 'Modifier utilisateur';
-$lang['delete_user']                                            = 'Supprimer utilisateur';
-$lang['user_added']                                             = 'Utilisateur crée avec succès';
-$lang['user_updated']                                           = 'Utilisateur mis à jour avec succès';
-$lang['users_deleted']                                          = 'Utilisateurs supprimes avec succès';
-$lang['alert_x_user']                                           = 'Vous allez supprimer cet utilisateur définitivement. OK pour valider et QUITTER pour retourner.';
-$lang['login_email']                                            = 'Login Email';
-$lang['edit_profile']                                           = 'Modifier profil';
-$lang['website']                                                = 'Site internet';
-$lang['if_you_need_to_rest_password_for_user']                  = 'Si vous avez besoin de réinitialiser le mot de passe pour cet utilisateur.';
-$lang['user_options']                                           = 'Options utilisateur';
-$lang['old_password']                                           = 'Ancien mot de passe';
-$lang['new_password']                                           = 'Nouveau mot de passe';
-$lang['new_password_confirm']                                           = 'Confirmer le mot de passe';
-$lang['change_avatar']                                          = 'Changer Avatar';
-$lang['update_avatar']                                          = 'Mettre à jour Avatar';
-$lang['avatar']                                                 = 'Avatar';
-$lang['avatar_deleted']                                         = 'Avatar mis à jour avec succès';
-$lang['captcha_wrong']                                          = 'Le captcha est incorrect ou expiré. Essayer encore';
-$lang['captcha']                                                = 'Captcha';
-$lang['site_is_offline_plz_try_later']                          = 'Le site est hors ligne. Revenez dans quelques jours.';
-$lang['type_captcha']                                           = 'Entrez le captcha';
-$lang['we_are_sorry_as_this_sction_is_still_under_development'] = 'Nous sommes désoles, cette section est en cours de développement. Merci pour votre patience.';
-$lang['confirm']                                                = 'Confirmation';
-$lang['error_csrf']                                             = 'La falsification de requête inter-site est détectée ou le jeton csrf a expiré. Veuillez réessayer.';
-$lang['avatar_updated']                                         = 'Avatar mis à jour avec succès';
-$lang['registration_is_disabled']                               = 'Les inscriptions sont fermées.';
-$lang['login_to_your_account']                                  = 'Connectez vous à votre compte.';
-$lang['pw']                                                     = 'Mot de passe';
-$lang['remember_me']                                            = 'Se souvenir de moi';
-$lang['forgot_your_password']                                   = 'Mot de passe oublié?';
-$lang['dont_worry']                                             = "Pas de panique!";
-$lang['click_here']                                             = 'cliquez ici';
-$lang['to_rest']                                                = 'pour réinitialiser';
-$lang['forgot_password']                                        = 'Mot de passe oublié';
-$lang['login_successful']                                       = 'Vous étés connecté avec succès.';
-$lang['back']                                                   = 'Retour';
-$lang['dont_have_account']                                      = "Vous n\'avez pas de compte?";
-$lang['no_worry']                                               = 'Pas de panique!';
-$lang['to_register']                                            = 'pour s\'enregistrer';
-$lang['register_account_heading']                               = 'Complétez le formulaire pour enregistrer votre compte';
-$lang['register_now']                                           = 'S\'enregistrer maintenant';
-$lang['no_user_selected']                                       = 'Pas d\utilisateur sélectionné. Veuillez en sélectionner au moins un.';
-$lang['delete_users']                                           = 'Supprimer utilisateur';
-$lang['delete_avatar']                                          = 'Supprimer Avatar';
-$lang['deactivate_heading']                                     = 'Étés vous sur de vouloir désactiver cet utilisateur?';
-$lang['deactivate']                                             = 'Désactiver';
-$lang['pasword_hint']                                           = 'Au moins 1 majuscule, 1 minuscule, 1 chiffre avec une longueur de plus de 8 caractères';
-$lang['pw_not_same']                                            = 'Les deux mots de passe ne correspondent pas';
-$lang['reset_password']                                         = 'Réinitialiser le mot de passe';
-$lang['reset_password_link_alt']                                = 'Vous pouvez coller ce code dans l\'adresse url si le lien ne fonctionne pas';
-$lang['email_forgotten_password_subject']                       = 'Détails mot de passe réinitialisé';
-$lang['reset_password_email']                                   = 'Réinitialiser le mot de passe pour %s';
-$lang['back_to_login']                                          = 'Retour à la connexion';
-$lang['forgot_password_unsuccessful']                           = 'Réinitialisation du mot de passe échouée';
-$lang['forgot_password_successful']                             = 'Le mail a été envoyé avec les instructions pour réinitialiser le mot de passe';
-$lang['password_change_unsuccessful']                           = 'Modification du mot de passe échouée';
-$lang['password_change_successful']                             = 'Mot de passe modifié avec succès';
-$lang['forgot_password_email_not_found']                        = 'Cette adresse email ne correspond à aucun compte.';
-$lang['login_unsuccessful']                                     = 'Connexion échouée , Veuillez réessayer';
-$lang['email_forgot_password_link']                             = 'Lien de réinitialisation du mot de passe';
-$lang['reset_password_heading']                                 = 'Réinitialiser le mot de passe';
-$lang['reset_password_new_password_label']                      = 'Nouveau mot de passe';
-$lang['reset_password_new_password_confirm_label']              = 'Confirmer le nouveau mot de passe';
-$lang['register']                                               = 'S\'enregistrer';
-$lang['email_new_password_subject']                             = 'Le mot de passe du compte a été réinitialisé';
-$lang['reset_password_submit_btn']                              = 'Réinitialiser le mot de passe';
-$lang['error_csrf']                                             = 'Ce formulaire ne passe pas notre contrôle de sécurité.';
-$lang['account_creation_successful']                            = 'Compte crée avec succès';
-$lang['old_password_wrong']                                     = 'Veuillez rentrer correctement l\'ancien mot de passe';
-$lang['sending_email_failed']                                   = 'Impossible d\'envoyer un mail, vérifiez vos paramètres système.';
-$lang['deactivate_successful']                                  = 'utilisateur désactivé avec succès';
-$lang['activate_successful']                                    = 'Utilisateur activé avec succès';
-$lang['login_timeout']                                          = 'Vous avez 3 échecs de connexion. veuillez réessayer après 10 minutes.';
-$lang['new_user_created']                                       = 'Nouveau utilisateur crée';
-$lang['type_email_to_reset']                                    = 'Veuillez rentrer votre adresse email pour avoir les instructions de réinitialisation';
-$lang['account_exists']                                         = 'Un compte existe déjà, essayez avec cet email/mot de passe ou réinitialisez votre mot de passe.';
+// Login
+$lang['login_heading']         = 'Connexion';
+$lang['login_subheading']      = 'Connectez vous';
+$lang['login_identity_label']  = 'Email/Username';
+$lang['login_password_label']  = 'Mot de passe';
+$lang['login_remember_label']  = 'Se rappeler de moi';
+$lang['login_submit_btn']      = 'Login';
+$lang['login_forgot_password'] = 'Mot de passe oublié ?';
+
+// Index
+$lang['index_heading']           = 'Utilisateur';
+$lang['index_subheading']        = 'Below is a list of the users.';
+$lang['index_fname_th']          = 'Prénom';
+$lang['index_lname_th']          = 'Nom';
+$lang['index_email_th']          = 'E-mail';
+$lang['index_groups_th']         = 'Groupe';
+$lang['index_status_th']         = 'Statut';
+$lang['index_action_th']         = 'Action';
+$lang['index_active_link']       = 'Active';
+$lang['index_inactive_link']     = 'Inactive';
+$lang['index_create_user_link']  = 'Créer nouvel utilisateur';
+$lang['index_create_group_link'] = 'Créer nouveau groupe';
+
+// Deactivate User
+$lang['deactivate_heading']                  = 'Desactiver utilisateur';
+$lang['deactivate_subheading']               = 'Sur de désactiver l\'utilisateur \'%s\'';
+$lang['deactivate_confirm_y_label']          = 'Oui ';
+$lang['deactivate_confirm_n_label']          = 'Non :';
+$lang['deactivate_submit_btn']               = 'Confirmer';
+$lang['deactivate_validation_confirm_label'] = 'Confirmation';
+$lang['deactivate_validation_user_id_label'] = 'user ID';
+
+// Create User
+$lang['create_user_heading']                           = 'Créer utilisateur';
+$lang['create_user_subheading']                        = 'Please enter the user\'s information below.';
+$lang['create_user_fname_label']                       = 'Prénom :';
+$lang['create_user_lname_label']                       = 'Nom :';
+$lang['create_user_company_label']                     = 'Nom sté :';
+$lang['create_user_identity_label']                    = 'Identité :';
+$lang['create_user_email_label']                       = 'E-mail:';
+$lang['create_user_phone_label']                       = 'Téléphone:';
+$lang['create_user_password_label']                    = 'MDP :';
+$lang['create_user_password_confirm_label']            = 'Confirmation MDP :';
+$lang['create_user_submit_btn']                        = 'Creer utilisateur';
+$lang['create_user_validation_fname_label']            = 'Prénom';
+$lang['create_user_validation_lname_label']            = 'Nom';
+$lang['create_user_validation_identity_label']         = 'Identité';
+$lang['create_user_validation_email_label']            = 'E-mail';
+$lang['create_user_validation_phone_label']            = 'Téléphone';
+$lang['create_user_validation_company_label']          = 'Nom sté';
+$lang['create_user_validation_password_label']         = 'MDP';
+$lang['create_user_validation_password_confirm_label'] = 'Confirmation MDP';
+
+// Edit User
+$lang['edit_user_heading']                           = 'Editer utilisateur';
+$lang['edit_user_subheading']                        = 'Please enter the user\'s information below.';
+$lang['edit_user_fname_label']                       = 'Prénom :';
+$lang['edit_user_lname_label']                       = 'Nom :';
+$lang['edit_user_company_label']                     = 'Nom sté:';
+$lang['edit_user_email_label']                       = 'E-mail:';
+$lang['edit_user_phone_label']                       = 'Téléphone:';
+$lang['edit_user_password_label']                    = 'MDP: (Si mot de passe changé)';
+$lang['edit_user_password_confirm_label']            = 'Confirm MDP: (Si mot de passe changé)';
+$lang['edit_user_groups_heading']                    = 'Membre du groupe';
+$lang['edit_user_submit_btn']                        = 'Sauvegarder';
+$lang['edit_user_validation_fname_label']            = 'Prénom';
+$lang['edit_user_validation_lname_label']            = 'Nom';
+$lang['edit_user_validation_email_label']            = 'E-mail';
+$lang['edit_user_validation_phone_label']            = 'Téléphone';
+$lang['edit_user_validation_company_label']          = 'Nom Sté';
+$lang['edit_user_validation_groups_label']           = 'Groupe';
+$lang['edit_user_validation_password_label']         = 'MDP';
+$lang['edit_user_validation_password_confirm_label'] = 'Confirmation MDP';
+
+// Create Group
+$lang['create_group_title']                  = 'Créer groupe';
+$lang['create_group_heading']                = 'Créer groupe';
+$lang['create_group_subheading']             = 'Please enter the group information below.';
+$lang['create_group_name_label']             = 'Nom groupe:';
+$lang['create_group_desc_label']             = 'Description:';
+$lang['create_group_submit_btn']             = 'Créer groupe';
+$lang['create_group_validation_name_label']  = 'Nom groupe';
+$lang['create_group_validation_desc_label']  = 'Description';
+
+// Edit Group
+$lang['edit_group_title']                  = 'Modifier Groupe';
+$lang['edit_group_saved']                  = 'Groupe sauvé';
+$lang['edit_group_heading']                = 'Modifier groupe';
+$lang['edit_group_subheading']             = 'Please enter the group information below.';
+$lang['edit_group_name_label']             = 'Nom groupe :';
+$lang['edit_group_desc_label']             = 'Description:';
+$lang['edit_group_submit_btn']             = 'Sauver Groupe';
+$lang['edit_group_validation_name_label']  = 'Nom groupe ';
+$lang['edit_group_validation_desc_label']  = 'Description';
+
+// Change Password
+$lang['change_password_heading']                               = 'Changeer MDP';
+$lang['change_password_old_password_label']                    = 'Ancien MDP:';
+$lang['change_password_new_password_label']                    = 'Nouveau MDP (au moins %s caractères):';
+$lang['change_password_new_password_confirm_label']            = 'Confirmer :';
+$lang['change_password_submit_btn']                            = 'Changer';
+$lang['change_password_validation_old_password_label']         = 'Ancien MDP';
+$lang['change_password_validation_new_password_label']         = 'Nouveau MDP';
+$lang['change_password_validation_new_password_confirm_label'] = 'Confirmer nouveau MDP';
+
+// Forgot Password
+$lang['forgot_password_heading']                 = 'MDP oublié';
+$lang['forgot_password_subheading']              = 'Merci d\'entrer votre %s nous vous enverrons un mail pour reinitialiser votre MDP.';
+$lang['forgot_password_email_label']             = '%s:';
+$lang['forgot_password_submit_btn']              = 'Entrer';
+$lang['forgot_password_validation_email_label']  = 'E-mail';
+$lang['forgot_password_identity_label'] = 'Identité';
+$lang['forgot_password_email_identity_label']    = 'E-mail';
+$lang['forgot_password_email_not_found']         = 'Pas d\'enregistrement sur ce mail.';
+
+// Reset Password
+$lang['reset_password_heading']                               = 'Changer MDP';
+$lang['reset_password_new_password_label']                    = 'Nouveau MDP (au moins %s caractères):';
+$lang['reset_password_new_password_confirm_label']            = 'Confirmer nouveau MDP :';
+$lang['reset_password_submit_btn']                            = 'Changer';
+$lang['reset_password_validation_new_password_label']         = 'Nouveau MDP';
+$lang['reset_password_validation_new_password_confirm_label'] = 'Confirmer nouveau MDP';

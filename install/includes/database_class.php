@@ -1,30 +1,26 @@
 <?php
 
-class Database
-{
-    // Function to create the tables and fill them with the default data
-    public function create_tables($data, $user = null, $code = null)
-    {
-        // Connect to the database
-        $mysqli = new mysqli($data['hostname'], $data['username'], $data['password'], $data['database']);
+class Database {
 
-        // Check for errors
-        if (mysqli_connect_errno()) {
-            return false;
-        }
+	// Function to create the tables and fill them with the default data
+	function create_tables($data)
+	{
+		// Connect to the database
+		$mysqli = new mysqli($data['hostname'],$data['username'],$data['password'],$data['database']);
 
-        // Open the default SQL file
-        $query = $data['dbtables'];
+		// Check for errors
+		if(mysqli_connect_errno())
+			return false;
 
-        //update username and code
-        $query .= " UPDATE `settings` SET `envato_username`= '" . $user . "',`purchase_code`= '" . $code . "' WHERE setting_id = 1;";
+		// Open the default SQL file
+		$query = file_get_contents('cache/install.sql');
 
-        // Execute a multi query
-        $mysqli->multi_query($query);
+		// Execute a multi query
+		$mysqli->multi_query($query);
 
-        // Close the connection
-        $mysqli->close();
+		// Close the connection
+		$mysqli->close();
 
-        return true;
-    }
+		return true;
+	}
 }

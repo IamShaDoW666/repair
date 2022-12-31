@@ -10,32 +10,29 @@
  *  ==============================================================================
  */
 
-use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\LabelAlignment;
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Response\QrCodeResponse;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\Label\Alignment\LabelAlignmentCenter;
+use Endroid\QrCode\Label\Font\NotoSans;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
 
 class Wf_qrcode
 {
 
     public function generate($params = array()) {
-		$params['data'] = (isset($params['data'])) ? $params['data'] : 'http://otsglobal.org';
-       
-    	$qrCode = new QrCode($params['data']);
-		$qrCode->setSize((int)$params['size']);
-
-		// Set advanced options
-		$qrCode->setWriterByName('png');
-		$qrCode->setMargin(0);
-		$qrCode->setEncoding('UTF-8');
-		$qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::HIGH));
-		$qrCode->setForegroundColor(['r' => 0, 'g' => 0, 'b' => 0, 'a' => 0]);
-		$qrCode->setBackgroundColor(['r' => 255, 'g' => 255, 'b' => 255, 'a' => 0]);
-
-		// Save it to a file
-		$qrCode->writeFile(FCPATH.$params['savename']);
-
-		
+        $data = (isset($params['data'])) ? $params['data'] : 'http://otsglobal.org';
+        $result = Builder::create()
+            ->writer(new PngWriter())
+            ->writerOptions([])
+            ->data($data)
+            ->encoding(new Encoding('UTF-8'))
+            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+            ->size(300)
+            ->margin(10)
+            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->build();
     }
 
 }

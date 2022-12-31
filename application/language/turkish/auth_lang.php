@@ -1,89 +1,145 @@
-<?php
-
-defined('BASEPATH') or exit('No direct script access allowed');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* Name:  Auth Lang (Repairer Pro) - Turkish
-* Author: cihaz360
+* Name:  Auth Lang - Turkish
+*
+* Author: Ben Edmunds
+* 		  ben.edmunds@gmail.com
+*         @benedmunds
+*
+* Author: Daniel Davis
+*         @ourmaninjapan
+* Turkish Translate: @gevv
+
+* Location: http://github.com/benedmunds/ion_auth/
+*
+* Created:  04.10.2020
+*
+* Description:  Turkish language file for Ion Auth example views
+*
 */
 
-$lang['users']                                               = 'Kullanıcalar';
-$lang['add_user']                                               = 'Yeni Kullanıcı';
-$lang['notify_user_by_email']                                   = 'Mail Bilgilendirme';
-$lang['group']                                                  = 'Grup';
-$lang['edit_user']                                              = 'Kullanıcı Düzenle';
-$lang['delete_user']                                            = 'Kullanıcı Sil';
-$lang['user_added']                                             = 'Kullanıcı Başarıyla Eklendi';
-$lang['user_updated']                                           = 'Kullanıcı Başarıyla Güncellendi';
-$lang['users_deleted']                                          = 'Kullanıcı Başarıyla Silindi';
-$lang['alert_x_user']                                           = 'Bu Kullanıcıyı Kalıcı olarak silmek üzeresiniz. Onaylamak için Tamam tuşunu kullanabilir ya da Geri Dönebilirsiniz.';
-$lang['login_email']                                            = 'Giriş E-Posta';
-$lang['edit_profile']                                           = 'Profili Düzenle';
-$lang['website']                                                = 'Website';
-$lang['if_you_need_to_rest_password_for_user']                  = 'Kullanıcı Şifre Sıfırla.';
-$lang['user_options']                                           = 'Kullanıcı Seçenekleri';
-$lang['old_password']                                           = 'Eski Şifre';
-$lang['new_password']                                           = 'Yeni Şifre';
-$lang['new_password_confirm']                                           = 'Şifre Tekrar';
-$lang['change_avatar']                                          = 'Fotoğraf Değiştir';
-$lang['update_avatar']                                          = 'Fotoğrafı Güncelle';
-$lang['avatar']                                                 = 'Fotoğraf';
-$lang['avatar_deleted']                                         = 'Fotoğraf Güncellendi';
-$lang['captcha_wrong']                                          = 'Captcha is wrong or expired. Please try again';
-$lang['captcha']                                                = 'Captcha';
-$lang['site_is_offline_plz_try_later']                          = 'Site is offline. Please visit us again in few days.';
-$lang['type_captcha']                                           = 'Type Captcha';
-$lang['we_are_sorry_as_this_sction_is_still_under_development'] = 'We are sorry as this section is still under development and we are try to make it asap. Your patient is highly appreciated.';
-$lang['confirm']                                                = 'Confirmation';
-$lang['error_csrf']                                             = 'Cross-site request forgery detected or the csrf token is expired. Please try again.';
-$lang['avatar_updated']                                         = 'Avatar successfully updated';
-$lang['registration_is_disabled']                               = 'Account Registration is closed.';
-$lang['login_to_your_account']                                  = 'Please login to your account.';
-$lang['pw']                                                     = 'Password';
-$lang['remember_me']                                            = 'Remember me';
-$lang['forgot_your_password']                                   = 'Forgot your password?';
-$lang['dont_worry']                                             = "Don't worry!";
-$lang['click_here']                                             = 'click here';
-$lang['to_rest']                                                = 'to reset';
-$lang['forgot_password']                                        = 'Forgot Password';
-$lang['login_successful']                                       = 'You are successfully logged in.';
-$lang['back']                                                   = 'Back';
-$lang['dont_have_account']                                      = "Don't have account?";
-$lang['no_worry']                                               = 'No worries!';
-$lang['to_register']                                            = 'to register';
-$lang['register_account_heading']                               = 'Please fill in the form below to register account';
-$lang['register_now']                                           = 'Register Now';
-$lang['no_user_selected']                                       = 'No user selected. Please select at least one user.';
-$lang['delete_users']                                           = 'Delete Users';
-$lang['delete_avatar']                                          = 'Delete Avatar';
-$lang['deactivate_heading']                                     = 'Are you sure to deactivate the user?';
-$lang['deactivate']                                             = 'Deactivate';
-$lang['pasword_hint']                                           = 'At least 1 capital, 1 lowercase, 1 number and more than 8 characters long';
-$lang['pw_not_same']                                            = 'The password and confirm password are not the same';
-$lang['reset_password']                                         = 'Reset Password';
-$lang['reset_password_link_alt']                                = 'You can paste this code below in your url if the above link not working';
-$lang['email_forgotten_password_subject']                       = 'Reset Password Details';
-$lang['reset_password_email']                                   = 'Reset password for %s';
-$lang['back_to_login']                                          = 'Back to login';
-$lang['forgot_password_unsuccessful']                           = 'Reset password failed';
-$lang['forgot_password_successful']                             = 'Email has been sent with reset password instructions';
-$lang['password_change_unsuccessful']                           = 'Password change failed';
-$lang['password_change_successful']                             = 'Password successfully changed';
-$lang['forgot_password_email_not_found']                        = 'The email address enter does not belong to any account.';
-$lang['login_unsuccessful']                                     = 'Login Failed, Please try again';
-$lang['email_forgot_password_link']                             = 'Reset Password Link';
-$lang['reset_password_heading']                                 = 'Reset Password';
-$lang['reset_password_new_password_label']                      = 'New Password';
-$lang['reset_password_new_password_confirm_label']              = 'Confirm New Password';
-$lang['register']                                               = 'Register';
-$lang['email_new_password_subject']                             = 'Account password has been reset';
-$lang['reset_password_submit_btn']                              = 'Reset Password';
-$lang['error_csrf']                                             = 'This form post did not pass our security checks.';
-$lang['account_creation_successful']                            = 'Account successfully created';
-$lang['old_password_wrong']                                     = 'Please type correct old password';
-$lang['sending_email_failed']                                   = 'Unable to send email, please check you system settings.';
-$lang['deactivate_successful']                                  = 'User successfully deactivated';
-$lang['activate_successful']                                    = 'User successfully activated';
-$lang['login_timeout']                                          = 'You have 3 failed login attempts. Please try after 10 minutes';
-$lang['new_user_created']                                       = 'New User Created';
-$lang['type_email_to_reset']                                    = 'Please type email address to get reset instructions';
-$lang['account_exists']                                         = 'An account already exist, please try with this username/email or reset your password.';
+// Errors
+$lang['error_csrf'] 							= 'Bu form gönderisi güvenlik kontrollerimizden geçmedi';
+
+// Login
+$lang['login_heading']         					= 'Giriş';
+$lang['login_subheading']      					= 'Oturumunuzu başlatmak için giriş yapın';
+$lang['login_identity_label']  					= 'E-posta / Kullanıcı Adı';
+$lang['login_password_label']  					= 'Şifre';
+$lang['login_remember_label']  					= 'Beni Hatırla';
+$lang['login_submit_btn']      					= 'Giriş';
+$lang['login_forgot_password'] 					= 'Şifrenizi mi unuttunuz?';
+
+// Index
+$lang['index_heading']          		 		= 'Kullanıcılar';
+$lang['index_subheading']        				= 'Aşağıda kullanıcıların listesi bulunmaktadır.';
+$lang['index_fname_th']          				= 'Adı';
+$lang['index_lname_th']          				= 'Soyadı';
+$lang['index_email_th']          				= 'E-posta';
+$lang['index_groups_th']         				= 'Gruplar';
+$lang['index_status_th']         				= 'Durum';
+$lang['index_action_th']         				= 'Eylem';
+$lang['index_active_link']       				= 'Etkin';
+$lang['index_inactive_link']     				= 'Etkin Değil';
+$lang['index_create_user_link']  				= 'Yeni bir kullanıcı oluştur';
+$lang['index_create_group_link'] 				= 'Yeni bir grup oluştur';
+
+// Deactivate User
+$lang['deactivate_heading']                  	= 'Kullanıcıyı Devre Dışı Bırak';
+$lang['deactivate_subheading']               	= '\'%s\' kullanıcısını devre dışı bırakmak istediğinizden emin misiniz';
+$lang['deactivate_confirm_y_label']          	= 'Evet:';
+$lang['deactivate_confirm_n_label']          	= 'Hayır:';
+$lang['deactivate_submit_btn']               	= 'Gönder';
+$lang['deactivate_validation_confirm_label'] 	= 'onay';
+$lang['deactivate_validation_user_id_label'] 	= 'kullanıcı ID';
+
+// Create User
+$lang['create_user_heading']                           = 'Kullanıcı Oluştur';
+$lang['create_user_subheading']                        = 'Lütfen aşağıya kullanıcı bilgilerini girin.';
+$lang['create_user_fname_label']                       = 'Adı:';
+$lang['create_user_lname_label']                       = 'Soyadı:';
+$lang['create_user_company_label']                     = 'Şirket Adı:';
+$lang['create_user_identity_label']                    = 'Kimlik:';
+$lang['create_user_email_label']                       = 'E-posta:';
+$lang['create_user_phone_label']                       = 'Telefon:';
+$lang['create_user_password_label']                    = 'Şifre:';
+$lang['create_user_password_confirm_label']            = 'Şifreyi Onayla:';
+$lang['create_user_submit_btn']                        = 'Kullanıcı Oluştur';
+$lang['create_user_validation_fname_label']            = 'Adı';
+$lang['create_user_validation_lname_label']            = 'Soyadı';
+$lang['create_user_validation_identity_label']         = 'Kimlik';
+$lang['create_user_validation_email_label']            = 'E-posta Adresi';
+$lang['create_user_validation_phone_label']            = 'Telefon';
+$lang['create_user_validation_company_label']          = 'Şirket Adı';
+$lang['create_user_validation_password_label']         = 'Şifre';
+$lang['create_user_validation_password_confirm_label'] = 'Şifreyi Onayı';
+
+// Edit User
+$lang['edit_user_heading']                           = 'Kullanıcıyı Düzenle';
+$lang['edit_user_subheading']                        = 'Lütfen aşağıya kullanıcı bilgilerini girin.';
+$lang['edit_user_fname_label']                       = 'Adı:';
+$lang['edit_user_lname_label']                       = 'Soyadı:';
+$lang['edit_user_company_label']                     = 'Şirket Adı:';
+$lang['edit_user_email_label']                       = 'E-posta:';
+$lang['edit_user_phone_label']                       = 'Telefon:';
+$lang['edit_user_password_label']                    = 'Şifre: (şifre değiştiriliyorsa)';
+$lang['edit_user_password_confirm_label']            = 'Şifreyi Onayla: (şifre değiştiriliyorsa)';
+$lang['edit_user_groups_heading']                    = 'Grup Üyeleri';
+$lang['edit_user_submit_btn']                        = 'Kullanıcıyı Kaydet';
+$lang['edit_user_validation_fname_label']            = 'Adı';
+$lang['edit_user_validation_lname_label']            = 'Soyadı';
+$lang['edit_user_validation_email_label']            = 'E-posta Adresi';
+$lang['edit_user_validation_phone_label']            = 'Telefon';
+$lang['edit_user_validation_company_label']          = 'Şirket Adı';
+$lang['edit_user_validation_groups_label']           = 'Gruplar';
+$lang['edit_user_validation_password_label']         = 'Şifre';
+$lang['edit_user_validation_password_confirm_label'] = 'Şifre Onayı';
+
+// Create Group
+$lang['create_group_title']                  = 'Grup Oluştur';
+$lang['create_group_heading']                = 'Grup Oluştur';
+$lang['create_group_subheading']             = 'Lütfen aşağıya grup bilgilerini girin.';
+$lang['create_group_name_label']             = 'Grup Adı:';
+$lang['create_group_desc_label']             = 'Açıklama:';
+$lang['create_group_submit_btn']             = 'Grup Oluştur';
+$lang['create_group_validation_name_label']  = 'Grup Adı';
+$lang['create_group_validation_desc_label']  = 'Açıklama';
+
+// Edit Group
+$lang['edit_group_title']                  = 'Grubu Düzenle';
+$lang['edit_group_saved']                  = 'Grup Kaydedildi';
+$lang['edit_group_heading']                = 'Grubu Düzenle';
+$lang['edit_group_subheading']             = 'Lütfen aşağıya grup bilgilerini girin.';
+$lang['edit_group_name_label']             = 'Grup Adı:';
+$lang['edit_group_desc_label']             = 'Açıklama:';
+$lang['edit_group_submit_btn']             = 'Grubu Kaydet';
+$lang['edit_group_validation_name_label']  = 'Grup Adı';
+$lang['edit_group_validation_desc_label']  = 'Açıklama';
+
+// Change Password
+$lang['change_password_heading']                               = 'Şifre Değiştir';
+$lang['change_password_old_password_label']                    = 'Eski Şifre:';
+$lang['change_password_new_password_label']                    = 'Yeni Şifre (en az %s karakter uzunluğunda):';
+$lang['change_password_new_password_confirm_label']            = 'Yeni Şifreyi Onaylayın:';
+$lang['change_password_submit_btn']                            = 'Değiştir';
+$lang['change_password_validation_old_password_label']         = 'Eski Şifre';
+$lang['change_password_validation_new_password_label']         = 'Yeni Şifre';
+$lang['change_password_validation_new_password_confirm_label'] = 'Yeni Parolayı Onayla';
+
+// Forgot Password
+$lang['forgot_password_heading']                 = 'Şifremi Unuttum';
+$lang['forgot_password_subheading']              = 'Lütfen %s kodunuzu girin, böylece size şifrenizi sıfırlamanız için bir e-posta gönderebiliriz.';
+$lang['forgot_password_email_label']             = '%s:';
+$lang['forgot_password_submit_btn']              = 'Gönder';
+$lang['forgot_password_validation_email_label']  = 'E-posta Adresi';
+$lang['forgot_password_identity_label'] 		 = 'Kimlik';
+$lang['forgot_password_email_identity_label']    = 'E-posta';
+$lang['forgot_password_email_not_found']         = 'Bu e-posta adresinin kaydı yok.';
+
+// Reset Password
+$lang['reset_password_heading']                               = 'Şifreyi Değiştir';
+$lang['reset_password_new_password_label']                    = 'Yeni Şifre (en az %s karakter uzunluğunda):';
+$lang['reset_password_new_password_confirm_label']            = 'Yeni Şifreyi Onaylayın:';
+$lang['reset_password_submit_btn']                            = 'Değiştir';
+$lang['reset_password_validation_new_password_label']         = 'Yeni Şifre';
+$lang['reset_password_validation_new_password_confirm_label'] = 'Yeni Parolayı Onayla';

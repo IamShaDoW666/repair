@@ -1,82 +1,138 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-$lang['users'] = "Benutzer";
-$lang['add_user'] = "Benutzer hinzufügen";
-$lang['notify_user_by_email'] = "Benutzer per E-Mail benachrichtigen";
-$lang['group'] = "Gruppe";
-$lang['edit_user'] = "Benutzer bearbeiten";
-$lang['delete_user'] = "Benutzer löschen";
-$lang['user_added'] = "Benutzer erfolgreich hinzugefügt";
-$lang['user_updated'] = "Benutzer erfolgreich aktualisiert";
-$lang['users_deleted'] = "Benutzer erfolgreich gelöscht";
-$lang['alert_x_user'] = "Sie werden diesen Benutzer endgültig entfernen. Drücken Sie OK, um fortzufahren, und Abbrechen, um zurückzugehen";
-$lang['login_email'] = "Login E-Mail";
-$lang['edit_profile'] = "Profil bearbeiten";
-$lang['website'] = "Webseite";
-$lang['if_you_need_to_rest_password_for_user'] = "Wenn Sie das Passwort für diesen Benutzer zurücksetzen müssen";
-$lang['user_options'] = "Benutzeroptionen] = Benutzeroptionen";
-$lang['old_password'] = "Altes Passwort";
-$lang['new_password'] = "Neues Passwort";
-$lang['new_password_confirm'] = "Passwort bestätigen";
-$lang['change_avatar'] = "Avatar ändern";
-$lang['update_avatar'] = "Avatar aktualisieren";
-$lang['avatar'] = "Avatar";
-$lang['avatar_deleted'] = "Avatar erfolgreich aktualisiert";
-$lang['captcha_wrong'] = "Captcha ist falsch oder abgelaufen. Bitte versuchen Sie es erneut";
-$lang['captcha'] = "Captcha";
-$lang['site_is_offline_plz_try_later'] = "Die Website ist offline. Bitte besuchen Sie uns in ein paar Tagen wieder.";
-$lang['type_captcha'] = "Typ Captcha";
-$lang['we_are_sorry_as_this_sction_is_still_under_development'] = "Es tut uns leid, da dieser Abschnitt noch in Entwicklung ist und wir versuchen, ihn so schnell wie möglich zu erstellen. Ihr Patient wird sehr geschätzt";
-$lang['confirm'] = "Bestätigung";
-$lang['error_csrf'] = "Cross-site request forgery detected or the csrf token is expired. Bitte versuchen Sie es erneut.";
-$lang['avatar_updated'] = "Avatar erfolgreich aktualisiert";
-$lang['registration_is_disabled'] = "Kontoregistrierung ist geschlossen";
-$lang['login_to_your_account'] = "Bitte loggen Sie sich in Ihr Konto ein";
-$lang['pw'] = "Passwort";
-$lang['remember_me'] = " Login-Daten merken";
-$lang['forgot_your_password'] = "Passwort vergessen?";
-$lang['dont_worry'] = "Mach dir keine Sorgen!";
-$lang['click_here'] = "hier klicken";
-$lang['to_rest'] = "zum Zurücksetzen";
-$lang['forgot_password'] = "Passwort_vergessen";
-$lang['login_successful'] = "Sie sind erfolgreich eingeloggt";
-$lang['back'] = "Zurück";
-$lang['dont_have_account'] = "Sie haben kein Konto?";
-$lang['no_worry'] = "Keine Sorgen!";
-$lang['to_register'] = "zur Anmeldung";
-$lang['register_account_heading'] = "Bitte füllen Sie das untenstehende Formular aus, um ein Konto zu registrieren";
-$lang['register_now'] = "Jetzt registrieren";
-$lang['no_user_selected'] = "Kein Benutzer ausgewählt. Bitte wählen Sie mindestens einen Benutzer aus.";
-$lang['delete_users'] = "Benutzer löschen";
-$lang['delete_avatar'] = "Avatar löschen";
-$lang['deactivate_heading'] = "Sind Sie sicher, dass der Benutzer deaktiviert werden soll?";
-$lang['deactivate'] = "Deaktivieren";
-$lang['pasword_hint'] = "Mindestens 1 Großbuchstabe, 1 Kleinbuchstabe, 1 Zahl und mehr als 8 Zeichen lang";
-$lang['pw_not_same'] = "Das Passwort und das Bestätigungspasswort sind nicht dasselbe";
-$lang['reset_password'] = "Passwort zurücksetzen";
-$lang['reset_password_link_alt'] = "Sie können diesen Code unten in Ihre Url einfügen, wenn der obige Link nicht funktioniert";
-$lang['email_forgotten_password_subject'] = "Passwort-Details zurücksetzen";
-$lang['reset_password_email'] = "Passwort für %s zurücksetzen";
-$lang['back_to_login'] = "Zurück zur Anmeldung";
-$lang['forgot_password_unsuccessful'] = "Passwort zurücksetzen fehlgeschlagen";
-$lang['forgot_password_successful'] = "E-Mail wurde mit Anweisungen zum Zurücksetzen des Passworts verschickt";
-$lang['password_change_unsuccessful'] = "Passwortänderung fehlgeschlagen";
-$lang['password_change_successful'] = "Passwortänderung erfolgreich geändert";
-$lang['forgot_password_email_not_found'] = "Die eingegebene E-Mail-Adresse gehört zu keinem Konto";
-$lang['login_unsuccessful'] = "Anmeldung fehlgeschlagen, bitte versuchen Sie es erneut";
-$lang['email_forgot_password_link'] = "Passwort-Link zurücksetzen";
-$lang['reset_password_heading'] = "Passwort zurücksetzen";
-$lang['reset_password_new_password_label'] = "Neues Passwort";
-$lang['reset_password_new_password_confirm_label'] = "Neues Passwort bestätigen";
-$lang['register'] = "Registrieren";
-$lang['email_new_password_subject'] = "Kontopasswort wurde zurückgesetzt";
-$lang['reset_password_submit_btn'] = "Passwort zurücksetzen";
-$lang['error_csrf'] = "Cross-site request forgery detected or the csrf token is expired. Bitte versuchen Sie es erneut.";
-$lang['account_creation_successful'] = "Konto erfolgreich erstellt";
-$lang['old_password_wrong'] = "Bitte altes Passwort korrekt eingeben";
-$lang['sending_email_failed'] = "E-Mail kann nicht gesendet werden, bitte überprüfen Sie Ihre Systemeinstellungen";
-$lang['deactivate_successful'] = "Benutzer erfolgreich deaktiviert";
-$lang['activate_successful'] = "Benutzer erfolgreich aktiviert";
-$lang['login_timeout'] = "Sie haben 3 fehlgeschlagene Anmeldeversuche. Bitte versuchen Sie es nach 10 Minuten";
-$lang['new_user_created'] = "Neuer Benutzer erstellt";
-$lang['type_email_to_reset'] = "Bitte geben Sie Ihre E-Mail-Adresse ein, um Anweisungen zum Zurücksetzen zu erhalten";
-$lang['account_exists'] = "Ein Konto existiert bereits, bitte versuchen Sie es mit diesem Benutzernamen/E-Mail oder setzen Sie Ihr Passwort zurück";
+/**
+* Name:  Auth Lang - German
+*
+* Author: Shark
+* 		  info@shark-webdesign.com
+*
+* Created:  06.01.2019
+*
+* Description:  German language file for Ion Auth example views
+*
+*/
+
+// Errors
+$lang['error_csrf'] = 'Dieser Post hat unserer Sicherheits-Chekc nicht bestanden.';
+
+// Login
+$lang['login_heading']         = 'Login';
+$lang['login_subheading']      = 'Melden Sie sich an';
+$lang['login_identity_label']  = 'Email/Benutzername';
+$lang['login_password_label']  = 'Passwort';
+$lang['login_remember_label']  = 'Anmeldedaten merken';
+$lang['login_submit_btn']      = 'Login';
+$lang['login_forgot_password'] = 'Passwort vergessen?';
+
+// Index
+$lang['index_heading']           = 'Benutzer';
+$lang['index_subheading']        = 'Hier sehen Sie eine Liste mit allen Benutzern.';
+$lang['index_fname_th']          = 'Vorname';
+$lang['index_lname_th']          = 'Nachname';
+$lang['index_email_th']          = 'Email';
+$lang['index_groups_th']         = 'Gruppe';
+$lang['index_status_th']         = 'Status';
+$lang['index_action_th']         = 'Aktion';
+$lang['index_active_link']       = 'Aktiv';
+$lang['index_inactive_link']     = 'Inaktiv';
+$lang['index_create_user_link']  = 'Neuen Benutzer erstellen';
+$lang['index_create_group_link'] = 'Neue Gruppe erstellen';
+
+// Deactivate User
+$lang['deactivate_heading']                  = 'Benutzer deaktivieren';
+$lang['deactivate_subheading']               = 'Sind Sie sicher, den Benutzer zu deaktivieren \'%s\'';
+$lang['deactivate_confirm_y_label']          = 'Ja:';
+$lang['deactivate_confirm_n_label']          = 'Nein:';
+$lang['deactivate_submit_btn']               = '&Uuml;bermitteln';
+$lang['deactivate_validation_confirm_label'] = 'Best&auml;tigung';
+$lang['deactivate_validation_user_id_label'] = 'Benutzer ID';
+
+// Create User
+$lang['create_user_heading']                           = 'Benutzer erstellen';
+$lang['create_user_subheading']                        = 'Bitte die Benutzerinformation(en) eingeben.';
+$lang['create_user_fname_label']                       = 'Vorname:';
+$lang['create_user_lname_label']                       = 'Nachname:';
+$lang['create_user_company_label']                     = 'Firmenname:';
+$lang['create_user_identity_label']                    = 'Identit&auml;t:';
+$lang['create_user_email_label']                       = 'Email:';
+$lang['create_user_phone_label']                       = 'Telefon:';
+$lang['create_user_password_label']                    = 'Passwort:';
+$lang['create_user_password_confirm_label']            = 'Passwort best&auml;tigen:';
+$lang['create_user_submit_btn']                        = 'Benutzer erstellen';
+$lang['create_user_validation_fname_label']            = 'Vorname';
+$lang['create_user_validation_lname_label']            = 'Nachname';
+$lang['create_user_validation_identity_label']         = 'Identit&auml;t';
+$lang['create_user_validation_email_label']            = 'Email-Addresse';
+$lang['create_user_validation_phone_label']            = 'Telefon';
+$lang['create_user_validation_company_label']          = 'Firmenname';
+$lang['create_user_validation_password_label']         = 'Passwort';
+$lang['create_user_validation_password_confirm_label'] = 'Passwort Best&auml;tigung';
+
+// Edit User
+$lang['edit_user_heading']                           = 'Benutzer bearbeiten';
+$lang['edit_user_subheading']                        = 'Bitte die Benutzerinformation(en) eingeben.';
+$lang['edit_user_fname_label']                       = 'Vorname:';
+$lang['edit_user_lname_label']                       = 'Nachname:';
+$lang['edit_user_company_label']                     = 'Firmename:';
+$lang['edit_user_email_label']                       = 'Email:';
+$lang['edit_user_phone_label']                       = 'Telefon:';
+$lang['edit_user_password_label']                    = 'Passwort: (wenn Passwort &auml;nderung)';
+$lang['edit_user_password_confirm_label']            = 'Passwort best&auml;tigen: (wenn Passwort &auml;nderung)';
+$lang['edit_user_groups_heading']                    = 'Mitglied folgender Gruppe';
+$lang['edit_user_submit_btn']                        = 'Benutzer speichern';
+$lang['edit_user_validation_fname_label']            = 'Vorname';
+$lang['edit_user_validation_lname_label']            = 'Nachname';
+$lang['edit_user_validation_email_label']            = 'Email Adresse';
+$lang['edit_user_validation_phone_label']            = 'Telefon';
+$lang['edit_user_validation_company_label']          = 'Firmename';
+$lang['edit_user_validation_groups_label']           = 'Gruppe';
+$lang['edit_user_validation_password_label']         = 'Passwort';
+$lang['edit_user_validation_password_confirm_label'] = 'Passwort Best&auml;tigung';
+
+// Create Group
+$lang['create_group_title']                  = 'Gruppe erstellen';
+$lang['create_group_heading']                = 'Gruppe erstellen';
+$lang['create_group_subheading']             = 'Bitte die Informationen der Gruppe unten eingeben.';
+$lang['create_group_name_label']             = 'Gruppen Name:';
+$lang['create_group_desc_label']             = 'Beschreibung:';
+$lang['create_group_submit_btn']             = 'Gruppe erstellen';
+$lang['create_group_validation_name_label']  = 'Gruppen Name';
+$lang['create_group_validation_desc_label']  = 'Beschreibung';
+
+// Edit Group
+$lang['edit_group_title']                  = 'Gruppe bearbeiten';
+$lang['edit_group_saved']                  = 'Gruppe speichern';
+$lang['edit_group_heading']                = 'Gruppe bearbeiten';
+$lang['edit_group_subheading']             = 'Bitte die Informationen der Gruppe unten eingeben.';
+$lang['edit_group_name_label']             = 'Gruppen Name:';
+$lang['edit_group_desc_label']             = 'Beschreibung:';
+$lang['edit_group_submit_btn']             = 'Gruppe speichern';
+$lang['edit_group_validation_name_label']  = 'Gruppen Name';
+$lang['edit_group_validation_desc_label']  = 'Beschreibung';
+
+// Change Password
+$lang['change_password_heading']                               = 'Passwort &auml;ndern';
+$lang['change_password_old_password_label']                    = 'Altes Passwort:';
+$lang['change_password_new_password_label']                    = 'Neues Passwort (mindesten %s Stellen lan):';
+$lang['change_password_new_password_confirm_label']            = 'Neues Passwort best&auml;tigen:';
+$lang['change_password_submit_btn']                            = '&Auml;ndern';
+$lang['change_password_validation_old_password_label']         = 'Altes Passwort';
+$lang['change_password_validation_new_password_label']         = 'Neues Passwort';
+$lang['change_password_validation_new_password_confirm_label'] = 'Neues Passwort best&auml;tigen';
+
+// Forgot Password
+$lang['forgot_password_heading']                 = 'Passwort vergessen';
+$lang['forgot_password_subheading']              = 'Bitten geben Sie ihr % ein, damit wir Ihnen eine eMail zum Reset des Passworts senden k&ouml;nnen.';
+$lang['forgot_password_email_label']             = '%:';
+$lang['forgot_password_submit_btn']              = 'Senden';
+$lang['forgot_password_validation_email_label']  = 'Email Adresse';
+$lang['forgot_password_identity_label'] = 'Identit&auml;t';
+$lang['forgot_password_email_identity_label']    = 'Email';
+$lang['forgot_password_email_not_found']         = 'eMail-Adresse nicht in der Datenbank.';
+
+// Reset Password
+$lang['reset_password_heading']                               = 'Passwort &auml;ndern';
+$lang['reset_password_new_password_label']                    = 'Neues Passwort (Mindesten % Stellen lang):';
+$lang['reset_password_new_password_confirm_label']            = 'Neues Passwort best&auml;tigen:';
+$lang['reset_password_submit_btn']                            = '&Auml;ndern';
+$lang['reset_password_validation_new_password_label']         = 'Neues Passwort';
+$lang['reset_password_validation_new_password_confirm_label'] = 'Neues Passwort best&auml;tigen';

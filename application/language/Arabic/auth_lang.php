@@ -1,94 +1,144 @@
-<?php
-
-defined('BASEPATH') or exit('No direct script access allowed');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* Name:  Main Lang (Repairer Advance) - English
-* Author: Usman Sher
-*         uskhan099@gmail.com
-*         @usmansher
-* Location: http://otsglobal.org/repair/
-* Created:  03.14.2010
-* Description:  English language file for Repair Management System
+* Name:  Auth Lang - English
+*
+* Author: Ben Edmunds
+* 		  ben.edmunds@gmail.com
+*         @benedmunds
+*
+* Author: Daniel Davis
+*         @ourmaninjapan
+*
+* Location: http://github.com/benedmunds/ion_auth/
+*
+* Created:  03.09.2013
+*
+* Description:  English language file for Ion Auth example views
+*
 */
 
-$lang['users']                                               = 'المستخدمين';
-$lang['add_user']                                               = 'اضافة مستخدم';
-$lang['notify_user_by_email']                                   = 'اعلام المستخدم برسالة ايميل';
-$lang['group']                                                  = 'مجموعة';
-$lang['edit_user']                                              = 'تعديل المستخدم';
-$lang['delete_user']                                            = 'حذف المستخدم';
-$lang['user_added']                                             = 'تمت اضافة المستخدم بنجاح';
-$lang['user_updated']                                           = 'تم تحديث المستخدم بنجاح';
-$lang['users_deleted']                                          = 'تم حذف المستخدم بنجاح';
-$lang['alert_x_user']                                           = 'سوف تقوم بحذف المستخدم بشكل نهائي اضغط نعم للاستمرار او لا للرجوع';
-$lang['login_email']                                            = 'ايميل المستخدم';
-$lang['edit_profile']                                           = 'تعديل المعلومات الشخصية';
-$lang['website']                                                = 'الموقع الالكتروني';
-$lang['if_you_need_to_rest_password_for_user']                  = 'اذا اردت ضبط كلمة المرور لهذا المستخدم.';
-$lang['user_options']                                           = 'خيارات المستخدم';
-$lang['old_password']                                           = 'كلمة المرور القديمة';
-$lang['new_password']                                           = 'كلمة المرور الجديدة';
-$lang['new_password_confirm']                                           = 'كلمة المرور الجديدة';
-$lang['change_avatar']                                          = 'تغيير الصورة الرمزية';
-$lang['update_avatar']                                          = 'تحديث الصورة الرمزية';
-$lang['avatar']                                                 = 'الصورة الرمزية';
-$lang['avatar_deleted']                                         = 'تم تحديث الصورة الرمزية بنجاح';
-$lang['captcha_wrong']                                          = 'كلمة التحقق خاطئة او قديمة الرجاء المحاولة مرة اخرى';
-$lang['captcha']                                                = 'كلمة التحقق';
-$lang['site_is_offline_plz_try_later']                          = 'الموقع متوقف مؤقتا الرجاء زيارتنا خلال عدة ايام.';
-$lang['type_captcha']                                           = 'أدخل رمز التحقق';
-$lang['we_are_sorry_as_this_sction_is_still_under_development'] = 'We are sorry as this section is still under development and we are try to make it asap. Your patient is highly appreciated.';
-$lang['confirm']                                                = 'Confirmation';
-$lang['error_csrf']                                             = 'Cross-site request forgery detected or the csrf token is expired. Please try again.';
-$lang['avatar_updated']                                         = 'Avatar successfully updated';
-$lang['registration_is_disabled']                               = 'Account Registration is closed.';
-$lang['login_to_your_account']                                  = 'الرجاء الدخول بأكاونتك';
-$lang['pw']                                                     = 'الباسورد';
-$lang['remember_me']                                            = 'تذكرني';
-$lang['forgot_your_password']                                   = 'هل نسيت الباسورد؟';
-$lang['dont_worry']                                             = "ما تقلق !";
-$lang['click_here']                                             = 'اضغط هنا';
-$lang['to_rest']                                                = 'لاعادة الضبط';
-$lang['forgot_password']                                        = 'نسيت الباسورد';
-$lang['login_successful']                                       = 'تم تسجيل عملية الدخول بنجاح';
-$lang['back']                                                   = 'رجوع';
-$lang['dont_have_account']                                      = "ليس لديك اكاونت؟";
-$lang['no_worry']                                               = 'لا تقلق';
-$lang['to_register']                                            = 'للتسجيل';
-$lang['register_account_heading']                               = 'Please fill in the form below to register account';
-$lang['register_now']                                           = 'Register Now';
-$lang['no_user_selected']                                       = 'No user selected. Please select at least one user.';
-$lang['delete_users']                                           = 'Delete Users';
-$lang['delete_avatar']                                          = 'Delete Avatar';
-$lang['deactivate_heading']                                     = 'Are you sure to deactivate the user?';
-$lang['deactivate']                                             = 'Deactivate';
-$lang['pasword_hint']                                           = 'At least 1 capital, 1 lowercase, 1 number and more than 8 characters long';
-$lang['pw_not_same']                                            = 'The password and confirm password are not the same';
-$lang['reset_password']                                         = 'Reset Password';
-$lang['reset_password_link_alt']                                = 'You can paste this code below in your url if the above link not working';
-$lang['email_forgotten_password_subject']                       = 'Reset Password Details';
-$lang['reset_password_email']                                   = 'Reset password for %s';
-$lang['back_to_login']                                          = 'Back to login';
-$lang['forgot_password_unsuccessful']                           = 'Reset password failed';
-$lang['forgot_password_successful']                             = 'Email has been sent with reset password instructions';
-$lang['password_change_unsuccessful']                           = 'Password change failed';
-$lang['password_change_successful']                             = 'Password successfully changed';
-$lang['forgot_password_email_not_found']                        = 'The email address enter does not belong to any account.';
-$lang['login_unsuccessful']                                     = 'Login Failed, Please try again';
-$lang['email_forgot_password_link']                             = 'Reset Password Link';
-$lang['reset_password_heading']                                 = 'اعادة ضبط كلمة السر';
-$lang['reset_password_new_password_label']                      = 'كلمة سر جديدة';
-$lang['reset_password_new_password_confirm_label']              = 'اعادة تأكيد كلمة السر';
-$lang['register']                                               = 'التسجيل';
-$lang['email_new_password_subject']                             = 'Account password has been reset';
-$lang['reset_password_submit_btn']                              = 'اعادة ضبط كلمة السر';
-$lang['error_csrf']                                             = 'This form post did not pass our security checks.';
-$lang['account_creation_successful']                            = 'Account successfully created';
-$lang['old_password_wrong']                                     = 'Please type correct old password';
-$lang['sending_email_failed']                                   = 'Unable to send email, please check you system settings.';
-$lang['deactivate_successful']                                  = 'User successfully deactivated';
-$lang['activate_successful']                                    = 'User successfully activated';
-$lang['login_timeout']                                          = 'You have 3 failed login attempts. Please try after 10 minutes';
-$lang['new_user_created']                                       = 'تم انشاء مستخدم جديد';
-$lang['type_email_to_reset']                                    = 'Please type email address to get reset instructions';
-$lang['account_exists']                                         = 'An account already exist, please try with this username/email or reset your password.';
+// Errors
+$lang['error_csrf'] = 'لم يتم تجاوز فحصوصات الأمان الخاصة بنا.';
+
+// Login
+$lang['login_heading']         = 'دخول';
+$lang['login_subheading']      = 'تسجيل الدخول لبدء الجلسة';
+$lang['login_identity_label']  = 'البريد\إسم المستخدم';
+$lang['login_password_label']  = 'كلمة المرور';
+$lang['login_remember_label']  = 'تذكرني';
+$lang['login_submit_btn']      = 'دخول';
+$lang['login_forgot_password'] = 'هل نسيت كلمة المرور؟';
+
+// Index
+$lang['index_heading']           = 'المستخدمون';
+$lang['index_subheading']        = 'أدناه قائمة المستخدمين.';
+$lang['index_fname_th']          = 'الاسم';
+$lang['index_lname_th']          = 'اسم العائلة';
+$lang['index_email_th']          = 'البريد';
+$lang['index_groups_th']         = 'مجموعات';
+$lang['index_status_th']         = 'الحالة';
+$lang['index_action_th']         = 'إجراء';
+$lang['index_active_link']       = 'نشط';
+$lang['index_inactive_link']     = 'غير نشط';
+$lang['index_create_user_link']  = 'قم بإنشاء مستخدم جديد';
+$lang['index_create_group_link'] = 'أنشئ مجموعة جديدة';
+
+// Deactivate User
+$lang['deactivate_heading']                  = 'قم بإلغاء تنشيط المستخدم';
+$lang['deactivate_subheading']               = 'هل أنت متأكد أنك تريد إلغاء تنشيط المستخدم \'%s\'';
+$lang['deactivate_confirm_y_label']          = 'نعم:';
+$lang['deactivate_confirm_n_label']          = 'لا:';
+$lang['deactivate_submit_btn']               = 'إرسال';
+$lang['deactivate_validation_confirm_label'] = 'التأكيد';
+$lang['deactivate_validation_user_id_label'] = 'معرف المستخدم';
+
+// Create User
+$lang['create_user_heading']                           = 'انشاء مستخدم جديد ';
+$lang['create_user_subheading']                        = 'الرجاء إدخال معلومات المستخدم أدناه.';
+$lang['create_user_fname_label']                       = 'الاسم الاول:';
+$lang['create_user_lname_label']                       = 'الاسم الاخير:';
+$lang['create_user_company_label']                     = 'اسم الشركة:';
+$lang['create_user_identity_label']                    = 'الهوية:';
+$lang['create_user_email_label']                       = 'البريد الالكتروني';
+$lang['create_user_phone_label']                       = 'رقم الهاتف:';
+$lang['create_user_password_label']                    = 'كلمة السر:';
+$lang['create_user_password_confirm_label']            = 'تأكيد كلمة السر:';
+$lang['create_user_submit_btn']                        = 'انشاء مستخدم جديد';
+$lang['create_user_validation_fname_label']            = 'الاسم الاول';
+$lang['create_user_validation_lname_label']            = 'الاسم الاخير';
+$lang['create_user_validation_identity_label']         = 'الهوية';
+$lang['create_user_validation_email_label']            = 'عنوان البريد الالكتروني';
+$lang['create_user_validation_phone_label']            = 'رقم الهاتف';
+$lang['create_user_validation_company_label']          = 'اسم الشركة';
+$lang['create_user_validation_password_label']         = 'كلمة السر';
+$lang['create_user_validation_password_confirm_label'] = 'تاكيد كلمة السر';
+
+// Edit User
+$lang['edit_user_heading']                           = 'تحرير العضو';
+$lang['edit_user_subheading']                        = 'الرجاء إدخال معلومات المستخدم أدناه.';
+$lang['edit_user_fname_label']                       = 'الاسم الاول:';
+$lang['edit_user_lname_label']                       = 'الكنية:';
+$lang['edit_user_company_label']                     = 'اسم الشركة:';
+$lang['edit_user_email_label']                       = 'بريد إلكتروني:';
+$lang['edit_user_phone_label']                       = 'هاتف:';
+$lang['edit_user_password_label']                    = 'كلمة المرور: (في حالة تغيير كلمة المرور)';
+$lang['edit_user_password_confirm_label']            = 'تأكيد كلمة المرور: (في حالة تغيير كلمة المرور)';
+$lang['edit_user_groups_heading']                    = 'عضو في المجموعات';
+$lang['edit_user_submit_btn']                        = 'حفظ المستخدم';
+$lang['edit_user_validation_fname_label']            = 'الاسم الاول';
+$lang['edit_user_validation_lname_label']            = 'اسم العائلة';
+$lang['edit_user_validation_email_label']            = 'عنوان البريد الإلكتروني';
+$lang['edit_user_validation_phone_label']            = 'هاتف';
+$lang['edit_user_validation_company_label']          = 'اسم الشركة';
+$lang['edit_user_validation_groups_label']           = 'مجموعات';
+$lang['edit_user_validation_password_label']         = 'كلمة المرور';
+$lang['edit_user_validation_password_confirm_label'] = 'تأكيد كلمة المرور';
+
+// Create Group
+$lang['create_group_title']                  = 'إنشاء مجموعة';
+$lang['create_group_heading']                = 'إنشاء مجموعة';
+$lang['create_group_subheading']             = 'الرجاء إدخال معلومات المجموعة أدناه.';
+$lang['create_group_name_label']             = 'اسم المجموعة:';
+$lang['create_group_desc_label']             = 'الوصف:';
+$lang['create_group_submit_btn']             = 'إنشاء مجموعة';
+$lang['create_group_validation_name_label']  = 'اسم المجموعة';
+$lang['create_group_validation_desc_label']  = 'الوصف';
+
+// Edit Group
+$lang['edit_group_title']                  = 'تحرير المجموعة';
+$lang['edit_group_saved']                  = 'تم حفظ المجموعة';
+$lang['edit_group_heading']                = 'تحرير المجموعة';
+$lang['edit_group_subheading']             = 'الرجاء إدخال معلومات المجموعة أدناه.';
+$lang['edit_group_name_label']             = 'اسم المجموعة:';
+$lang['edit_group_desc_label']             = 'الوصف:';
+$lang['edit_group_submit_btn']             = 'حفظ المجموعة';
+$lang['edit_group_validation_name_label']  = 'اسم المجموعة';
+$lang['edit_group_validation_desc_label']  = 'الوصف';
+
+// Change Password
+$lang['change_password_heading']                               = 'تغيير كلمة المرور';
+$lang['change_password_old_password_label']                    = 'كلمة المرور القديمة:';
+$lang['change_password_new_password_label']                    = 'كلمة مرور جديدة (بطول %s من الأحرف على الأقل):';
+$lang['change_password_new_password_confirm_label']            = 'تأكيد كلمة المرور الجديدة:';
+$lang['change_password_submit_btn']                            = 'تغيير';
+$lang['change_password_validation_old_password_label']         = 'كلمة المرور القديمة';
+$lang['change_password_validation_new_password_label']         = 'كلمة المرور الجديدة';
+$lang['change_password_validation_new_password_confirm_label'] = 'تأكيد كلمة المرور الجديدة';
+
+// Forgot Password
+$lang['forgot_password_heading']                 = 'هل نسيت كلمة المرور';
+$lang['forgot_password_subheading']              = 'الرجاء إدخال %s الخاص بك حتى نتمكن من إرسال بريد إلكتروني لك لإعادة تعيين كلمة المرور الخاصة بك.';
+$lang['forgot_password_email_label']             = '%s:';
+$lang['forgot_password_submit_btn']              = 'إرسال';
+$lang['forgot_password_validation_email_label']  = 'عنوان البريد الإلكتروني';
+$lang['forgot_password_identity_label'] = 'الهوية';
+$lang['forgot_password_email_identity_label']    = 'بريد إلكتروني';
+$lang['forgot_password_email_not_found']         = 'لا يوجد سجل لهذا البريد الإلكتروني.';
+
+// Reset Password
+$lang['reset_password_heading']                               = 'تغيير كلمة المرور';
+$lang['reset_password_new_password_label']                    = 'كلمة مرور جديدة (بطول %s من الأحرف على الأقل):';
+$lang['reset_password_new_password_confirm_label']            = 'تأكيد كلمة المرور الجديدة:';
+$lang['reset_password_submit_btn']                            = 'تغيير';
+$lang['reset_password_validation_new_password_label']         = 'كلمة المرور الجديدة';
+$lang['reset_password_validation_new_password_confirm_label'] = 'تأكيد كلمة المرور الجديدة';

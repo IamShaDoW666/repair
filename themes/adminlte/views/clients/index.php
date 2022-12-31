@@ -1,142 +1,101 @@
- <style>
-  /* Always set the map height explicitly to define the size of the div
-   * element that contains the map. */
-  #map {
-    height: 100%;
-  }
-  /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    #autocomplete{
-        z-index: 9999;   
-    }
-    .pac-container {
-        background-color: #FFF;
-        z-index: 9999;
-        position: fixed;
-        display: inline-block;
-        float: left;
-    }
-</style>
-<script>
-
-function actions(x) {
-
-    var pqc = x.split("___");
-    var action = "<div class='btn-group'><button type=\"button\" class=\"btn btn-default btn-xs btn-primary dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"true\"><?php echo lang('actions');?> <span class=\"caret\"></button><ul class=\"dropdown-menu pull-right\" role=\"menu\">";
-
-    button = "";
-
-    <?php if($this->Admin || $GP['customers-edit']): ?>
-        action += "<li><a href='<?php echo base_url('panel/customers/edit/');?>"+pqc[0]+"'><i class='fas fa-edit'></i> <?php echo lang('Edit');?>   </a></li>";
-    <?php endif; ?>
-
-
-    <?php if($this->Admin || $GP['customers-delete']): ?>
-        button += "<li><a id='delete_customer' data-num='"+pqc[0]+"' >" + "<i class='fas fa-trash'></i> <?php echo lang('delete');?>" +"</a></li>";
-    <?php endif; ?>
-   
-
-
-
-    action += button;
-    return action;
-}
-function tp(x) {
-    return x.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
-}
-    $(document).ready(function () {
-        var oTable = $('#dynamic-table').dataTable({
-            "aaSorting": [[3, "asc"]],
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "iDisplayLength": <?=$settings->rows_per_page;?>,
-            'bProcessing': true, 'bServerSide': true,
-            'sAjaxSource': '<?php echo base_url(); ?>panel/customers/getAllCustomers/<?php echo $toggle_type;?>',
-            'fnServerData': function (sSource, aoData, fnCallback) {
-                aoData.push({
-                    "name": "<?php echo $this->security->get_csrf_token_name() ?>",
-                    "value": "<?php echo $this->security->get_csrf_hash() ?>"
-                });
-                $.ajax({'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback});
-            }, 
-            "aoColumns": [
-            null,
-            null,
-            null,
-            null,
-            {mRender: tp},
-            {mRender: actions},
-                    
-            ],
-           
-        });
-              
-    });
-
-    jQuery(document).on("click", "#delete_customer", function () {
-        var num = jQuery(this).data("num");
-        var mode = jQuery(this).data("mode");
-        jQuery.ajax({
-            type: "POST",
-            url: base_url + "panel/customers/delete",
-            data: "id=" + encodeURI(num) ,
-            cache: false,
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "progressBar": true,
-                    "positionClass": "toast-bottom-right",
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-                toastr['success']("<?php echo lang('deleted');?>");
-                $('#dynamic-table').DataTable().ajax.reload();
-            }
-        });
-    });
-
-
-</script>
 
 
 <?php if($this->Admin || $GP['customers-add']): ?>
     <button href="#clientmodal" class="add_c btn btn-primary">
-        <i class="fas fa-plus-circle"></i> <?php echo lang('add'); ?> <?php echo lang('client_title'); ?>
+        <i class="fa fa-plus-circle"></i> <?= lang('add'); ?> <?= lang('client_title'); ?>
     </button>
 <?php endif; ?>
 
- <a href="<?=base_url();?>panel/customers/export_csv" class="btn btn-primary">
-        <i class="fas fa-file-excel"></i> <?= lang('export_to_excel') ?>
-</a>
-<div class="box box-primary ">
-  
-    <div class="box-body">
-        <div class="table-responsive">
-            <table class=" compact table table-bordered table-striped" id="dynamic-table" width="100%">
-                <thead>
-                    <tr>
-                        <th><?php echo lang('client_name'); ?></th>
-                        <th><?php echo lang('client_company'); ?></th>
-                        <th><?php echo lang('client_address'); ?></th>
-                        <th><?php echo lang('client_email'); ?></th>
-                        <th><?php echo lang('client_telephone'); ?></th>
-                        <th><?php echo lang('actions'); ?></th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+
+<!-- Main content -->
+<?php echo form_open('panel/customers/customer_actions', 'id="action-form"'); ?>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+
+    <div class="card-header d-flex p-0">
+        <h3 class="card-title p-3"><?= lang('customers/index'); ?></h3>
+        <ul class="nav nav-pills ml-auto p-2">
+            <li class="dropdown dropleft">
+                    <div class="btn-group dropleft" style="list-style-type: none;">
+                        <a data-toggle="dropdown" class="dropdown-toggle btn-round btn btn-default" href="#" >
+                            <i class="icon fa fa-tasks tip" data-placement="left" title="<?= lang("actions") ?>"></i> 
+                        </a>
+                        <ul class="dropdown-menu  tasks-menus" role="menu" aria-labelledby="dLabel">
+                            
+                            <a class="dropdown-item" href="<?=base_url();?>panel/customers/export_csv">
+                                <i class="fas fa-file-excel"></i> <?= lang('export_to_excel') ?>
+                            </a>
+                        
+                            <a class="dropdown-item" href="#" id="excel" data-action="export_pdf">
+                                <i class="fas fa-file-pdf"></i> <?= lang('export_to_pdf') ?>
+                            </a>
+                            
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="<?= base_url('panel/customers/import_csv'); ?>" data-toggle="modal" data-target="#myModal">
+                                <i class="fas fa-file-excel"></i> <?= lang("import_customers_by_csv"); ?>
+                            </a>
+                            <a href="#" class="bpo dropdown-item" title="<b><?= lang("delete_selected") ?></b>" data-content="<p><?= lang('r_u_sure') ?></p><button type='button' class='btn-icon btn btn-danger' id='delete' data-action='delete'><i class='fas fa-trash img-circle text-danger'></i> <?= lang('i_m_sure') ?></a> <button class='btn bpo-close btn-default btn-icon'><i class='fas fa-trash img-circle text-muted'></i> <?= lang('no') ?></button>"  data-html="true" data-placement="left">
+                                <i class="fas fa-trash "></i> <?= lang('delete_selected') ?>
+                            </a>
+
+                        </ul>
+                    </div>
+            </li>
+        </ul>
     </div>
+      <div class="card-body">
+
+                <table id="dynamic-table" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th style="min-width:30px; width: 30px; text-align: center;">
+                        <input class="checkbox checkth" type="checkbox" name="check"/>
+                    </th>
+                    <th><?= lang('client_name'); ?></th>
+                    <th><?= lang('client_company'); ?></th>
+                    <th><?= lang('client_address'); ?></th>
+                    <th><?= lang('client_email'); ?></th>
+                    <th><?= lang('client_telephone'); ?></th>
+                    <th><?= lang('total_repairs'); ?></th>
+                    <th><?= lang('total_spent'); ?></th>
+                    <th><?= lang('actions'); ?></th>
+                </tr>
+            </thead>
+    
+            <tfoot>
+                <tr>
+                    <th style="min-width:30px; width: 30px; text-align: center;">
+                        <input class="checkbox checkft" type="checkbox" name="check"/>
+                    </th>
+                    <th><?= lang('client_name'); ?></th>
+                    <th><?= lang('client_company'); ?></th>
+                    <th><?= lang('client_address'); ?></th>
+                    <th><?= lang('client_email'); ?></th>
+                    <th><?= lang('client_telephone'); ?></th>
+                    <th><?= lang('total_repairs'); ?></th>
+                    <th><?= lang('total_spent'); ?></th>
+                    <th><?= lang('actions'); ?></th>
+                </tr>
+            </tfoot>
+        </table>
+        <div style="display: none;">
+            <input type="hidden" name="form_action" value="" id="form_action"/>
+            <?= form_submit('performAction', 'performAction', 'id="action-form-submit"') ?>
+        </div>
+
+
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.col -->
 </div>
+<!-- /.row -->
+
+
+<?= form_close() ?>
+    
+<script type="text/javascript" src="<?=base_url();?>panel/misc/js/client"></script>

@@ -1,65 +1,78 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+* Name:  Ion Auth Lang - English
+*
+* Author: Ben Edmunds
+*         ben.edmunds@gmail.com
+*         @benedmunds
+*
+* Location: http://github.com/benedmunds/ion_auth/
+*
+* Created:  03.14.2010
+*
+* Description:  English language file for Ion Auth messages and errors
+*
+*/
 
 // Account Creation
-$lang['account_creation_successful']            = 'Compte crée avec succès';
-$lang['account_creation_unsuccessful']          = 'Échec lors de la création du compte';
-$lang['account_creation_duplicate_email']       = 'Email déjà utilisé ou invalide';
-$lang['account_creation_duplicate_identity']    = 'Identité déjà utilisée ou invalide';
-$lang['account_creation_missing_default_group'] = 'Groupe par défaut non renseigné';
-$lang['account_creation_invalid_default_group'] = 'Nom du groupe par défaut invalide';
+$lang['account_creation_successful']            = 'Account Successfully Created';
+$lang['account_creation_unsuccessful']          = 'Unable to Create Account';
+$lang['account_creation_duplicate_email']       = 'Email Already Used or Invalid';
+$lang['account_creation_duplicate_identity']    = 'Identity Already Used or Invalid';
+$lang['account_creation_missing_default_group'] = 'Default group is not set';
+$lang['account_creation_invalid_default_group'] = 'Invalid default group name set';
 
 
 // Password
-$lang['password_change_successful']          = 'Mot de passe changé avec succès';
-$lang['password_change_unsuccessful']        = 'Impossible de changer le mot de passe';
-$lang['forgot_password_successful']          = 'Mot de passe réinitialisé, émail envoyé';
-$lang['forgot_password_unsuccessful']        = 'Impossible de réinitialiser le mot de passe';
+$lang['password_change_successful']          = 'Password Successfully Changed';
+$lang['password_change_unsuccessful']        = 'Unable to Change Password';
+$lang['forgot_password_successful']          = 'Password Reset Email Sent';
+$lang['forgot_password_unsuccessful']        = 'Unable to Reset Password';
 
 // Activation
-$lang['activate_successful']                 = 'Compte activé';
-$lang['activate_unsuccessful']               = 'Impossible d\'activer le compte';
-$lang['deactivate_successful']               = 'Compte désactivé';
-$lang['deactivate_unsuccessful']             = 'Impossible de désactiver le compte';
-$lang['activation_email_successful']         = 'Courriel d\'activation envoyé';
-$lang['activation_email_unsuccessful']       = 'Impossible d\'envoyer un émail d\'activation';
+$lang['activate_successful']                 = 'Account Activated';
+$lang['activate_unsuccessful']               = 'Unable to Activate Account';
+$lang['deactivate_successful']               = 'Account De-Activated';
+$lang['deactivate_unsuccessful']             = 'Unable to De-Activate Account';
+$lang['activation_email_successful']         = 'Activation Email Sent';
+$lang['activation_email_unsuccessful']       = 'Unable to Send Activation Email';
 
 // Login / Logout
-$lang['login_successful']                    = 'Connexion réussie';
-$lang['login_unsuccessful']                  = 'Login Incorrect';
-$lang['login_unsuccessful_not_active']       = 'le compte est désactivé';
-$lang['login_timeout']                       = 'Bloqué temporairement. Essayez plus tard.';
-$lang['logout_successful']                   = 'Déconnexion réussie';
+$lang['login_successful']                    = 'Logged In Successfully';
+$lang['login_unsuccessful']                  = 'Incorrect Login';
+$lang['login_unsuccessful_not_active']       = 'Account is inactive';
+$lang['login_timeout']                       = 'Temporarily Locked Out.  Try again later.';
+$lang['logout_successful']                   = 'Logged Out Successfully';
 
 // Account Changes
-$lang['update_successful']                   = 'Informations du compte mises à jours avec succès';
-$lang['update_unsuccessful']                 = 'Impossible de mettre à jour les informations du compte';
-$lang['delete_successful']                   = 'Utilisateur supprimé';
-$lang['delete_unsuccessful']                 = 'Impossible de supprimer l\'utilisateur';
+$lang['update_successful']                   = 'Account Information Successfully Updated';
+$lang['update_unsuccessful']                 = 'Unable to Update Account Information';
+$lang['delete_successful']                   = 'User Deleted';
+$lang['delete_unsuccessful']                 = 'Unable to Delete User';
 
 // Groups
-$lang['group_creation_successful']           = 'Groupe créé avec succès';
-$lang['group_already_exists']                = 'Ce nom de groupe est déjà utilisé';
-$lang['group_update_successful']             = 'Détails de groupe mis à jour';
-$lang['group_delete_successful']             = 'Groupe supprimé';
-$lang['group_delete_unsuccessful']           = 'Impossible de supprimer ce groupe';
-$lang['group_delete_notallowed']             = 'Impossible de supprimer le groupe de l\'administrateur';
-$lang['group_name_required']                 = 'Le nom du groupe est requis';
-$lang['group_name_admin_not_alter']          = 'Le nom du groupe Admin ne peut être changé';
+$lang['group_creation_successful']           = 'Group created Successfully';
+$lang['group_already_exists']                = 'Group name already taken';
+$lang['group_update_successful']             = 'Group details updated';
+$lang['group_delete_successful']             = 'Group deleted';
+$lang['group_delete_unsuccessful']           = 'Unable to delete group';
+$lang['group_delete_notallowed']             = 'Can\'t delete the administrators\' group';
+$lang['group_name_required']                 = 'Group name is a required field';
+$lang['group_name_admin_not_alter']          = 'Admin group name can not be changed';
 
 // Activation Email
-$lang['email_activation_subject']            = 'Activation du compte';
-$lang['email_activate_heading']              = 'Activer le compte pour %s';
-$lang['email_activate_subheading']           = 'Cliquer ce lien pour %s.';
-$lang['email_activate_link']                 = 'Activer votre compter';
+$lang['email_activation_subject']            = 'Account Activation';
+$lang['email_activate_heading']              = 'Activate account for %s';
+$lang['email_activate_subheading']           = 'Please click this link to %s.';
+$lang['email_activate_link']                 = 'Activate Your Account';
 
 // Forgot Password Email
-$lang['email_forgotten_password_subject']    = 'Vérification du mot de passe oublié';
-$lang['email_forgot_password_heading']       = 'Réinitialiser le mot de passe pour %s';
-$lang['email_forgot_password_subheading']    = 'Veuillez cliquer ce lien pour %s.';
-$lang['email_forgot_password_link']          = 'Réinitialiser votre mot de passe';
+$lang['email_forgotten_password_subject']    = 'Forgotten Password Verification';
+$lang['email_forgot_password_heading']       = 'Reset Password for %s';
+$lang['email_forgot_password_subheading']    = 'Please click this link to %s.';
+$lang['email_forgot_password_link']          = 'Reset Your Password';
 
 // New Password Email
-$lang['email_new_password_subject']          = 'Nouveau mot de passe';
-$lang['email_new_password_heading']          = 'Nouveau mot de passe pour %s';
-$lang['email_new_password_subheading']       = 'Votre mot de passe a été réinitialisé pour: %s';
+$lang['email_new_password_subject']          = 'New Password';
+$lang['email_new_password_heading']          = 'New Password for %s';
+$lang['email_new_password_subheading']       = 'Your password has been reset to: %s';

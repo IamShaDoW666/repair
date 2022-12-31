@@ -89,3 +89,7 @@ h3 { font-size:20px; }
 i.red-arrow-up {
 left: 50% !important;
 }
+
+html{ height: 100%; }
+body { padding-bottom:40px; height:auto; background:url("img/bg2.png"); }
+form { margin:0; }

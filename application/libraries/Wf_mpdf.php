@@ -1,14 +1,4 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-/*
- *  ==============================================================================
- *  Author  : Usman Sher
- *  Email   : usman@otsglobal.org
- *  For     : mPDF
- *  Web     : https://github.com/mpdf/mpdf
- *  License : GNU General Public License v2.0
- *          : https://github.com/mpdf/mpdf/blob/development/LICENSE.txt
- *  ==============================================================================
- */
 
 use Mpdf\Mpdf;
 
@@ -31,36 +21,10 @@ class Wf_mpdf
             $margin_top = 20;
         }
 
-        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-        $fontDirs = $defaultConfig['fontDir'];
-
-        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
-
-
-
-
-        $mpdf = new Mpdf([
-            'setAutoBottomMargin' => 'pad', 
-            'fontDir' => array_merge($fontDirs, [
-                FCPATH . '/assets/fonts',
-            ]),
-            'fontdata' => $fontData + [
-                'opensans' => [
-                    'R' => 'OpenSans-Regular.ttf',
-                    'I' => 'OpenSans-Italic.ttf',
-                ]
-            ],
-            'default_font' => 'opensans'
-        ]);
-
-
-
+        $mpdf = new Mpdf();
         $mpdf->autoScriptToLang = true;
         $mpdf->autoLangToFont = true;
         $mpdf->SetTopMargin($margin_top);
-        // $mpdf->setAutoBottomMargin($margin_bottom);
-        // setAutoBottomMargin
         $mpdf->SetTitle($this->mSettings->title);
         $mpdf->SetAuthor($this->mSettings->title);
         $mpdf->SetCreator($this->mSettings->title);
@@ -90,9 +54,6 @@ class Wf_mpdf
             if ($footer != '') {
                 $mpdf->SetHTMLFooter('<p class="text-center">' . $footer . '</p>', '', true);
             }
-
-            // $mpdf->SetHTMLFooter($this->mSettings->title.'||{PAGENO}/{nbpg}', '', TRUE); // For simple text header
-            
 
         }
 

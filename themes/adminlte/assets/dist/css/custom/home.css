@@ -77,3 +77,30 @@ body {
     border-bottom: 0;
   }
 }
+
+
+
+.label{
+  white-space: inherit;
+  display: block;
+}
+  .loader {
+      color: white;
+      top: 0;
+      right: 0;
+      position: fixed;
+      width: 106px;
+      height: 106px;
+      background: url('../../img/loading-page.gif') no-repeat center;
+      z-index: 4;
+  }
+  .bio-row p span.bold{
+    width: 100%;
+  }
+
+  body, html {
+    height: 100%;
+    margin: 0;
+    font: 400 15px/1.8 "Lato", sans-serif;
+    color: #777;
+  }

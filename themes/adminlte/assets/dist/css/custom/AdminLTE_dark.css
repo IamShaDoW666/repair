@@ -5943,7 +5943,7 @@ div.col-md-12.col-lg-6.bio-row p {
 }
 
 i.fa.fa-calendar,
-i.fa.fa-link,
+i.fa.fa-chain-broken,
 i.fa.fa-eye,
 i.fa.fa-money,
 i.fa.fa-phone,
@@ -6511,7 +6511,7 @@ i.fa.fa-calendar {
     background-color: #337ab7;
 }
 
-i.fa.fa-link {
+i.fa.fa-chain-broken {
     color: #ffffff;
     background-color: #337ab7;
 }

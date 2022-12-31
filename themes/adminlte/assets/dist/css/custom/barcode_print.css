@@ -1,3 +1,60 @@
+
+.padding05{
+    padding-right: 5px;
+}
+.table.barcodes td {
+padding: 30px 20px !important;
+}
+.table.barcodes .table-barcode {
+    width: 100%;
+}
+.table.barcodes .table-barcode td {
+    border-bottom: 1px solid #eee;
+    padding: 3px !important;
+}
+
+.table th, .table td { vertical-align: middle !important; }
+.table > thead:first-child > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table-striped thead tr.primary:nth-child(odd) th {
+    background-color: #428BCA;
+    color: white;
+    border-color: #357EBD;
+    border-top: 1px solid #357EBD;
+    text-align: center;
+}
+.table-responsive { margin-bottom: 0; }
+.table-responsive .form-inline select.form-control {
+    width: auto;
+}
+.table-responsive .form-inline select.form-control option {
+    padding: 0;
+}
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+    background-color:#D9EDF7;
+    border-color: #AFD9EE;
+}
+.table-hover > tbody > tr.warning:hover > td,
+.table-hover > tbody > tr.warning:hover > th {
+    border-color: #F0E1A0;
+}
+.table-hover > tbody > tr.danger:hover > td,
+.table-hover > tbody > tr.danger:hover > th {
+    border-color: #ebbbbb;
+}
+.nav-tabs > li.active > a.tab-grey, .nav-tabs > li.active > a.tab-grey:hover, .nav-tabs > li.active > a.tab-grey:focus {
+    background-color: #F7F7F8;
+}
+.table-borderless > thead > tr > th,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > tbody > tr > td,
+.table-borderless > tfoot > tr > td {
+  border-top: none;
+}
+.table td p:last-child {
+    margin-bottom: 0;
+}
 @media print {
     html, body, .container, #content,
     .box-content, .col-lg-12, .table-responsive,
@@ -87,10 +144,18 @@
 .barcodea4 .style24 .barcode_site, .barcodea4 .style24 .barcode_name { font-size: 14px; }
 .barcodea4 .style18 .barcode_site, .barcodea4 .style18 .barcode_name { font-size: 14px; font-weight: bold; }
 .barcodea4 .style12 .barcode_site, .barcodea4 .style12 .barcode_name { font-size: 15px; font-weight: bold; }
-
+.alignleft {
+    float: left;
+    padding-left: 5px;
+}
+.alignright {
+    float: right;
+    padding-right: 5px;
+}
 @media print {
-    .tooltip, #sliding-ad { display: none !important; }
+    .content-wrapper{ margin: 0 !important; }
     .barcode, .barcodea4 { margin: 0; }
     .barcode, .barcode .item, .barcodea4, .barcodea4 .item, .style50, .div50 { border: none !important; }
     .div50, .modal-content { page-break-after:always; }
+
 }

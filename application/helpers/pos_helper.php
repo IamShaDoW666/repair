@@ -46,7 +46,6 @@ if(! function_exists('taxLine')) {
 
 if ( ! function_exists('character_limiter')) {
     function character_limiter($str, $n = 500, $end_char = '&#8230;') {
-        $str = xss_clean($str);
         if (mb_strlen($str) < $n) {
             return $str;
         }
@@ -113,3 +112,4 @@ if ( ! function_exists('word_wrap')) {
         return $output;
     }
 }
+

@@ -8,81 +8,107 @@ class Welcome extends Auth_Controller {
         $this->load->model('welcome_model');
         $this->load->model('reports_model');
     }
-	
+	/**
+	 * Index Page for this controller.
+	 *
+	 * Maps to the following URL
+	 * 		http://example.com/index.php/welcome
+	 *	- or -
+	 * 		http://example.com/index.php/welcome/index
+	 *	- or -
+	 * Since this controller is set as the default controller in
+	 * config/routes.php, it's displayed at http://example.com/
+	 *
+	 * So any other public methods not prefixed with an underscore will
+	 * map to /index.php/welcome/<method_name>
+	 * @see https://codeigniter.com/user_guide/general/urls.html
+	 */
 	public function index()
-    {
-     
-        $this->showPageTitle = false;
-        $this->data['repair_count'] = $this->welcome_model->getRepairCount();
-        $this->data['completed_repair_count7'] = $this->welcome_model->getCompletedRepairCount7();
-        $this->data['completed_repair_count30'] = $this->welcome_model->getCompletedRepairCount30();
-        $this->data['clients_count'] = $this->welcome_model->getClientCount();
-        $this->data['stock_count'] = $this->welcome_model->getStockCount();
-        $this->data['currency'] = $this->mSettings->currency;
-        $this->data['stock'] = $this->reports_model->getStockValue();
-        $this->data['list'] = $this->reports_model->list_earnings(date('m'), date('Y'));
-        $this->data['rsales'] = $this->welcome_model->getRecentSales(!$this->Admin ? $this->GP: NULL);
-        $this->data['commission_day'] = $this->welcome_model->getAllCommissions('day');
-        $this->data['commission_week'] = $this->welcome_model->getAllCommissions('week');
-        $this->data['commission_month'] = $this->welcome_model->getAllCommissions('month');
-        $this->data['messages'] = $this->welcome_model->getBoardMessages();
-
-        $this->render('dashboard');
-    }
-
-    public function loadMessages()
-    {
-        $data['messages'] = $this->welcome_model->getBoardMessages();
-        $this->load->view($this->theme.'board', $data);
-    }
-
-	public function lookup_sale() {
-		$sale_id = $this->input->post('sale_id');
-        $q = $this->db->get_where('sales', array('id'=> $sale_id));
-        if ($q->num_rows() > 0 ) {
-        	echo json_encode(array('success'=>true));
-        }else{
-    		echo json_encode(array('success'=>false));
-        }
-	}
-	public function lookup_repair() {
-		$repair_code = $this->input->post('repair_code');
-
-        $this->db->order_by('id', 'desc')->where('code', $repair_code)->or_where('telephone', $repair_code);
-        $q = $this->db->get('repair');
-        if ($q->num_rows() > 0 ) {
-        	echo json_encode(array('success'=>true, 'id'=>$q->row()->id));
-        }else{
-    		echo json_encode(array('success'=>false));
-        }
+	{
+        $this->mPageTitle = lang('home');
+		$this->data['reparation_count'] = $this->welcome_model->getReparationCount();
+		$this->data['clients_count'] = $this->welcome_model->getClientCount();
+		$this->data['stock_count'] = $this->welcome_model->getStockCount();
+		$this->data['currency'] = $this->mSettings->currency;
+		$this->data['technicians'] = $this->getTechReport();
+		$this->render('dashboard');
 	}
 
-	public function lookup_client() {
-        $client_id = $this->input->post('client_id');
-        $q = $this->db->get_where('clients', array('id'=> $client_id));
-        if ($q->num_rows() > 0 ) {
-            echo json_encode(array('success'=>true, 'id'=>$q->row()->id));
-        }else{
-            echo json_encode(array('success'=>false));
+	public function getTechReport()
+	{
+		$q = $this->db
+			->select('CONCAT(users.first_name, " ",users.last_name) as name,first_name, last_name, COUNT(reparation.id) as repair_count, SUM(grand_total) as total_revenue')
+			->join('users', 'reparation.assigned_to=users.id','left')
+			->where('users.id !=', null)
+			->group_by('reparation.assigned_to')
+			->get('reparation');
+		if ($q->num_rows() > 0) {
+			return $q->result();
+		}
+		return [];
+	}
+
+	public function getTechReportDA()
+	{
+        $this->load->library('datatables');
+
+		$q = $this->datatables
+			->select('CONCAT(users.first_name, " ",users.last_name) as name, (SELECT COUNT(reparation.id)  FROM reparation WHERE assigned_to = users.id) as repair_count, (SELECT SUM(reparation.grand_total)  FROM reparation WHERE assigned_to = users.id) as total_revenue')
+			->from('users');
+        echo $this->datatables->generate();
+
+	}
+
+	public function getTechReportD()
+	{
+        $this->load->library('datatables');
+
+        $start_date = null;
+        $end_date = null;
+      	if ($this->input->post('start_date')) {
+            $start_date = $this->input->post('start_date');
         }
-    }
 
-    public function add_message() {
-        $message = $this->input->post('message');
-        $user = $this->ion_auth->user()->row();
-        $name = $user->first_name . ' ' . $user->last_name;
-        $data = array(
-            'message'   => filter_var($message, FILTER_SANITIZE_STRING),
-            'user_id'   => $user->id,
-            'timestamp' => date('Y-m-d H:i:s'),
-        );
-        $this->db->insert('message_board', $data);
-        echo json_encode(array('success'=>true));
-        
-    }
+        if ($this->input->post('end_date')) {
+            $end_date = $this->input->post('end_date');
+        }
 
-    
-    public function nav_toggle() {
+        $date = '';
+        if ($start_date && $end_date) {
+        	$date = ' AND reparation.date_opening BETWEEN "'.$start_date.'" AND "'.$end_date.'"';
+        }
+
+		$q = $this->datatables
+			->select('CONCAT(users.first_name, " ",users.last_name) as name, (SELECT COUNT(reparation.id)  FROM reparation WHERE assigned_to = users.id '.$date.') as repair_count, (SELECT SUM(reparation.grand_total)  FROM reparation WHERE assigned_to = users.id '.$date.') as total_revenue')
+			->from('users');
+        echo $this->datatables->generate();
+
+	}
+	
+	public function send_mail(){
+		if ($this->input->post('email_to')) {
+			$to 		= ($this->input->post('email_to')  != '') ? $this->input->post('email_to') : FALSE;
+			$to 		= $this->settings_model->getClientsByIDs($to);
+			$to 		= array_column($to, 'email');
+		}else{
+			$to 		= ($this->input->post('to')  != '') ? $this->input->post('to') : FALSE;
+		}
+		$subject 	= ($this->input->post('subject') != '') ? $this->input->post('subject') : FALSE;
+		$body 		= ($this->input->post('body') != '') ? $this->input->post('body') : FALSE;
+		if ($to==FALSE OR $subject==FALSE OR $body==FALSE) {
+			echo 2;
+			die();
+		}
+		$this->load->library('repairer');
+		$result = $this->repairer->send_email($to, $subject, $body);
+		if ($result) {
+			echo 1;
+		}else{
+			echo 0;
+		}
+	}
+	
+	public function nav_toggle() {
         $this->output->set_header('Content-Type: application/json; charset=utf-8');
         $state = (string) $this->input->post('state');
         if ($state == '') {
@@ -93,7 +119,6 @@ class Welcome extends Auth_Controller {
         }
         $this->output->set_output(json_encode(array('state' => $state)));
     }
-
-
-
+    
+   
 }

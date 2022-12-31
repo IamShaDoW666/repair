@@ -8,11 +8,7 @@ class Events extends Auth_Controller {
 	}
 
 	public function getAllEvents() {
-		$this->load->model('repair_model');
 		
-		$start = $this->input->get('start');
-		$end = $this->input->get('end');
-
 		$data = array();
 		$q = $this->db->get('events');
 		if ($q->num_rows() > 0) {
@@ -27,7 +23,7 @@ class Events extends Auth_Controller {
 			}
 		}
 
-		$repairs = $this->repair_model->getAllRepairs($start, $end);
+		$repairs = $this->reparation_model->getAllReparations();
 		foreach ($repairs as $repair) {
 			$ending_date = $repair->date_opening;
 			

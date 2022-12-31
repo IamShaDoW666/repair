@@ -15,64 +15,64 @@
 */
 
 // Account Creation
-$lang['account_creation_successful']            = 'Account Successfully Created';
-$lang['account_creation_unsuccessful']          = 'Unable to Create Account';
-$lang['account_creation_duplicate_email']       = 'Email Already Used or Invalid';
-$lang['account_creation_duplicate_identity']    = 'Identity Already Used or Invalid';
-$lang['account_creation_missing_default_group'] = 'Default group is not set';
-$lang['account_creation_invalid_default_group'] = 'Invalid default group name set';
+$lang['account_creation_successful']            = 'تم إنشاء الحساب بنجاح';
+$lang['account_creation_unsuccessful']          = 'تعذر إنشاء حساب';
+$lang['account_creation_duplicate_email']       = 'البريد الإلكتروني مستخدم بالفعل أو غير صالح';
+$lang['account_creation_duplicate_identity']    = 'هوية مستعملة مسبقا أو غير صالحة';
+$lang['account_creation_missing_default_group'] = 'لم يتم تعيين المجموعة الافتراضية';
+$lang['account_creation_invalid_default_group'] = 'اسم مجموعة افتراضي غير صالح';
 
 
 // Password
-$lang['password_change_successful']          = 'Password Successfully Changed';
-$lang['password_change_unsuccessful']        = 'Unable to Change Password';
-$lang['forgot_password_successful']          = 'Password Reset Email Sent';
-$lang['forgot_password_unsuccessful']        = 'Unable to Reset Password';
+$lang['password_change_successful']          = 'تم تغيير كلمة المرور بنجاح';
+$lang['password_change_unsuccessful']        = 'تعذر تغيير كلمة المرور';
+$lang['forgot_password_successful']          = 'تم إرسال بريد إلكتروني لإعادة تعيين كلمة المرور';
+$lang['forgot_password_unsuccessful']        = 'غير قادر على إعادة تعيين كلمة المرور';
 
 // Activation
-$lang['activate_successful']                 = 'Account Activated';
-$lang['activate_unsuccessful']               = 'Unable to Activate Account';
-$lang['deactivate_successful']               = 'Account De-Activated';
-$lang['deactivate_unsuccessful']             = 'Unable to De-Activate Account';
-$lang['activation_email_successful']         = 'Activation Email Sent';
-$lang['activation_email_unsuccessful']       = 'Unable to Send Activation Email';
+$lang['activate_successful']                 = 'تم تفعيل الحساب';
+$lang['activate_unsuccessful']               = 'تعذر تنشيط الحساب';
+$lang['deactivate_successful']               = 'تم تعطيل الحساب';
+$lang['deactivate_unsuccessful']             = 'تعذر تعطيل الحساب';
+$lang['activation_email_successful']         = 'تم إرسال بريد التفعيل';
+$lang['activation_email_unsuccessful']       = 'غير قادر على إرسال بريد إلكتروني للتنشيط';
 
 // Login / Logout
-$lang['login_successful']                    = 'Logged In Successfully';
-$lang['login_unsuccessful']                  = 'Incorrect Login';
-$lang['login_unsuccessful_not_active']       = 'Account is inactive';
-$lang['login_timeout']                       = 'Temporarily Locked Out.  Try again later.';
-$lang['logout_successful']                   = 'Logged Out Successfully';
+$lang['login_successful']                    = 'تم تسجيل الدخول بنجاح';
+$lang['login_unsuccessful']                  = 'تسجيل دخول خاطئ';
+$lang['login_unsuccessful_not_active']       = 'الحساب غير نشط';
+$lang['login_timeout']                       = 'مغلق مؤقتًا. حاول مرة أخرى في وقت لاحق.';
+$lang['logout_successful']                   = 'تم تسجيل الخروج بنجاح';
 
 // Account Changes
-$lang['update_successful']                   = 'Account Information Successfully Updated';
-$lang['update_unsuccessful']                 = 'Unable to Update Account Information';
-$lang['delete_successful']                   = 'User Deleted';
-$lang['delete_unsuccessful']                 = 'Unable to Delete User';
+$lang['update_successful']                   = 'تم تحديث معلومات الحساب بنجاح';
+$lang['update_unsuccessful']                 = 'تعذر تحديث معلومات الحساب';
+$lang['delete_successful']                   = 'تم حذف المستخدم';
+$lang['delete_unsuccessful']                 = 'تعذر حذف المستخدم';
 
 // Groups
-$lang['group_creation_successful']           = 'Group created Successfully';
-$lang['group_already_exists']                = 'Group name already taken';
-$lang['group_update_successful']             = 'Group details updated';
-$lang['group_delete_successful']             = 'Group deleted';
-$lang['group_delete_unsuccessful']           = 'Unable to delete group';
-$lang['group_delete_notallowed']             = 'Can\'t delete the administrators\' group';
-$lang['group_name_required']                 = 'Group name is a required field';
-$lang['group_name_admin_not_alter']          = 'Admin group name can not be changed';
+$lang['group_creation_successful']           = 'تم إنشاء المجموعة بنجاح';
+$lang['group_already_exists']                = 'اسم المجموعة محجوز بالفعل';
+$lang['group_update_successful']             = 'تم تحديث تفاصيل المجموعة';
+$lang['group_delete_successful']             = 'تم حذف المجموعة';
+$lang['group_delete_unsuccessful']           = 'تعذر حذف المجموعة';
+$lang['group_delete_notallowed']             = 'لا يمكن حذف مجموعة المسؤولين';
+$lang['group_name_required']                 = 'اسم المجموعة هو حقل مطلوب';
+$lang['group_name_admin_not_alter']          = 'لا يمكن تغيير اسم مجموعة المسؤول';
 
 // Activation Email
-$lang['email_activation_subject']            = 'Account Activation';
-$lang['email_activate_heading']              = 'Activate account for %s';
-$lang['email_activate_subheading']           = 'Please click this link to %s.';
-$lang['email_activate_link']                 = 'Activate Your Account';
+$lang['email_activation_subject']            = 'تفعيل الحساب';
+$lang['email_activate_heading']              = 'تنشيط الحساب لـ %s';
+$lang['email_activate_subheading']           = 'الرجاء الضغط على هذا الرابط ل %s.';
+$lang['email_activate_link']                 = 'فعل حسابك';
 
 // Forgot Password Email
-$lang['email_forgotten_password_subject']    = 'Forgotten Password Verification';
-$lang['email_forgot_password_heading']       = 'Reset Password for %s';
-$lang['email_forgot_password_subheading']    = 'Please click this link to %s.';
-$lang['email_forgot_password_link']          = 'Reset Your Password';
+$lang['email_forgotten_password_subject']    = 'نسيت كلمة المرور';
+$lang['email_forgot_password_heading']       = 'إعادة تعيين كلمة المرور لـ %s';
+$lang['email_forgot_password_subheading']    = 'الرجاء الضغط على هذا الرابط ل %s.';
+$lang['email_forgot_password_link']          = 'اعد ضبط كلمه السر';
 
 // New Password Email
-$lang['email_new_password_subject']          = 'New Password';
-$lang['email_new_password_heading']          = 'New Password for %s';
-$lang['email_new_password_subheading']       = 'Your password has been reset to: %s';
+$lang['email_new_password_subject']          = 'كلمة مرور جديدة';
+$lang['email_new_password_heading']          = 'كلمة مرور جديدة لـ %s';
+$lang['email_new_password_subheading']       = 'تمت إعادة تعيين كلمة المرور الخاصة بك إلى: %s';

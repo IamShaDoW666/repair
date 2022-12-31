@@ -8,37 +8,35 @@ if (!defined('BASEPATH')) {
  * Setting
  *
  *
- * @package		Repair
- * @category	Controller
- * @author		Usman Sher
+ * @package     Repair
+ * @category    Controller
+ * @author      Urepairern Sher
 */
 
 class Settings extends Auth_Controller
 {
-	// THE CONSTRUCTOR //
+    // THE CONSTRUCTOR //
     public function __construct()
     {
         parent::__construct();
-
         $this->load->model('Settings_model');
-        $this->digital_upload_path = 'assets/uploads/csv/';
-        // $this->lang->load('global', $this->Main_model->language());
+        
+        $this->upload_path = 'assets/uploads/';
+        $this->thumbs_path = 'assets/uploads/thumbs/';
+        $this->image_types = 'gif|jpg|jpeg|png|tif';
+        $this->allowed_file_size = '1024';
+
     }
 
-	// SHOW THE SETTINGS PAGE //
+    // SHOW THE settings PAGE //
     public function index()
     {
-        $q = $this->db->query("SHOW TABLE STATUS LIKE 'sales'");
-
-        $this->data['auto_increment_value'] = $q->row()->Auto_increment;
+        $this->mPageTitle = lang('system_settings');
         $this->data['tax_rates'] = $this->settings_model->getTaxRates();
         $this->data['date_formats'] = $this->settings_model->getDateFormats();
-            $this->data['bank_accounts'] = $this->settings_model->getAllBankAccountsDP();
-
         $this->render('settings');
     }
-
-
+    
     // AJAX LOGO UPLOAD //
     public function upload_image()
     {
@@ -66,19 +64,51 @@ class Settings extends Auth_Controller
             $data = $this->upload->data();
             if($data)
             {
-                // if ($data['image_height'] > 90) {
-                //     $config['image_library']    = 'gd2';
-                //     $config['source_image']     = $data['full_path'];
-                //     $config['create_thumb']     = FALSE;
-                //     $config['maintain_ratio']   = TRUE;
-                //     $config['width']            = 90;
-                //     $this->load->library('image_lib', $config);
-                //     $this->image_lib->resize();
-                // }
                 $name = $this->upload->file_name;
-                $this->settings_model->update_logo($name);
+                $this->Settings_model->update_logo($name);
                 echo $name;
-                
+            }
+            else
+            {
+                unlink($data['full_path']);
+                echo 'false';
+            }
+
+        }
+
+    }
+
+    // AJAX LOGO UPLOAD //
+    public function upload_background()
+    {
+        $status = "";
+        $msg = "";
+        $this->load->library('upload');
+        $this->upload_path = 'assets/uploads/backgrounds';
+        $this->image_types = 'jpg|jpeg|png|gif';
+        $this->allowed_file_size = 190 * 53;
+
+        $config['upload_path'] = $this->upload_path;
+        $config['allowed_types'] = $this->image_types;
+        $config['max_size'] = $this->allowed_file_size;
+        $config['overwrite'] = FALSE;
+        $config['max_filename'] = 25;
+        $config['encrypt_name'] = TRUE;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload('background_upload')) {
+            $error = $this->upload->display_errors();
+            $status = 'error';
+            echo $msg = $this->upload->display_errors('', '');
+            echo 'false1';
+        }else{
+            $data = $this->upload->data();
+            if($data)
+            {
+                $name = $this->upload->file_name;
+                $this->db->update('settings', array(
+                    'background' => $name
+                ));
+                echo $name;
             }
             else
             {
@@ -91,534 +121,593 @@ class Settings extends Auth_Controller
     }
 
 
-	// SAVE THE SETTING //
+    // SAVE THE SETTING //
     public function save_settings()
-    {
+    {   
+        $categories = $this->input->post('category') ? implode(',', $this->input->post('category')) : '';
+        $custom_fields = $this->input->post('custom_fields') ? implode(',', $this->input->post('custom_fields')) : '';
+        $repair_custom_toggles = $this->input->post('repair_custom_toggles') ? implode(',', $this->input->post('repair_custom_toggles')) : '';
+        $tax1 = ($this->input->post('tax_rate') != 0) ? 1 : 0;
+        $tax2 = ($this->input->post('tax_rate2') != 0) ? 1 : 0;
+        $data_ = array(
+            'title'                 => $this->input->post('title'),
+            'language'              => $this->input->post('language'),
+            'currency'              => $this->input->post('currency'),
+            'product_discount'      => $this->input->post('product_discount'),
+            'purchase_prefix'       => $this->input->post('purchase_prefix'),
+            'reference_format'      => $this->input->post('reference_format'),
+            'decimals'              => $this->input->post('decimals'),
+            'qty_decimals'          => $this->input->post('qty_decimals'),
+            'tax1'                  => $tax1,
+            'tax2'                  => $tax2,
+            'default_tax_rate'      => $this->input->post('tax_rate'),
+            'default_tax_rate2'     => $this->input->post('tax_rate2'),
+            'update_cost'           => $this->input->post('update_cost'),
+            'bc_fix'                => $this->input->post('bc_fix'),
+            'disable_editing'       => $this->input->post('disable_editing'),
+            'category'              => $categories,
+            'custom_fields'         => $custom_fields,
+            'invoice_name'          => $this->input->post('invoice_name'),
+            'invoice_mail'          => $this->input->post('invoice_mail'),
+            'address'               => $this->input->post('invoice_address'),
+            'phone'                 => $this->input->post('invoice_phone'),
+            'vat'                   => $this->input->post('invoice_vat'),
+            'disclaimer'            => $this->input->post('disclaimer'),
+            'stampadue'             => 1,
+            'usesms'                => $this->input->post('usesms'),
+            'nexmo_api_key'         => $this->input->post('n_api_key'),
+            'nexmo_api_secret'      => $this->input->post('n_api_secret'),
+            'twilio_mode'           => $this->input->post('t_mode'),
+            'twilio_account_sid'    => $this->input->post('t_account_sid'),
+            'twilio_auth_token'     => $this->input->post('t_token'),
+            'twilio_number'         => $this->input->post('t_number'),
+            'smtp_host'             => $this->input->post('smtp_host'),
+            'smtp_user'             => $this->input->post('smtp_user'),
+            'smtp_pass'             => $this->input->post('smtp_pass'),
+            'smtp_port'             => $this->input->post('smtp_port'),
+            'model_based_search'    => $this->input->post('model_based_search'),
+            'iwidth' => $this->input->post('iwidth'),
+            'iheight' => $this->input->post('iheight'),
+            'twidth' => $this->input->post('twidth'),
+            'theight' => $this->input->post('theight'),
+            'watermark' => $this->input->post('watermark'),
+            'rows_per_page' => $this->input->post('rows_per_page'),
+            'bg_color' => $this->input->post('bg_color'),
+            'header_color' => $this->input->post('header_color'),
+            'menu_color' => $this->input->post('menu_color'),
+            'menu_active_color' => $this->input->post('menu_active_color'),
+            'menu_text_color' => $this->input->post('menu_text_color'),
+            'mmenu_text_color' => $this->input->post('mmenu_text_color'),
+            'bg_text_color' => $this->input->post('bg_text_color'),
+            'invoice_table_color' => $this->input->post('invoice_table_color'),
+            'body_font' => $this->input->post('body_font'),
+            'use_dark_theme' => $this->input->post('use_dark_theme'),
+            'use_topbar' => $this->input->post('use_topbar'),
+            'invoice_template' => $this->input->post('invoice_template'),
+            'report_template' => $this->input->post('report_template'),
+            'show_settings_menu' => $this->input->post('show_settings_menu'),
+            'google_site_key'     => $this->input->post('google_site_key'),
+            'google_secret_key'   => $this->input->post('google_secret_key'),
+            'google_api_key'      => $this->input->post('google_api_key'),
+            'enable_recaptcha'    => $this->input->post('enable_recaptcha'),
+            'repair_custom_toggles' => $repair_custom_toggles,
 
+            'open_report_on_repair_add' => $this->input->post('open_report_on_repair_add'),
+            'smsgateway_token' => $this->input->post('smsgateway_token'),
+            'smsgateway_device_id' => $this->input->post('smsgateway_device_id'),
+            'warranty_ribbon_color' => $this->input->post('warranty_ribbon_color'),
+            'default_http_api' => $this->input->post('default_http_api'),
+            'sale_email_text' => $this->input->post('sale_email_text'),
+            'email_footer' => $this->input->post('email_footer'),
+            'dateformat' => $this->input->post('dateformat'),
+            'invoice_email_text' => $this->input->post('invoice_email_text'),
 
-        if ($this->Admin || $this->GP['settings-order_repairs_edit']) {
-            // START order_repairs
-            $categories = implode(',', $this->input->post('category'));
-            $custom_fields = implode(',', $this->input->post('custom_fields'));
-            $repair_custom_checkbox = implode(',', $this->input->post('repair_custom_checkbox'));
-            $repair_custom_toggles = implode(',', $this->input->post('repair_custom_toggles'));
-            // END order_repairs
-        }
+            'sms_caller_id' => $this->input->post('sms_caller_id'),
+            'enable_overselling' => $this->input->post('enable_overselling'),
+            'smtp_crypto' => $this->input->post('smtp_crypto'),
+            'hide_repair_fields' => json_encode( $this->input->post('hide_repair_fields') ),
 
-        $data = array();
-        if ($this->Admin || $this->GP['settings-general_settings_edit']) {
-            // START GENERAL
-            $data['title']              = $this->input->post('title');
-            $data['language']           = $this->input->post('language');
-            $data['currency']           = $this->input->post('currency');
-            $data['reference_format']   = $this->input->post('reference_format');
-            $data['random_admin']       = $this->input->post('random_admin');
-            $data['disable_labor']      = $this->input->post('disable_labor');
-            $data['google_api_key']     = $this->input->post('google_api_key');
-            $data['dateformat']     = $this->input->post('dateformat');
+            'message_bird_access_key' => $this->input->post('message_bird_access_key'),
+            'protocol' => $this->input->post('protocol'),
+            'mailpath' => $this->input->post('mailpath'),
+            'mailchimp_api_key' => $this->input->post('mailchimp_api_key'),
             
-
-            $data['sales_prefix']    = $this->input->post('sales_prefix');
-            $data['payment_prefix']    = $this->input->post('payment_prefix');
-            $data['return_prefix']    = $this->input->post('return_prefix');
-            $data['purchase_prefix']    = $this->input->post('purchase_prefix');
-            $data['repair_prefix']    = $this->input->post('repair_prefix');
-
-
-
-            $data['thousands_sep']     = $this->input->post('thousands_sep');
-            $data['decimals_sep']     = $this->input->post('decimals_sep');
-            
-            $data['use_defects_input_dropdown']     = $this->input->post('use_defects_input_dropdown');
-            $data['use_models_input_dropdown']     = $this->input->post('use_models_input_dropdown');
-            $data['use_rtl']     = $this->input->post('use_rtl');
-            $data['display_symbol']     = $this->input->post('display_symbol');
-
-            $data['invoice_template'] = $this->input->post('invoice_template');
-            $data['report_template'] = $this->input->post('report_template');
-
-            $data['require_clockin'] = $this->input->post('require_clockin');
-            $data['auto_clockout'] = $this->input->post('auto_clockout');
-            
-            $data['universal_clients']  = $this->input->post('universal_clients');
-            if ($this->input->post('universal_clients')) {
-                $this->db->update('clients', array('universal'=>1));
-            }
-            $data['universal_accessories']  = $this->input->post('universal_accessories');
-            if ($this->input->post('universal_accessories')) {
-                $this->db->update('accessory', array('universal'=>1));
-            }
-            $data['universal_plans']  = $this->input->post('universal_plans');
-            if ($this->input->post('universal_plans')) {
-                $this->db->update('plans', array('universal'=>1));
-            }
-            $data['universal_others']  = $this->input->post('universal_others');
-            if ($this->input->post('universal_others')) {
-                $this->db->update('other', array('universal'=>1));
-            }
-            $data['universal_manufacturers']  = $this->input->post('universal_manufacturers');
-            if ($this->input->post('universal_manufacturers')) {
-                $this->db->update('manufacturers', array('universal'=>1));
-            }
-            $data['universal_carriers']  = $this->input->post('universal_carriers');
-            if ($this->input->post('universal_carriers')) {
-                $this->db->update('carriers', array('universal'=>1));
-            }
-            $data['universal_suppliers']  = $this->input->post('universal_suppliers');
-            if ($this->input->post('universal_suppliers')) {
-                $this->db->update('suppliers', array('universal'=>1));
-            }
-            // END GENERAL
-        }
-
-
-        // START order_repairs
-        if ($this->Admin || $this->GP['settings-order_repairs_edit']) {
-            $data['category']               = $categories;
-            $data['custom_fields']          = $custom_fields;
-            $data['repair_custom_checkbox'] = $repair_custom_checkbox;
-            $data['repair_custom_toggles'] = $repair_custom_toggles;
-        }
-        // END order_repairs
-
-        // START settings-quote
-        if ($this->Admin || $this->GP['settings-quote_edit']) {
-
-            $data['invoice_name'] = $this->input->post('invoice_name');
-            $data['invoice_mail'] = $this->input->post('invoice_mail');
-            $data['address'] = $this->input->post('invoice_address');
-            $data['phone'] = $this->input->post('invoice_phone');
-            $data['vat'] = $this->input->post('invoice_vat');
-            $data['disclaimer'] = $this->input->post('disclaimer');
-            $data['city'] = $this->input->post('city');
-            $data['state'] = $this->input->post('state');
-            $data['zipcode'] = $this->input->post('zip');
-        }
-        // END settings-quote
-
-        // START SMS
-        if ($this->Admin || $this->GP['settings-sms_edit']) {
-            $data['usesms'] = $this->input->post('usesms');
-            $data['nexmo_api_key'] = $this->input->post('n_api_key');
-            $data['nexmo_api_secret'] = $this->input->post('n_api_secret');
-            $data['twilio_mode'] = $this->input->post('t_mode');
-            $data['twilio_account_sid'] = $this->input->post('t_account_sid');
-            $data['twilio_auth_token'] = $this->input->post('t_token');
-            $data['twilio_number'] = $this->input->post('t_number');
-            $data['smtp_host'] = $this->input->post('smtp_host');
-            $data['smtp_user'] = $this->input->post('smtp_user');
-            $data['smtp_pass'] = $this->input->post('smtp_pass');
-            $data['smtp_port'] = $this->input->post('smtp_port');
-            $data['smtp_crypto'] = $this->input->post('smtp_crypto');
-                
-            $data['smsgateway_token'] = $this->input->post('smsgateway_token');
-            $data['smsgateway_device_id'] = $this->input->post('smsgateway_device_id'); 
-            $data['default_http_api'] = $this->input->post('default_http_api'); 
-            
-            $this->load->helper('file');
-            $customer_purchase = $this->input->post('customer_purchase');
-            write_file(FCPATH.'themes/'.$this->theme.'/email_templates/customer_purchase.html', $customer_purchase);
-        }
-
-
-        // END SMS
-
-        if ($this->Admin || $this->GP['settings-pos_configuration_edit']) {
-            $data['drawer_amount'] = $this->input->post('drawer_amount');
-            $data['max_drawer_amount'] = $this->input->post('max_drawer_amount');
-            $data['auto_close_drawer'] = $this->input->post('auto_close_drawer');
-            $data['sell_repair_parts'] = $this->input->post('sell_repair_parts');
-            $data['accept_cash'] = $this->input->post('accept_cash');
-            $data['accept_cheque'] = $this->input->post('accept_cheque');
-            $data['accept_cc'] = $this->input->post('accept_cc');
-            $data['accept_paypal'] = $this->input->post('accept_paypal');
-            $data['disclaimer_sale'] = $this->input->post('disclaimer_sale');
-            
-            $data['accept_authorize'] = $this->input->post('accept_authorize');
-            $data['authorize_login_id'] = $this->input->post('authorize_login_id');
-            $data['authorize_transaction_id'] = $this->input->post('authorize_transaction_id');
-            $data['authorize_client_key'] = $this->input->post('authorize_client_key');
-        }
-
-            $data['after_sale_page'] = $this->input->post('after_sale_page');
-            $data['pos_bank_id'] = $this->input->post('pos_bank_id');
-            $data['purchase_bank_id'] = $this->input->post('purchase_bank_id');
-
-        $data['due_bill_notify_before'] = $this->input->post('due_bill_notify_before');
-        $data['rows_per_page'] = $this->input->post('rows_per_page');
-        $data['due_bill_notify_when'] = $this->input->post('due_bill_notify_when');
-        $data['due_bill_message'] = trim($this->input->post('due_bill_message'));
+        );
         
-        $data['notify_sales'] = $this->input->post('notify_sales') ? implode(',', $this->input->post('notify_sales')) : '';
-        $data['notify_refund'] = $this->input->post('notify_refund') ? implode(',', $this->input->post('notify_refund')) : '';
-        $data['notify_repair'] = $this->input->post('notify_repair') ? implode(',', $this->input->post('notify_repair')) : '';
-        $data['notify_porder'] = $this->input->post('notify_porder') ? implode(',', $this->input->post('notify_porder')) : '';
-        $data['notify_preceive'] = $this->input->post('notify_preceive') ? implode(',', $this->input->post('notify_preceive')) : '';
-        $data['notify_cpurchase'] = $this->input->post('notify_cpurchase') ? implode(',', $this->input->post('notify_cpurchase')) : '';
-        $sale_start_number= (int)$this->input->post('sale_start_number');
-        $auto_increment_value = (int)$this->db->query("SHOW TABLE STATUS LIKE 'sales'")->row()->Auto_increment;
-        if ($sale_start_number > $auto_increment_value) {
-            $q = $this->db->query("ALTER TABLE sales AUTO_INCREMENT = ".$sale_start_number);
-        }
-		$data = $this->Settings_model->update_settings($data);
-
-
-        if ($this->input->post('use_defects_input_dropdown') == 1) {
-            $this->repairer->updateDefectsTable();
-        }
-        // if ($this->input->post('use_models_input_dropdown') == 1) {
-        //     $this->repairer->updateModelsTable();
-        // }
+        $data = $this->Settings_model->update_settings($data_);
         echo json_encode($data);
     }
 
-    // SHOW THE SETTINGS PAGE //
+    // SHOW THE settings PAGE //
     public function tax_rates($action = NULL)
     {
-        if (!$action or $action == 'index') {
-            $this->repairer->checkPermissions();
+        $this->mPageTitle = lang('taxrate_title');
+        $id = $this->input->post('id');
+        if (!$action) {
+            $this->repairer->checkPermissions('index', NULL, 'tax_rates');
             $this->render('tax_rates');
         }
         if ($action == 'getAll') {
+            $this->repairer->checkPermissions('index', NULL, 'tax_rates');
             $this->load->library('datatables');
-
-            if ($this->uri->segment(5)) {
-                $a = $this->uri->segment(5);
-                if ($a == 'disabled') {
-                    $this->datatables->where('disable', 1);
-                }elseif($a == 'enabled'){
-                    $this->datatables->where('disable', 0);
-                }
-            }
             $this->datatables
-                ->select('id, name, code, rate, type, disable')
+                ->select('id, name, code, rate, type')
                 ->from('tax_rates');
-            $this->datatables->add_column('actions', "$1___$2", 'id, disable');
-            $this->datatables->unset_column('id');
-            $this->datatables->unset_column('disable');
-            echo $this->datatables->generate();
-        }elseif ($action == 'toggle') {
-            $toggle = $this->input->post('toggle');
-            if ($toggle == 'enable') {
-                $data = array(
-                    'disable' => 0,
-                );
-                $a = lang('enabled');
-            }else{
-                $data = array(
-                    'disable' => 1,
-                );
-                $a = lang('disabled');
+            $actions = "";
+            if ($this->Admin || $this->GP['tax_rates-edit']) {
+                $actions .= "<a  data-dismiss='modal' id='modify_tax' href='#taxmodal' data-toggle='modal' data-num='$1'><button class='btn btn-primary btn-xs'><i class='fas fa-edit'></i></button></a>";
             }
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('tax_rates', $data);
-            echo json_encode(array('ret' => 'true', 'toggle' => $a));
+            if ($this->Admin || $this->GP['tax_rates-delete']) {
+                $actions .= "<a id='delete' data-num='$1'><button class='btn btn-danger btn-xs'><i class='fas fa-trash'></i></button></a>";
+            }
+
+            $this->datatables->add_column('actions', $actions, 'id');
+            $this->datatables->unset_column('id');
+            echo $this->datatables->generate();
+        }elseif ($action == 'delete') {
+            $this->repairer->checkPermissions('delete', NULL, 'tax_rates');
+
+            if ($id == 1) {
+                return false;
+            }
+            $this->db->where('id', $id);
+            $this->db->delete('tax_rates');
+            $this->settings_model->addLog('delete', 'taxrate', $id, json_encode(array(
+                
+            )));
+            echo "true";
         }elseif ($action == 'byID') {
             $data = array();
-            $query = $this->db->get_where('tax_rates', array('id' => $this->input->post('id')));
+            $query = $this->db->get_where('tax_rates', array('id' => $id));
             if ($query->num_rows() > 0) {
                 $data = $query->row_array();
             }
             echo  json_encode($data);
         }elseif ($action == 'add') {
-            $this->repairer->checkPermissions('add', FALSE,'tax_rates');
+            $this->repairer->checkPermissions('add', NULL, 'tax_rates');
 
             $data = array(
-                'name' => $this->input->post('name'),
-                'code' => $this->input->post('code'),
-                'rate' => $this->input->post('rate'),
-                'type' => $this->input->post('type'),
+                'name' => $this->input->post('name'), 
+                'code' => $this->input->post('code'), 
+                'rate' => $this->input->post('rate'), 
+                'type' => $this->input->post('type'), 
             );
             $this->db->insert('tax_rates', $data);
-            echo $this->db->insert_id();
+            $this->settings_model->addLog('add', 'taxrate', $id, json_encode(array(
+                'data'   => $data,
+            )));
         }elseif ($action == 'edit') {
-            $this->repairer->checkPermissions('edit', FALSE,'tax_rates');
+            $this->repairer->checkPermissions('edit', NULL, 'tax_rates');
+
+            $data = array(
+                'name' => $this->input->post('name'), 
+                'code' => $this->input->post('code'), 
+                'rate' => $this->input->post('rate'), 
+                'type' => $this->input->post('type'), 
+            );
+            $this->db->where('id', $id);
+            $this->db->update('tax_rates', $data);
+            $this->settings_model->addLog('update', 'taxrate', $id, json_encode(array(
+                'data'   => $data,
+            )));
+        }
+    }
+
+
+    function categories()
+    {
+        $this->mPageTitle = lang('categories');
+
+        $this->render('settings/categories');
+    }
+
+    function getCategories()
+    {
+
+        $this->load->library('datatables');
+        $actions = "";
+        if ($this->Admin || $this->GP['categories-edit']) {
+            $actions .= "<a href='" . base_url('panel/settings/edit_category/$1') . "' data-toggle='modal' data-target='#myModal' class='tip' title='" . lang("edit_category") . "'><i class=\"fa fa-edit\"></i></a>";
+        }
+        if ($this->Admin || $this->GP['categories-delete']) {
+            $actions .= "<a href='#' class='tip po' title='<b>" . lang("delete_category") . "</b>' data-content=\"<p>" . lang('r_u_sure') . "</p><a class='btn btn-danger po-delete' href='" . base_url('panel/settings/delete_category/$1') . "'>" . lang('i_m_sure') . "</a> <button class='btn po-close'>" . lang('no') . "</button>\"  rel='popover'><i class=\"fas fa-trash\"></i></a>";
+        }
+        $this->datatables
+            ->select("{$this->db->dbprefix('categories')}.id as id, {$this->db->dbprefix('categories')}.image, {$this->db->dbprefix('categories')}.code, {$this->db->dbprefix('categories')}.name, c.name as parent", FALSE)
+            ->from("categories")
+            ->join("categories c", 'c.id=categories.parent_id', 'left')
+            ->group_by('categories.id')
+            ->add_column("Actions", "<div class=\"text-center\">".$actions."</div>", "id");
+        echo $this->datatables->generate();
+    }
+
+    function add_category()
+    {
+        $this->load->helper('security');
+        $this->form_validation->set_rules('code', lang("category_code"), 'trim|is_unique[categories.code]|required');
+        $this->form_validation->set_rules('name', lang("name"), 'required|min_length[3]');
+        $this->form_validation->set_rules('userfile', lang("category_image"), 'xss_clean');
+        if ($this->form_validation->run() == true) {
             $data = array(
                 'name' => $this->input->post('name'),
                 'code' => $this->input->post('code'),
-                'rate' => $this->input->post('rate'),
-                'type' => $this->input->post('type'),
+                'parent_id' => $this->input->post('parent'),
             );
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('tax_rates', $data);
-        }
-    }
 
-    // SHOW THE SETTINGS PAGE //
-    public function carriers($action = NULL)
-    {
-        if (!$action or $action == 'index') {
-            $this->repairer->checkPermissions();
-            $this->render('carriers');
-        }
-        if ($action == 'getAll') {
-            $this->load->library('datatables');
-
-            if ($this->uri->segment(5)) {
-                $a = $this->uri->segment(5);
-                if ($a == 'disabled') {
-                    $this->datatables->where('disable', 1);
-                }elseif($a == 'enabled'){
-                    $this->datatables->where('disable', 0);
-                }
-            }
-            $this->datatables->where('(universal=1 OR store_id='.$this->activeStore.')' , NULL, FALSE);
-
-            $this->datatables
-                ->select('id, name, disable')
-                ->from('carriers');
-            $this->datatables->add_column('actions', "$1___$2", 'id, disable');
-            $this->datatables->unset_column('id');
-            $this->datatables->unset_column('disable');
-            echo $this->datatables->generate();
-        }elseif ($action == 'toggle') {
-            $toggle = $this->input->post('toggle');
-            if ($toggle == 'enable') {
-                $data = array(
-                    'disable' => 0,
-                );
-                $a = lang('enabled');
-            }else{
-                $data = array(
-                    'disable' => 1,
-                );
-                $a = lang('disabled');
-            }
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('carriers', $data);
-            echo json_encode(array('ret' => 'true', 'toggle' => $a));
-        }elseif ($action == 'byID') {
-            $data = array();
-            $query = $this->db->get_where('carriers', array('id' => $this->input->post('id')));
-            if ($query->num_rows() > 0) {
-                $data = $query->row_array();
-            }
-            echo  json_encode($data);
-        }elseif ($action == 'add') {
-            $this->repairer->checkPermissions('add', FALSE, 'carriers');
-            $data = array(
-                'name' => $this->input->post('name'),
-                'universal' => $this->input->post('universal') ? $this->input->post('universal') : $this->mSettings->universal_carriers,
-                'store_id' => $this->activeStore,
-            );
-            $this->db->insert('carriers', $data);
-            echo $this->db->insert_id();
-        }elseif ($action == 'edit') {
-            $this->repairer->checkPermissions('edit', FALSE, 'carriers');
-
-            $data = array(
-                'name' => $this->input->post('name'),
-                'universal' => $this->input->post('universal') ? $this->input->post('universal') : $this->mSettings->universal_carriers,
-            );
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('carriers', $data);
-        }
-    }
-    // SHOW THE SETTINGS PAGE //
-    public function manufacturers($action = NULL)
-    {
-        if (!$action or $action == 'index') {
-            $this->repairer->checkPermissions();
-
-            $this->render('manufacturers');
-        }
-        if ($action == 'getAll') {
-            $this->load->library('datatables');
-            if ($this->uri->segment(5)) {
-                $a = $this->uri->segment(5);
-                if ($a == 'disabled') {
-                    $this->datatables->where('disable', 1);
-                }elseif($a == 'enabled'){
-                    $this->datatables->where('disable', 0);
-                }
-            }
-            $this->datatables->where('(universal=1 OR store_id='.$this->activeStore.')' , NULL, FALSE);
-
-            $this->datatables
-                ->select('id, name, disable')
-                ->where('parent_id', null)
-                ->from('manufacturers');
-            $this->datatables->add_column('actions', "$1___$2", 'id, disable');
-            $this->datatables->unset_column('id');
-            $this->datatables->unset_column('disable');
-            echo $this->datatables->generate();
-        }elseif ($action == 'toggle') {
-            $toggle = $this->input->post('toggle');
-            if ($toggle == 'enable') {
-                $data = array(
-                    'disable' => 0,
-                );
-                $a = lang('enabled');
-            }else{
-                $data = array(
-                    'disable' => 1,
-                );
-                $a = lang('disabled');
-            }
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('manufacturers', $data);
-            echo json_encode(array('ret' => 'true', 'toggle' => $a));
-        }elseif ($action == 'byID') {
-            $data = array();
-            $query = $this->db->get_where('manufacturers', array('id' => $this->input->post('id')));
-            if ($query->num_rows() > 0) {
-                $data = $query->row_array();
-            }
-            echo  json_encode($data);
-        }elseif ($action == 'add') {
-            $this->repairer->checkPermissions('add', FALSE, 'manufacturers');
-
-            $data = array(
-                'name' => $this->input->post('name'),
-                'universal' => $this->input->post('universal') ? $this->input->post('universal') : $this->mSettings->universal_manufacturers,
-                'store_id' => $this->activeStore,
-            );
-            $this->db->insert('manufacturers', $data);
-            echo $this->db->insert_id();
-        }elseif ($action == 'edit') {
-            $this->repairer->checkPermissions('edit', FALSE, 'manufacturers');
-
-            $data = array(
-                'name' => $this->input->post('name'),
-                'universal' => $this->input->post('universal') ? $this->input->post('universal') : $this->mSettings->universal_manufacturers,
-            );
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('manufacturers', $data);
-        }
-    }
-
-
-    // SHOW THE SETTINGS PAGE //
-    public function models($action = NULL)
-    {
-        if (!$action or $action == 'index') {
-            $this->repairer->checkPermissions();
-
-            $this->render('models');
-        } elseif ($action == 'getAjax') {
-            $term = $this->input->get('q');
-            if ($term) {
-                $this->db->where("manufacturers.name LIKE '%" . $term . "%'");
-            }
-
-            $this->db->select('id, name');
-            $this->db->where('disable', 0);
-            $this->db->where('parent_id', $this->input->get('manufacturer'));
-            $q = $this->db->get('manufacturers');
-
-            $data = array();
-            if ($q->num_rows() > 0) {
-                foreach ($q->result() as $model) {
-                    $data[] = array('id' => $model->id, 'text' => "$model->name ");
-                }
-            }
-
-            echo $this->repairer->send_json($data);
-        } elseif ($action == 'getAll') {
-            $this->load->library('datatables');
-            if ($this->uri->segment(5)) {
-                $a = $this->uri->segment(5);
-                if ($a == 'disabled') {
-                    $this->datatables->where('disable', 1);
-                }elseif($a == 'enabled'){
-                    $this->datatables->where('disable', 0);
-                }
-            }
-            $this->datatables->where('(universal=1 OR store_id='.$this->activeStore.')' , NULL, FALSE);
-
-            $this->datatables
-                ->select('id, name, disable')
-                ->where('parent_id !=',  null)
-                ->from('manufacturers');
-            $this->datatables->add_column('actions', "$1___$2", 'id, disable');
-            $this->datatables->unset_column('id');
-            $this->datatables->unset_column('disable');
-            echo $this->datatables->generate();
-        }elseif ($action == 'toggle') {
-            $toggle = $this->input->post('toggle');
-            if ($toggle == 'enable') {
-                $data = array(
-                    'disable' => 0,
-                );
-                $a = lang('enabled');
-            }else{
-                $data = array(
-                    'disable' => 1,
-                );
-                $a = lang('disabled');
-            }
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('manufacturers', $data);
-            echo json_encode(array('ret' => 'true', 'toggle' => $a));
-        }elseif ($action == 'byID') {
-            $data = array();
-            $query = $this->db->get_where('manufacturers', array('id' => $this->input->post('id')));
-            if ($query->num_rows() > 0) {
-                $data = $query->row_array();
-            }
-            echo  json_encode($data);
-        }elseif ($action == 'add') {
-            $this->repairer->checkPermissions('add', FALSE, 'manufacturers');
-
-            $data = array(
-                'name' => $this->input->post('name'),
-                'parent_id' => $this->input->post('parent_id') ?? null,
-                'universal' => $this->input->post('universal') ? $this->input->post('universal') : $this->mSettings->universal_manufacturers,
-                'store_id' => $this->activeStore,
-            );
-            $this->db->insert('manufacturers', $data);
-            echo $this->db->insert_id();
-        }elseif ($action == 'edit') {
-            $this->repairer->checkPermissions('edit', FALSE, 'manufacturers');
-
-            $data = array(
-                'name' => $this->input->post('name'),
-                'parent_id' => $this->input->post('parent_id') ?? null,
-                'universal' => $this->input->post('universal') ? $this->input->post('universal') : $this->mSettings->universal_manufacturers,
-            );
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('manufacturers', $data);
-        }
-    }
-   
-
-    // PRINT A SUPPLIERS PAGE //
-    public function suppliers()
-    {
-
-        $this->render('inventory/suppliers_index');
-    }
-
-    // PRINT A Import Function PAGE //
-    public function import($type = NULL)
-    {
-        $this->repairer->checkPermissions();
-
-        $this->load->helper('security');
-        $this->form_validation->set_rules('customers', lang("upload_file"), 'xss_clean');
-
-        if ($this->form_validation->run() == true) {
-            if (isset($_FILES["customers"])) {
+            if ($_FILES['userfile']['size'] > 0) {
                 $this->load->library('upload');
-
-                $config['upload_path'] = $this->digital_upload_path;
-                $config['allowed_types'] = 'csv|text/csv';
-                $config['max_size'] = 99999;
-                $config['overwrite'] = TRUE;
-
+                $config['upload_path'] = $this->upload_path;
+                $config['allowed_types'] = $this->image_types;
+                $config['max_size'] = $this->allowed_file_size;
+                $config['max_width'] = $this->mSettings->iwidth;
+                $config['max_height'] = $this->mSettings->iheight;
+                $config['overwrite'] = FALSE;
+                $config['encrypt_name'] = TRUE;
+                $config['max_filename'] = 25;
                 $this->upload->initialize($config);
-
-                if (!$this->upload->do_upload($type)) {
+                if (!$this->upload->do_upload()) {
                     $error = $this->upload->display_errors();
                     $this->session->set_flashdata('error', $error);
-                    redirect('panel/settings/import/'.$type);
+                    redirect($_SERVER["HTTP_REFERER"]);
+                }
+                $photo = $this->upload->file_name;
+                $data['image'] = $photo;
+                $this->load->library('image_lib');
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = $this->upload_path . $photo;
+                $config['new_image'] = $this->thumbs_path . $photo;
+                $config['maintain_ratio'] = TRUE;
+                $config['width'] = $this->mSettings->twidth;
+                $config['height'] = $this->mSettings->theight;
+                $this->image_lib->clear();
+                $this->image_lib->initialize($config);
+                if (!$this->image_lib->resize()) {
+                    echo $this->image_lib->display_errors();
+                }
+                if ($this->mSettings->watermark) {
+                    $this->image_lib->clear();
+                    $wm['source_image'] = $this->upload_path . $photo;
+                    $wm['wm_text'] = 'Copyright ' . date('Y') . ' - ' . $this->mSettings->site_name;
+                    $wm['wm_type'] = 'text';
+                    $wm['wm_font_path'] = 'system/fonts/texb.ttf';
+                    $wm['quality'] = '100';
+                    $wm['wm_font_size'] = '16';
+                    $wm['wm_font_color'] = '999999';
+                    $wm['wm_shadow_color'] = 'CCCCCC';
+                    $wm['wm_vrt_alignment'] = 'top';
+                    $wm['wm_hor_alignment'] = 'left';
+                    $wm['wm_padding'] = '10';
+                    $this->image_lib->initialize($wm);
+                    $this->image_lib->watermark();
+                }
+                $this->image_lib->clear();
+                $config = NULL;
+            }
+
+        } elseif ($this->input->post('add_category')) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect("panel/settings/categories");
+        }
+
+        if ($this->form_validation->run() == true && $cat_id = $this->settings_model->addCategory($data)) {
+
+            $this->settings_model->addLog('add', 'category', $cat_id, json_encode(array(
+                'data'   => $data,
+            )));
+
+            $this->session->set_flashdata('message', lang("category_added"));
+            redirect("panel/settings/categories");
+        } else {
+
+            $this->data['error'] = validation_errors() ? validation_errors() : $this->session->flashdata('error');
+            $this->data['categories'] = $this->settings_model->getParentCategories();
+            $this->load->view($this->theme . 'settings/add_category', $this->data);
+
+        }
+    }
+
+    function edit_category($id = NULL)
+    {
+        $this->load->helper('security');
+        $this->form_validation->set_rules('code', lang("category_code"), 'trim|required');
+        $pr_details = $this->settings_model->getCategoryByID($id);
+        if ($this->input->post('code') != $pr_details->code) {
+            $this->form_validation->set_rules('code', lang("category_code"), 'required|is_unique[categories.code]');
+        }
+
+        $this->form_validation->set_rules('name', lang("category_name"), 'required|min_length[3]');
+        $this->form_validation->set_rules('userfile', lang("category_image"), 'xss_clean');
+
+        if ($this->form_validation->run() == true) {
+
+            $data = array(
+                'name' => $this->input->post('name'),
+                'code' => $this->input->post('code'),
+                'parent_id' => $this->input->post('parent'),
+                );
+
+            if ($_FILES['userfile']['size'] > 0) {
+                $this->load->library('upload');
+                $config['upload_path'] = $this->upload_path;
+                $config['allowed_types'] = $this->image_types;
+                $config['max_size'] = $this->allowed_file_size;
+                $config['max_width'] = $this->mSettings->iwidth;
+                $config['max_height'] = $this->mSettings->iheight;
+                $config['overwrite'] = FALSE;
+                $config['encrypt_name'] = TRUE;
+                $config['max_filename'] = 25;
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload()) {
+                    $error = $this->upload->display_errors();
+                    $this->session->set_flashdata('error', $error);
+                    redirect($_SERVER["HTTP_REFERER"]);
+                }
+                $photo = $this->upload->file_name;
+                $data['image'] = $photo;
+                $this->load->library('image_lib');
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = $this->upload_path . $photo;
+                $config['new_image'] = $this->thumbs_path . $photo;
+                $config['maintain_ratio'] = TRUE;
+                $config['width'] = $this->mSettings->twidth;
+                $config['height'] = $this->mSettings->theight;
+                $this->image_lib->clear();
+                $this->image_lib->initialize($config);
+                if (!$this->image_lib->resize()) {
+                    echo $this->image_lib->display_errors();
+                }
+                if ($this->mSettings->watermark) {
+                    $this->image_lib->clear();
+                    $wm['source_image'] = $this->upload_path . $photo;
+                    $wm['wm_text'] = 'Copyright ' . date('Y') . ' - ' . $this->mSettings->site_name;
+                    $wm['wm_type'] = 'text';
+                    $wm['wm_font_path'] = 'system/fonts/texb.ttf';
+                    $wm['quality'] = '100';
+                    $wm['wm_font_size'] = '16';
+                    $wm['wm_font_color'] = '999999';
+                    $wm['wm_shadow_color'] = 'CCCCCC';
+                    $wm['wm_vrt_alignment'] = 'top';
+                    $wm['wm_hor_alignment'] = 'left';
+                    $wm['wm_padding'] = '10';
+                    $this->image_lib->initialize($wm);
+                    $this->image_lib->watermark();
+                }
+                $this->image_lib->clear();
+                $config = NULL;
+            }
+
+        } elseif ($this->input->post('edit_category')) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect("panel/settings/categories");
+        }
+
+        if ($this->form_validation->run() == true && $this->settings_model->updateCategory($id, $data)) {
+
+            $this->settings_model->addLog('update', 'category', $id, json_encode(array(
+                'data'   => $data,
+            )));
+            $this->session->set_flashdata('message', lang("category_updated"));
+            redirect("panel/settings/categories");
+        } else {
+
+            $this->data['error'] = validation_errors() ? validation_errors() : $this->session->flashdata('error');
+            $this->data['category'] = $this->settings_model->getCategoryByID($id);
+            $this->data['categories'] = $this->settings_model->getParentCategories();
+            $this->load->view($this->theme . 'settings/edit_category', $this->data);
+
+        }
+    }
+
+    function delete_category($id = NULL)
+    {
+
+        if ($this->settings_model->getSubCategories($id)) {
+            $this->repairer->send_json(array('error' => 1, 'msg' => lang("category_has_subcategory")));
+        }
+
+        if ($this->settings_model->deleteCategory($id)) {
+            $this->settings_model->addLog('delete', 'category', $id, json_encode(array(
+            )));
+            $this->repairer->send_json(array('error' => 0, 'msg' => lang("category_deleted")));
+        }
+    }
+
+    function category_actions()
+    {
+
+        $this->form_validation->set_rules('form_action', lang("form_action"), 'required');
+
+        if ($this->form_validation->run() == true) {
+
+            if (!empty($_POST['val'])) {
+                if ($this->input->post('form_action') == 'delete') {
+                    foreach ($_POST['val'] as $id) {
+                        $this->settings_model->deleteCategory($id);
+                    }
+                    $this->session->set_flashdata('message', lang("categories_deleted"));
+                    redirect($_SERVER["HTTP_REFERER"]);
                 }
 
+                if ($this->input->post('form_action') == 'export_excel' || $this->input->post('form_action') == 'export_pdf') {
+                    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+                    $sheet = $spreadsheet->getActiveSheet();
+
+                    $sheet->setTitle(lang('categories'));
+                    $sheet->SetCellValue('A1', lang('code'));
+                    $sheet->SetCellValue('B1', lang('name'));
+                    $sheet->SetCellValue('C1', lang('image'));
+                    $sheet->SetCellValue('D1', lang('parent_category'));
+                    $row = 2;
+                    foreach ($_POST['val'] as $id) {
+                        $sc = $this->settings_model->getCategoryByID($id);
+                        $parent_actegory = '';
+                        if ($sc->parent_id) {
+                            $pc = $this->settings_model->getCategoryByID($sc->parent_id);
+                            $parent_actegory = $pc->code;
+                        }
+                        $sheet->SetCellValue('A' . $row, $sc->code);
+                        $sheet->SetCellValue('B' . $row, $sc->name);
+                        $sheet->SetCellValue('C' . $row, $sc->image);
+                        $sheet->SetCellValue('D' . $row, $parent_actegory);
+                        $row++;
+                    }
+
+                    $sheet->getColumnDimension('B')->setWidth(20);
+                    $sheet->getColumnDimension('D')->setWidth(20);
+                    $sheet->getParent()->getDefaultStyle()->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $filename = 'categories_' . date('Y_m_d_H_i_s');
+
+                    if ($this->input->post('form_action') == 'export_excel') {
+                        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                        header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+                        header('Cache-Control: max-age=0');
+
+                        $writer = PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+                        $writer->save('php://output');
+                        exit();
+                    }
+
+                    if ($this->input->post('form_action') == 'export_pdf') {
+                        $styleArray = [
+                            'borders' => [
+                                'allBorders' => [
+                                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                                    'color' => ['argb' => 'FFFF0000'],
+                                ],
+                            ],
+                        ];
+                        $sheet->getStyle('A0:D'.($row-1))->applyFromArray($styleArray);
+                        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+                        header('Content-Type: application/pdf');
+                        header('Content-Disposition: attachment;filename="' . $filename . '.pdf"');
+                        header('Cache-Control: max-age=0');
+                        $writer = PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Mpdf');
+                        $writer->save('php://output');
+                    }
+                }
+            } else {
+                $this->session->set_flashdata('error', lang("no_record_selected"));
+                redirect($_SERVER["HTTP_REFERER"]);
+            }
+        } else {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect($_SERVER["HTTP_REFERER"]);
+        }
+    }
+
+
+    function import_categories()
+    {
+
+        $this->load->helper('security');
+        $this->form_validation->set_rules('userfile', lang("upload_file"), 'xss_clean');
+
+        if ($this->form_validation->run() == true) {
+
+            if (isset($_FILES["userfile"])) {
+
+                $this->load->library('upload');
+                $config['upload_path'] = 'files/';
+                $config['allowed_types'] = 'csv';
+                $config['max_size'] = $this->allowed_file_size;
+                $config['overwrite'] = TRUE;
+                $this->upload->initialize($config);
+
+                if (!$this->upload->do_upload()) {
+                    $error = $this->upload->display_errors();
+                    $this->session->set_flashdata('error', $error);
+                    redirect("settings/categories");
+                }
 
                 $csv = $this->upload->file_name;
 
                 $arrResult = array();
-                $handle = fopen($this->digital_upload_path . $csv, "r");
+                $handle = fopen('files/' . $csv, "r");
+                if ($handle) {
+                    while (($row = fgetcsv($handle, 5000, ",")) !== FALSE) {
+                        if (!array_key_exists(3, $row)) {
+                            $row[] = NULL;
+                        }
+                        $arrResult[] = $row;
+                    }
+                    fclose($handle);
+                }
+
+                $titles = array_shift($arrResult);
+                $keys = array('code', 'name', 'image', 'pcode');
+                $final = array();
+                foreach ($arrResult as $key => $value) {
+                    $final[] = array_combine($keys, $value);
+                }
+
+                foreach ($final as $csv_ct) {
+                    if ( ! $this->settings_model->getCategoryByCode(trim($csv_ct['code']))) {
+                        $pcat = NULL;
+                        $pcode = trim($csv_ct['pcode']);
+                        if (!empty($pcode)) {
+                            if ($pcategory = $this->settings_model->getCategoryByCode(trim($csv_ct['pcode']))) {
+                                $data[] = array(
+                                    'code' => trim($csv_ct['code']),
+                                    'name' => trim($csv_ct['name']),
+                                    'image' => trim($csv_ct['image']),
+                                    'parent_id' => $pcategory->id,
+                                );
+                            }
+                        } else {
+                            $data[] = array(
+                                'code' => trim($csv_ct['code']),
+                                'name' => trim($csv_ct['name']),
+                                'image' => trim($csv_ct['image']),
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($this->form_validation->run() == true && $this->settings_model->addCategories($data)) {
+            $this->session->set_flashdata('message', lang("categories_added"));
+            redirect('panel/settings/categories');
+        } else {
+
+            $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
+            $this->data['userfile'] = array('name' => 'userfile',
+                'id' => 'userfile',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('userfile')
+            );
+            $this->load->view($this->theme . 'settings/import_categories', $this->data);
+
+        }
+    }
+
+    function import_subcategories()
+    {
+
+        $this->load->helper('security');
+        $this->form_validation->set_rules('userfile', lang("upload_file"), 'xss_clean');
+
+        if ($this->form_validation->run() == true) {
+
+            if (isset($_FILES["userfile"])) {
+
+                $this->load->library('upload');
+                $config['upload_path'] = 'files/';
+                $config['allowed_types'] = 'csv';
+                $config['max_size'] = $this->allowed_file_size;
+                $config['overwrite'] = TRUE;
+                $this->upload->initialize($config);
+
+                if (!$this->upload->do_upload()) {
+                    $error = $this->upload->display_errors();
+                    $this->session->set_flashdata('error', $error);
+                    redirect("panel/settings/categories");
+                }
+
+                $csv = $this->upload->file_name;
+
+                $arrResult = array();
+                $handle = fopen('files/' . $csv, "r");
                 if ($handle) {
                     while (($row = fgetcsv($handle, 5000, ",")) !== FALSE) {
                         $arrResult[] = $row;
@@ -626,794 +715,52 @@ class Settings extends Auth_Controller
                     fclose($handle);
                 }
                 $titles = array_shift($arrResult);
-                $keys = array('first_name', 'last_name', 'company', 'telephone', 'address', 'city', 'state', 'postal_code', 'email', 'vat', 'cf', 'comment', 'tax_exempt', 'universal');
+                $keys = array('code', 'name', 'category_code', 'image');
                 $final = array();
-                if (count($arrResult) > 0 && count($keys) == count($arrResult[0])) {
-                        foreach ($arrResult as $key => $value) {
-                            $final[] = array_combine($keys, $value);
-                        }
-                } else {
-                    $this->session->set_flashdata('error', lang('CSV Format Error'));
-                    redirect('panel/settings/import/'.$type);
+                foreach ($arrResult as $key => $value) {
+                    $final[] = array_combine($keys, $value);
                 }
+
                 $rw = 2;
-                foreach ($final as $csv_pr) {
-                    $c_first_name[] = trim($csv_pr['first_name']);
-                    $c_last_name[] = trim($csv_pr['last_name']);
-                    $c_company[] = trim($csv_pr['company']);
-                    $c_telephone[] = trim(preg_replace('/\D+/', '', $csv_pr['telephone']));
-                    $c_address[] = trim($csv_pr['address']);
-                    $c_city[] = trim($csv_pr['city']);
-                    $c_state[] = trim($csv_pr['state']);
-                    $c_postal_code[] = trim($csv_pr['postal_code']);
-                    $c_email[] = trim($csv_pr['email']);
-                    $c_vat[] = trim($csv_pr['vat']);
-                    $c_cf[] = trim($csv_pr['cf']);
-                    $c_date[] = date('Y-m-d');
-                    $c_comment[] = trim($csv_pr['comment']);
-                    $c_tax_exempt[] = trim($csv_pr['tax_exempt']);
-                    $c_universal[] = trim($csv_pr['universal']);
-                    $c_store_id[] = trim($this->activeStore);
+                foreach ($final as $csv_ct) {
+                    if ( ! $this->settings_model->getSubcategoryByCode(trim($csv_ct['code']))) {
+                        if ($parent_actegory = $this->settings_model->getCategoryByCode(trim($csv_ct['category_code']))) {
+                            $data[] = array(
+                                'code' => trim($csv_ct['code']),
+                                'name' => trim($csv_ct['name']),
+                                'image' => trim($csv_ct['image']),
+                                'category_id' => $parent_actegory->id,
+                                );
+                        } else {
+                            $this->session->set_flashdata('error', lang("check_category_code") . " (" . $csv_ct['category_code'] . "). " . lang("category_code_x_exist") . " " . lang("line_no") . " " . $rw);
+                            redirect("settings/categories");
+                        }
+                    }
                     $rw++;
                 }
-
-                $ikeys = array('first_name', 'last_name', 'company', 'telephone', 'address', 'city', 'state', 'postal_code', 'email', 'vat', 'cf', 'date' , 'comment', 'tax_exempt', 'universal', 'store_id');
-                $items = array();
-                foreach (array_map(null, $c_first_name, $c_last_name, $c_company, $c_telephone, $c_address, $c_city, $c_state, $c_postal_code, $c_email, $c_vat, $c_cf, $c_date, $c_comment, $c_tax_exempt, $c_universal, $c_store_id) as $ikey => $value) {
-                    $items[] = array_combine($ikeys, $value);
-                }
-
             }
         }
 
-        if ($this->form_validation->run() == true) {
-            if ($this->settings_model->import($items, $type)) {
-                $this->session->set_flashdata('message', ucfirst($type)." ".lang('Added Successfully'));
-                redirect('panel/settings/import/'.$type);
-            }else{
-                $this->session->set_flashdata('error', lang('Error Adding')." ".ucfirst($type));
-                redirect('panel/settings/import/'.$type);
-            }
+        if ($this->form_validation->run() == true && $this->settings_model->addSubCategories($data)) {
+            $this->session->set_flashdata('message', lang("subcategories_added"));
+            redirect('panel/settings/categories');
         } else {
+
             $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
-            $this->render('import');
-        }
-    }
-
-    // Multi Store Setup //
-    public function store($action = NULL)
-    {
-        if (!$action or $action == 'index') {
-            $this->repairer->checkPermissions('index', FALSE, 'store');
-            $this->data['tax_rates'] = $this->settings_model->getTaxRates();
-            $this->data['timezones'] = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
-            $this->render('store');
-        }
-        if ($action == 'getAll') {
-            $this->load->library('datatables');
-            if ($this->uri->segment(5)) {
-                $a = $this->uri->segment(5);
-                if ($a == 'locked') {
-                    $this->datatables->where('locked', 1);
-                }elseif($a == 'available'){
-                    $this->datatables->where('locked', 0);
-                }
-            }
-            $this->datatables->where('deleted', 0);
-            $this->datatables
-                ->select('id, name, locked')
-                ->from('store');
-            $this->datatables->add_column('actions', "$1___$2", 'id, locked');
-            $this->datatables->unset_column('id');
-            $this->datatables->unset_column('locked');
-            echo $this->datatables->generate();
-        }elseif ($action == 'toggle') {
-            $this->repairer->checkPermissions('disable', FALSE, 'store');
-
-            $toggle = $this->input->post('toggle');
-            if ($toggle == 'enable') {
-                $data = array(
-                    'locked' => 0,
-                );
-                $a = lang('Unlocked');
-            }else{
-                $data = array(
-                    'locked' => 1,
-                );
-                $a = lang('Locked');
-            }
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('store', $data);
-            echo json_encode(array('ret' => 'true', 'toggle' => $a));
-        }elseif ($action == 'delete') {
-            $this->repairer->checkPermissions('delete', FALSE, 'store');
-
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('store', array('deleted'=>1));
-            echo "true";
-        }elseif ($action == 'byID') {
-            $data = array();
-            $query = $this->db->get_where('store', array('id' => $this->input->post('id')));
-            if ($query->num_rows() > 0) {
-                $data = $query->row_array();
-            }
-            echo  json_encode($data);
-        }elseif ($action == 'add') {
-            $this->repairer->checkPermissions('add', FALSE, 'store');
-            $data = array(
-                'name' => $this->input->post('name'),
-                'address' => $this->input->post('address'),
-                'invoice_mail' => $this->input->post('email'),
-                'phone' => $this->input->post('phone'),
-                'timezone' => $this->input->post('timezone'),
+            $this->data['userfile'] = array('name' => 'userfile',
+                'id' => 'userfile',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('userfile')
             );
-            $data['city'] = $this->input->post('city');
-            $data['state'] = $this->input->post('state');
-            $data['zipcode'] = $this->input->post('zip');
-            $new_phone_tax = implode(',', $this->input->post('new_phone_tax'));
-            $used_phone_tax = implode(',', $this->input->post('used_phone_tax'));
-            $accessories_tax = implode(',', $this->input->post('accessories_tax'));
-            $repair_items_tax = implode(',', $this->input->post('repair_items_tax'));
-            $other_items_tax = implode(',', $this->input->post('other_items_tax'));
-            $plans_tax = implode(',', $this->input->post('plans_tax'));
-            $data['new_phone_tax']      = $new_phone_tax;
-            $data['used_phone_tax']     = $used_phone_tax;
-            $data['accessories_tax']    = $accessories_tax;
-            $data['repair_items_tax']   = $repair_items_tax;
-            $data['other_items_tax']    = $other_items_tax;
-            $data['plans_tax']          = $plans_tax;
+            $this->load->view($this->theme . 'settings/import_subcategories', $this->data);
 
-            $this->db->insert('store', $data);
-            echo $this->db->insert_id();
-        }elseif ($action == 'edit') {
-            $this->repairer->checkPermissions('edit', FALSE, 'store');
-            $data = array(
-                'name' => $this->input->post('name'),
-                'address' => $this->input->post('address'),
-                'invoice_mail' => $this->input->post('email'),
-                'phone' => $this->input->post('phone'),
-                'timezone' => $this->input->post('timezone'),
-            );
-            $data['city'] = $this->input->post('city');
-            $data['state'] = $this->input->post('state');
-            $data['zipcode'] = $this->input->post('zip');
-            // $data['store_wise_reference'] = $this->input->post('store_wise_reference');
-
-            
-            $new_phone_tax = implode(',', $this->input->post('new_phone_tax'));
-            $used_phone_tax = implode(',', $this->input->post('used_phone_tax'));
-            $accessories_tax = implode(',', $this->input->post('accessories_tax'));
-            $repair_items_tax = implode(',', $this->input->post('repair_items_tax'));
-            $other_items_tax = implode(',', $this->input->post('other_items_tax'));
-            $plans_tax = implode(',', $this->input->post('plans_tax'));
-            $data['new_phone_tax']      = $new_phone_tax;
-            $data['used_phone_tax']     = $used_phone_tax;
-            $data['accessories_tax']    = $accessories_tax;
-            $data['repair_items_tax']   = $repair_items_tax;
-            $data['other_items_tax']    = $other_items_tax;
-            $data['plans_tax']          = $plans_tax;
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('store', $data);
-        }
-    }
-  
-
-
-     public function getActivitiesAjax($show_parent = TRUE){
-
-        $term = $this->input->get('q');
-        if ($term) {
-            $this->db->where("activities.name LIKE '%" . $term . "%'");
-        }
-        $this->db->select('id, name');
-        $this->db->where('disable', 0);
-        if ($show_parent) {
-            $this->db->where('sub_id IS NULL', NULL, FALSE);
-        }else{
-            $this->db->where('sub_id IS NOT NULL', NULL, FALSE);
-            if ($this->input->get('activity_id')) {
-                $this->db->where('sub_id', $this->input->get('activity_id'));
-            }
-        }
-        $q = $this->db->get('activities');
-
-        $data = array();
-        if ($q->num_rows() > 0) {
-            foreach ($q->result() as $client) {
-                $data[] = array('id' => $client->id, 'text' => "$client->name ");
-            }
-        }
-
-        echo json_encode($data);
-    }
-    public function activate() {
-        $this->form_validation->set_rules('current_account', lang('current_account'), 'required');
-        if ($this->form_validation->run() == TRUE) {
-            $current_account = $this->input->post('current_account');
-            $this->session->set_userdata('active_store', $current_account);
-            redirect('panel');
-        }else{
-            $this->render('activate');
         }
     }
 
-    function toggle_activities() {
-        $toggle = $this->input->post('toggle');
-        if ($toggle == 'enable') {
-            $data = array('disable' => 0);
-            $a = lang('enabled');
-        } else {
-            $data = array('disable' => 1);
-            $a = lang('disabled');
-        }
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('activities', $data);
-        echo json_encode(array('ret' => 'true', 'toggle' => $a));
-    }
-
-    public function delete_activities() {
-        $id = $this->input->post('id');
-        $this->db->where('id', $id)->update('activities', array('disable' => 1 ));
-        echo "true";
-    }
-
-    public function activities($type = NULL) {
-
-        $this->repairer->checkPermissions();
-
-        if ($type === 'disabled' || $type === 'enabled') {
-            $this->data['toggle_type'] = $type;
-        }else{
-            $this->data['toggle_type'] = NULL;
-        }
-        $this->mPageTitle = "Activities";
-        $this->render("activities/index");
-    }
-
-    // GENERATE THE AJAX TABLE CONTENT //
-    public function getAllActivities($type = NULL)
-    {
-        $this->repairer->checkPermissions('activities');
-
-        $this->load->library('datatables');
-        if ($this->uri->segment(4)) {
-            $a = $this->uri->segment(4);
-            if ($a == 'disabled') {
-                $this->datatables->where('activities.disable', 1);
-            }elseif($a == 'enabled'){
-                $this->datatables->where('activities.disable', 0);
-            }
-        }
-
-        $this->datatables
-            ->select('activities.id as id, activities.name, activities.disable as disable')
-            ->where('sub_id IS NULL', NULL, FALSE)
-            ->from('activities');
-        $this->datatables->add_column('actions', "$1___$2", 'id, disable');
-        $this->datatables->unset_column('id');
-        $this->datatables->unset_column('disable');
-        echo $this->datatables->generate();
-    }
-
-    public function addmore_activities() {
-
-        $this->load->view($this->theme."activities/add_item");
-    }
-    public function add_activities()
-    {
-        $this->repairer->checkPermissions('add', FALSE, 'activities');
-
-        $this->mPageTitle = lang('Add Activity');
-        $this->form_validation->set_rules('activity_name',lang('Activity Name'), 'trim|required');
-        $this->form_validation->set_rules('name[]', lang('Sub Activity Name'), 'trim|required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->render('activities/add');
-        }else{
-            $data = array(
-                'name' => $this->input->post('activity_name'),
-                'sub_id' => NULL,
-                'disable' => 0,
-            );
-            $this->db->insert('activities', $data);
-            $activity_id = $this->db->insert_id();
-            if ($this->input->post('name')) {
-                $i = sizeof($this->input->post('name'));
-                for ($r = 0; $r < $i; $r++) {
-                    $name = $this->input->post('name')[$r];
-                    $subs[] = array(
-                        'sub_id' => $activity_id,
-                        'name' => $name,
-                        'disable' => 0,
-                    );
-                }
-            }
-            $this->db->insert_batch('activities', $subs);
-            $this->session->set_flashdata('message', lang('Activity added successfully'));
-            redirect('panel/settings/activities');
-        }
-    }
-    public function edit_activities($id)
-    {
-        $this->repairer->checkPermissions('edit', FALSE, 'activities');
-
-
-        $this->mPageTitle = lang('Edit Activity');
-        $this->form_validation->set_rules('activity_name', lang('Activity Name'), 'trim|required');
-        $this->form_validation->set_rules('name[]', lang('Sub Activity Name'), 'trim|required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->data['activity'] = $this->db->where('id', $id)->get('activities')->row();
-            $this->data['sub_activities'] = $this->db->where('sub_id', $id)->get('activities')->result();
-            $this->render('activities/edit');
-        }else{
-            $this->db->update('activities', array('name' => $this->input->post('activity_name') ), array('id'=> $id));
-
-            if ($this->input->post('name')) {
-                $i = sizeof($this->input->post('name'));
-                for ($r = 0; $r < $i; $r++) {
-                    $name = $this->input->post('name')[$r];
-                    $disable = $this->input->post('disable')[$r];
-                    $sub_old = (int)$this->input->post('sub_old')[$r];
-                    $subs = array(
-                        'sub_id' => $id,
-                        'name' => $name,
-                        'disable' => $disable,
-                    );
-                    if ($sub_old == 1) {
-                        $sub_id = (int)$_POST['sub_id'][$r];
-                        $this->db->where('id', $sub_id)->update('activities', $subs);
-                    }else{
-                        $this->db->insert('activities', $subs);
-                    }
-                }
-            }
-            $this->session->set_flashdata('message', lang('Activity edited successfully'));
-            redirect('panel/settings/activities');
-        }
-    }
-
-
-     public function getCategoriesAjax($show_parent = TRUE){
-
-        $term = $this->input->get('r');
-        if ($term) {
-            $this->db->where("categories.name LIKE '%" . $term . "%'");
-        }
-        $this->db->select('id, name');
-        $this->db->where('disable', 0);
-        if ($show_parent) {
-            $this->db->where('sub_id IS NULL', NULL, FALSE);
-        }else{
-            $this->db->where('sub_id IS NOT NULL', NULL, FALSE);
-            if ($this->input->get('category_id')) {
-                $this->db->where('sub_id', $this->input->get('category_id'));
-            }
-        }
-        $q = $this->db->get('categories');
-
-        $data = array();
-        if ($q->num_rows() > 0) {
-            foreach ($q->result() as $client) {
-                $data[] = array('id' => $client->id, 'text' => "$client->name ");
-            }
-        }
-
-        echo json_encode($data);
-    }
-
-    function toggle_categories() {
-        $toggle = $this->input->post('toggle');
-        if ($toggle == 'enable') {
-            $data = array('disable' => 0);
-            $a = lang('enabled');
-        } else {
-            $data = array('disable' => 1);
-            $a = lang('disabled');
-        }
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->update('categories', $data);
-        echo json_encode(array('ret' => 'true', 'toggle' => $a));
-    }
-
-    public function delete_categories() {
-        $id = $this->input->post('id');
-        $this->db->where('id', $id)->update('categories', array('disable' => 1 ));
-        echo "true";
-    }
-
-    public function categories($type = NULL) {
-
-        $this->repairer->checkPermissions();
-
-        if ($type === 'disabled' || $type === 'enabled') {
-            $this->data['toggle_type'] = $type;
-        }else{
-            $this->data['toggle_type'] = NULL;
-        }
-        $this->mPageTitle = "Categories";
-        $this->render("categories/index");
-    }
-
-    // GENERATE THE AJAX TABLE CONTENT //
-    public function getAllCategories($type = NULL)
-    {
-        $this->repairer->checkPermissions('categories');
-
-        $this->load->library('datatables');
-        if ($this->uri->segment(4)) {
-            $a = $this->uri->segment(4);
-            if ($a == 'disabled') {
-                $this->datatables->where('categories.disable', 1);
-            }elseif($a == 'enabled'){
-                $this->datatables->where('categories.disable', 0);
-            }
-        }
-
-        $this->datatables
-            ->select('categories.id as id, categories.name, categories.disable as disable')
-            ->where('sub_id IS NULL', NULL, FALSE)
-            ->from('categories');
-        $this->datatables->add_column('actions', "$1___$2", 'id, disable');
-        $this->datatables->unset_column('id');
-        $this->datatables->unset_column('disable');
-        echo $this->datatables->generate();
-    }
-
-    public function addmore_categories() {
-
-        $this->load->view($this->theme."categories/add_item");
-    }
-    public function add_categories()
-    {
-        $this->repairer->checkPermissions('add', FALSE, 'categories');
-
-        $this->mPageTitle = lang('Add Category');
-        $this->form_validation->set_rules('category_name', lang('Name'), 'trim|required');
-        $this->form_validation->set_rules('name[]', 'cubcategory', 'trim|required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->render('categories/add');
-        }else{
-            $data = array(
-                'name' => $this->input->post('category_name'),
-                'sub_id' => NULL,
-                'disable' => 0,
-            );
-            $this->db->insert('categories', $data);
-            $category_id = $this->db->insert_id();
-            if (isset($_POST['name']) && $_POST['name'] !== null) {
-                $i = sizeof($_POST['name']);
-                for ($r = 0; $r < $i; $r++) {
-                    $name = $this->input->post('name')[$r];
-                    $subs[] = array(
-                        'sub_id' => $category_id,
-                        'name' => $name,
-                        'disable' => 0,
-                    );
-                }
-            }
-            $this->db->insert_batch('categories', $subs);
-            $this->session->set_flashdata('message', lang('Category added successfully'));
-            redirect('panel/settings/categories');
-        }
-    }
-    public function edit_categories($id)
-    {
-        $this->repairer->checkPermissions('edit', FALSE, 'categories');
-
-
-        $this->mPageTitle = "Edit Category";
-        $this->form_validation->set_rules('category_name', lang('Name'), 'trim|required');
-        $this->form_validation->set_rules('name[]', lang('subcategory'), 'trim|required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->data['category'] = $this->db->where('id', $id)->get('categories')->row();
-            $this->data['sub_categories'] = $this->db->where('sub_id', $id)->get('categories')->result();
-            $this->render('categories/edit');
-        }else{
-            $this->db->update('categories', array('name' => $this->input->post('category_name') ), array('id'=> $id));
-            if (isset($_POST['name']) && $_POST['name'] !== null) {
-                $i = sizeof($_POST['name']);
-                for ($r = 0; $r < $i; $r++) {
-                    $name = $this->input->post('name')[$r];
-                    $disable = $this->input->post('disable')[$r];
-                    $sub_old = (int)$_POST['sub_old'][$r];
-                    $subs = array(
-                        'sub_id' => $id,
-                        'name' => $name,
-                        'disable' => $disable,
-                    );
-                    if ($sub_old == 1) {
-                        $sub_id = (int)$_POST['sub_id'][$r];
-                        $this->db->where('id', $sub_id)->update('categories', $subs);
-                    }else{
-                        $this->db->insert('categories', $subs);
-                    }
-                }
-            }
-            $this->session->set_flashdata('message', lang('Category edited successfully'));
-            redirect('panel/settings/categories');
-        }
-    }
-
-    public function mandatory_fields() {
-        $this->lang->load('mand', $this->mSettings->language);
-
-        $result = $this->db->get('frm_priv')->result();
-        $data = array();
-        foreach($result as $row){
-            $data[$row->form][$row->name] = $row->required;
-            $this->form_validation->set_rules($row->form.'___'.$row->name, lang($row->name), 'trim');
-        }
-        if ($this->form_validation->run() == FALSE) {
-            $this->data['mand_fields'] = $data;
-            $this->render('mand_fields');
-        }else{
-            foreach ($_POST as $key => $required) {
-                $key = explode('___', $key);
-                $form = $key[0];
-                $field = $key[1];
-                $this->db->where('form', $form)->where('name', $field)->update('frm_priv', array('required' => $required));
-            }
-            $this->session->set_flashdata('message', lang('updated'));
-            redirect('panel/settings/mandatory_fields');
-        }
-    }
-
-
-    // Warranty Plans CRUD //
-    public function warranties($type = NULL)
-    {
-        if ($type === 'disabled' || $type === 'enabled') {
-            $this->data['toggle_type'] = $type;
-        }else{
-            $this->data['toggle_type'] = NULL;
-        }
-        $this->render('warranties');
-    }
-
-
-    public function warranty_add()
-    {
-        $data = array(
-            'warranty_duration' => $this->input->post('duration'),
-            'warranty_duration_type' => $this->input->post('duration_type'),
-            'details' => $this->input->post('details'),
-        );
-        $this->db->insert('warranties', $data);
-        echo "true";
-    }
-    public function warranty_edit()
-    {
-        $id = $this->input->post('id');
-        $data = array(
-            'warranty_duration' => $this->input->post('duration'),
-            'warranty_duration_type' => $this->input->post('duration_type'),
-            'details' => $this->input->post('details'),
-        );
-        $this->db->update('warranties', $data, array('id'=>$id));
-        echo "true";
-    }
-
-    public function getWarrantyByID()
-    {
-        $id = $this->input->post('id');
-        $q = $this->db->get_where('warranties', array('id'=>$id));
-        if ($q->num_rows() > 0) {
-            echo json_encode(array('success' => true, 'data'=>$q->row() ));
-        }else{
-            echo json_encode(array('success' => false));
-        }
-    }
-
-    public function warranty_toggle()
-    {
-        $toggle = $this->input->post('toggle');
-            if ($toggle == 'enable') {
-                $data = array(
-                    'disable' => 0,
-                );
-                $a = lang('enabled');
-            }else{
-                $data = array(
-                    'disable' => 1,
-                );
-                $a = lang('disabled');
-            }
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('warranties', $data);
-            echo json_encode(array('ret' => 'true', 'toggle' => $a));
-    }
-    // SHOW THE SETTINGS PAGE //
-    public function getAllWarranties($type = '')
-    {
-        $this->load->library('datatables');
-        if ($type == 'disabled') {
-            $this->datatables->where('disable', 1);
-        }elseif($type == 'enabled'){
-            $this->datatables->where('disable', 0);
-        }
-        $this->datatables
-            ->select('warranties.id as id, warranty_duration, warranty_duration_type, details, warranties.disable as disable')
-            ->from('warranties');
-        $this->datatables->add_column('actions', "$1___$2", 'id, disable');
-        $this->datatables->unset_column('id');
-        $this->datatables->unset_column('disable');
-        echo $this->datatables->generate();
-    }
-    
-
-
-    // Activations Plans CRUD //
-    public function activation_plans($type = NULL)
-    {
-        if ($type === 'disabled' || $type === 'enabled') {
-            $this->data['toggle_type'] = $type;
-        }else{
-            $this->data['toggle_type'] = NULL;
-        }
-        $this->render('activation_plans');
-    }
-
-    public function getAllAPlans($type = '')
-    {
-        $this->load->library('datatables');
-        if ($type == 'disabled') {
-            $this->datatables->where('disable', 1);
-        }elseif($type == 'enabled'){
-            $this->datatables->where('disable', 0);
-        }
-        $this->datatables
-            ->select('id, name, items, disable')
-            ->from('activation_plans');
-        $this->datatables->add_column('actions', "$1___$2", 'id, disable');
-        $this->datatables->unset_column('id');
-        $this->datatables->unset_column('disable');
-        echo $this->datatables->generate();
-    }
-
-    public function getAPlanByID(){
-        $id = $this->input->post('id');
-        $q = $this->db->get_where('activation_plans', array('id'=>$id));
-        if ($q->num_rows() > 0) {
-            $data = $q->row();
-            $data->items = json_decode($data->items);
-            echo json_encode(array('success' => true, 'data'=>$data));
-        }else{
-            echo json_encode(array('success' => false));
-        }
-    }
-    public function aplan_add(){
-        $data = array(
-            'name' => $this->input->post('name'),
-            'universal' => $this->input->post('universal'),
-            'store_id' => $this->activeStore,
-        );
-
-        $items = array();
-        if (isset($_POST['product_name']) && $_POST['product_name'] !== null) {
-            $i = sizeof($_POST['product_name']);
-            for ($r = 0; $r < $i; $r++) {
-                $name = $_POST['product_name'][$r];
-                $type = $_POST['product_type'][$r];
-                $id = $_POST['product_id'][$r];
-                $code = $_POST['product'][$r];
-                $items[] = array(
-                    'name' => $name,
-                    'code' => $code,
-                    'type' => $type,
-                    'id'   => $id,
-                );
-            }
-        }
-        $data['items'] = json_encode($items);
-        
-        $this->db->insert('activation_plans', $data);
-        echo "true";
-    }
-
-    public function aplan_edit(){
-        $data = array(
-            'name' => $this->input->post('name'),
-            'universal' => $this->input->post('universal'),
-            'store_id' => $this->activeStore,
-        );
-
-        $items = array();
-        if (isset($_POST['product_name']) && $_POST['product_name'] !== null) {
-            $i = sizeof($_POST['product_name']);
-            for ($r = 0; $r < $i; $r++) {
-                $name = $_POST['product_name'][$r];
-                $type = $_POST['product_type'][$r];
-                $id = $_POST['product_id'][$r];
-                $code = $_POST['product'][$r];
-                $items[] = array(
-                    'name' => $name,
-                    'code' => $code,
-                    'type' => $type,
-                    'id'   => $id,
-                );
-            }
-        }
-        $data['items'] = json_encode($items);
-        $this->db->update('activation_plans', $data, array('id'=>$this->input->post('id')));
-        echo "true";
-    }
-
-    public function discount_codes($action = NULL)
-    {
-        if (!$action or $action == 'index') {
-            $this->render('discount_codes');
-        } if ($action == 'getAll') {
-            $this->load->library('datatables');
-            $this->datatables
-                ->select('code, type, CONCAT(IFNULL(used_for, ""),"____" ,IFNULL(used_for_name, "")) as used_for, used_on as date, CONCAT(users.first_name, " ", users.last_name) as name, sale_number, used_on as status, discount_codes.id as actions')
-                ->join('users', 'users.id=discount_codes.used_by', 'left')
-                ->from('discount_codes');
-            echo $this->datatables->generate();
-        }elseif ($action == 'add') {
-            $q = $this->db->get_where('discount_codes', array('code'=>$this->input->post('code')));
-            if ($q->num_rows() > 0) {
-                $this->repairer->send_json((array('success' => false, 'message' => lang('This Code already exists. Please try another code'))));
-            }
-            $type = $this->input->post('type');
-            $used_for = $this->input->post('used_for');
-            $used_for_id = NULL;
-            $used_for_name = NULL;
-            if ($type == 'product') {
-                $product = explode('____', $used_for);
-                $used_for = $product[1];
-                $used_for_id = $product[0];
-                $used_for_name = $product[2];
-            }
-            $data = array(
-                'code'          => $this->input->post('code'),
-                'type'          => $this->input->post('type'),
-                'used_for'      => $used_for,
-                'used_for_id'   => $used_for_id,
-                'used_for_name' => $used_for_name,
-            );
-            $this->db->insert('discount_codes', $data);
-            $this->repairer->send_json((array('success' => true, 'id' => $this->db->insert_id())));
-        }elseif ($action == 'json_sort') {
-            $term = $this->input->post('id', true);
-            $rows = array();
-            $q = NULL;
-            if ($term == 'product') {
-                $this->load->model('pos_model');
-                $new_phones     = $this->pos_model->getNewPhones();
-                $used_phones    = $this->pos_model->getUsedPhones();
-                $others         = $this->pos_model->getOthers();
-                $accessories    = $this->pos_model->getAccessoryNames();
-                $plans          = $this->pos_model->getAllPlans();
-                $repair_items   = $this->pos_model->getProductNames();
-                $rows = array_merge((array)$repair_items, (array)$accessories, (array)$new_phones, (array)$used_phones,(array)$others,(array)$plans);
-                unset($new_phones, $used_phones, $others, $accessories, $plans, $repair_items);
-                foreach (array_filter($rows) as $row) {
-                    $pr[] = array('id' => $row->id.'____'.$row->type.'____'.$row->name, 'text' => $row->name.' ('.humanize($row->type).')');
-                }
-            }elseif($term == 'category'){
-                $pr[] = array('id' => 'other', 'text' => lang('Other Products'));
-                $pr[] = array('id' => 'repair', 'text' => lang('Repair Parts'));
-                $pr[] = array('id' => 'new_phone', 'text' => lang('New Phones'));
-                $pr[] = array('id' => 'used_phone', 'text' => lang('Used Phones'));
-                $pr[] = array('id' => 'accessory', 'text' => lang('Accessories'));
-                $pr[] = array('id' => 'plans', 'text' => lang('Cellular Plans'));
-            }
-            if (!empty($pr)) {
-                $this->repairer->send_json($pr);
-            }else {
-                $this->repairer->send_json((array('id' => 0, 'text' => lang('no_match_found'))));
-            }            
-        }elseif($action == 'delete'){
-            $id = $this->input->post('id');
-            $this->db->delete('discount_codes', array('id'=>$id));
-            echo json_encode(array('success'=>true));
-        }
-    }
-
-
+    public function slug() {
+        echo $this->repairer->slug($this->input->get('title', TRUE), $this->input->get('type', TRUE));
+        exit();
+    }    
 
     public function repair_statuses() {
         $this->mPageTitle = lang('repair_statuses');
@@ -1437,18 +784,16 @@ class Settings extends Auth_Controller
             'label' => $this->input->post('label'),
             'bg_color' => $this->input->post('bg_color'),
             'fg_color' => $this->input->post('fg_color'),
+            'email_subject' => $this->input->post('email_subject'),
             'send_email' => $this->input->post('send_email') ? 1 : 0,
             'send_sms' => $this->input->post('send_sms') ? 1 : 0,
             'email_text' => $this->input->post('send_email') ? $this->input->post('email_text') : NULL,
             'sms_text' => $this->input->post('send_sms') ? $this->input->post('sms_text') : NULL,
             'position' => $this->settings_model->countRepairStatuses(),
             'completed' => $this->input->post('completed') ? $this->input->post('completed') : 0,
-            'show_in_default' => $this->input->post('show_in_default') ? $this->input->post('show_in_default') : 0,
         );
-
         $this->db->insert('status', $data);
         $id = $this->db->insert_id();
-
         $this->settings_model->addLog('add', 'status', $id, json_encode(array(
             'data' => $data,
         )));
@@ -1456,20 +801,17 @@ class Settings extends Auth_Controller
     }    
 
     public function status_edit() {
-        header("Content-Type: text/html; charset=utf-8");
         $id = $this->input->post('id');
-
-
         $data = array(
             'label' => $this->input->post('label'),
             'bg_color' => $this->input->post('bg_color'),
             'fg_color' => $this->input->post('fg_color'),
+            'email_subject' => $this->input->post('email_subject'),
             'send_email' => $this->input->post('send_email') ? 1 : 0,
             'send_sms' => $this->input->post('send_sms') ? 1 : 0,
-            'email_text' => $this->input->post('send_email') ? $this->input->post('email_text', false) : NULL,
-            'sms_text' => $this->input->post('send_sms') ? $this->input->post('sms_text', false) : NULL,
+            'email_text' => $this->input->post('send_email') ? $this->input->post('email_text') : NULL,
+            'sms_text' => $this->input->post('send_sms') ? $this->input->post('sms_text') : NULL,
             'completed' => $this->input->post('completed') ? $this->input->post('completed') : 0,
-            'show_in_default' => $this->input->post('show_in_default') ? $this->input->post('show_in_default') : 0,
         );
         $this->db->update('status', $data, array('id'=>$id));
         $this->settings_model->addLog('update', 'status', $id, json_encode(array(
@@ -1492,7 +834,6 @@ class Settings extends Auth_Controller
 
     }    
     
-    // GET CUSTOMER AND SEND TO AJAX FOR SHOW IT //
     public function getStatusByID()
     {
         $id = $this->security->xss_clean($this->input->post('id', true));
@@ -1505,7 +846,18 @@ class Settings extends Auth_Controller
     }
 
 
-    
+    public function updateDB()
+    {
+        $this->load->library('migration');
+
+        if ( ! $this->migration->current())
+        {
+            echo 'Error' . $this->migration->error_string();
+        } else {
+            echo 'Migrations ran successfully!';
+        }   
+    }
+
     public function sms_gateways() {
         $this->render('sms_gateways');
     }
@@ -1519,7 +871,6 @@ class Settings extends Auth_Controller
             'user_id' => $this->mUser->id,
             'url' => $this->input->post('url'),
             'to_name' => $this->input->post('to_name'),
-            // 'from_name' => $this->input->post('from_name'),
             'message_name' => $this->input->post('message_name'),
             'notes' => $this->input->post('notes'),
             'postdata' => $this->input->post('postdata') ? json_encode(array_combine($postdata['name'], $postdata['value'])) : '',
@@ -1542,7 +893,6 @@ class Settings extends Auth_Controller
             'user_id' => $this->mUser->id,
             'url' => $this->input->post('url'),
             'to_name' => $this->input->post('to_name'),
-            // 'from_name' => $this->input->post('from_name'),
             'message_name' => $this->input->post('message_name'),
             'notes' => $this->input->post('notes'),
             'postdata' => $this->input->post('postdata') ? json_encode(array_combine($postdata['name'], $postdata['value'])) : '',
@@ -1577,7 +927,7 @@ class Settings extends Auth_Controller
         
         $actions = "";
         if ($this->Admin || $this->GP['sms_gateways-edit']) {
-            $actions .= "<a  data-dismiss='modal' id='modify' href='#smsgatewaymodal' data-toggle='modal' data-num='$1'><button class='btn btn-primary btn-xs'><i class='fas fa-edit'></i></button></a>";
+            $actions .= "<a  data-dismiss='modal' id='modify_sms_gateway' href='#smsgatewaymodal' data-toggle='modal' data-num='$1'><button class='btn btn-primary btn-xs'><i class='fas fa-edit'></i></button></a>";
         }
         if ($this->Admin || $this->GP['sms_gateways-delete']) {
             $actions .= "<a id='delete' data-num='$1'><button class='btn btn-danger btn-xs'><i class='fas fa-trash'></i></button></a>";
@@ -1599,23 +949,5 @@ class Settings extends Auth_Controller
         echo $this->repairer->send_json(['success'=>false]);
         
     }
-
-    public function repair_statuses_pos($id = null)
-    {
-
-
-        $data = [];
-        $data['repair_deposit'] = $this->input->post('repair_deposit');
-        $data['repair_completed'] = $this->input->post('repair_completed');
-        $this->db->update('settings', $data);
-        redirect('panel/settings/repair_statuses/');
-    }
-
-
-    
-
 }
-
-
-
 

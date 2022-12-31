@@ -12,6 +12,9 @@ class Auth_Controller extends MY_Controller {
 	}
 	protected function render($view_file, $layout = 'default')
 	{
+		$config = $this->mConfig['adminlte'];
+		$this->mBodyClass .=' skin-red';
+
 		parent::render($view_file);
 	}
 }

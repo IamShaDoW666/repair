@@ -1,0 +1,32 @@
+*
+{
+   font-family: Prompt !important;
+   font-weight: bolder !important;
+}
+
+ #print_button {
+    height 50px;
+    width: 50%;
+    line-height: 50px;
+    position: fixed;
+    left: 25%;
+    bottom: 0px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 17px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    cursor: pointer;
+    background-color: crimson;
+
+}
+
+#print_button:hover {
+    background-color: #3A3A3A;
+
+}
+
+@media print {
+    #print_button {display: none;}
+}

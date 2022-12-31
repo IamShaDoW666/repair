@@ -53,12 +53,9 @@ class Repairer
     public function formatMoney($number)
     {
         $decimals = $this->mSettings->decimals;
-        $ts       = $this->mSettings->thousands_sep == '0' ? ' ' : $this->mSettings->thousands_sep;
-        $ds       = $this->mSettings->decimals_sep;
-
-        return ($this->mSettings->display_symbol == 1 ? $this->mSettings->currency : '') . 
-                number_format($number, $decimals, $ds, $ts) .
-                ($this->mSettings->display_symbol == 2 ? $this->mSettings->currency : '');
+        $ts = ',';
+        $ds = '.';
+        return number_format($number, 2) . ($this->mSettings->currency);
     }
 
     public function formatQuantity($number, $decimals = '00')
@@ -66,24 +63,21 @@ class Repairer
         if (!$decimals) {
             $decimals = $this->mSettings->qty_decimals;
         }
-
-        $ts       = $this->mSettings->thousands_sep == '0' ? ' ' : $this->mSettings->thousands_sep;
-        $ds       = $this->mSettings->decimals_sep;
-
-        return number_format($number, $decimals, $ds, $ts);
+        return number_format($number, $decimals);
     }
-     public function formatDecimal($number, $decimals = null)
+
+    public function formatDecimal($number, $decimals = null)
     {
-        if (!is_numeric($number)) {
-            return null;
-        }
-        if (!$decimals) {
-            $decimals = 2;
-        }
-
-        return number_format($number, $decimals, '.', '');
+        $formatted = number_format($number, 2, '.', ',');
+        return ($formatted);
     }
 
+
+    public function formatDecimal2($number, $decimals = null)
+    {
+        $formatted = number_format($number, 2, '.', '');
+        return ($formatted);
+    }
 
     public function clear_tags($str)
     {
@@ -135,8 +129,7 @@ class Repairer
         }
         return false;
     }
-   
-    public function hrsd($sdate)
+  public function hrsd($sdate)
     {
         if ($sdate) {
             return date($this->dateFormats['php_sdate'], strtotime($sdate));
@@ -158,9 +151,9 @@ class Repairer
     {
         if ($inv_date) {
             $jsd = $this->dateFormats['js_sdate'];
-            if ($jsd == 'dd-mm-yyyy' || $jsd == 'dd/mm/yyyy' || $jsd == 'dd.mm.yyyy') {
+            if ($jsd == 'DD-MM-YYYY' || $jsd == 'DD/MM/YYYY' || $jsd == 'DD.MM.YYYY') {
                 $date = substr($inv_date, -4) . "-" . substr($inv_date, 3, 2) . "-" . substr($inv_date, 0, 2);
-            } elseif ($jsd == 'mm-dd-yyyy' || $jsd == 'mm/dd/yyyy' || $jsd == 'mm.dd.yyyy') {
+            } elseif ($jsd == 'MM-DD-YYYY' || $jsd == 'MM/DD/YYYY' || $jsd == 'MM.DD.YYYY') {
                 $date = substr($inv_date, -4) . "-" . substr($inv_date, 0, 2) . "-" . substr($inv_date, 3, 2);
             } else {
                 $date = $inv_date;
@@ -178,9 +171,9 @@ class Repairer
             $jsd = $this->dateFormats['js_sdate'];
             $inv_date = $date[0];
             $time = $date[1];
-            if ($jsd == 'dd-mm-yyyy' || $jsd == 'dd/mm/yyyy' || $jsd == 'dd.mm.yyyy') {
+            if ($jsd == 'DD-MM-YYYY' || $jsd == 'DD/MM/YYYY' || $jsd == 'DD.MM.YYYY') {
                 $date = substr($inv_date, -4) . "-" . substr($inv_date, 3, 2) . "-" . substr($inv_date, 0, 2) . " " . $time;
-            } elseif ($jsd == 'mm-dd-yyyy' || $jsd == 'mm/dd/yyyy' || $jsd == 'mm.dd.yyyy') {
+            } elseif ($jsd == 'MM-DD-YYYY' || $jsd == 'MM/DD/YYYY' || $jsd == 'MM.DD.YYYY') {
                 $date = substr($inv_date, -4) . "-" . substr($inv_date, 0, 2) . "-" . substr($inv_date, 3, 2) . " " . $time;
             } else {
                 $date = $inv_date;
@@ -191,68 +184,37 @@ class Repairer
         }
     }
 
-
-    public function md($page = false)
-    {
-        die("<script type='text/javascript'>setTimeout(function(){ window.top.location.href = '" . ($page ? site_url($page) : (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'welcome')) . "'; }, 10);</script>");
-    }
-    public function mdytoymd($date)
-    {
-        if ($date) {
-            $date = explode('-', $date);
-            $month = $date[0];
-            $day = $date[1];
-            $year = $date[2];
-            return $year.'-'.$month.'-'.$day;
-        } else {
-            return '0000-00-00 00:00:00';
-        }
-    }
-    public function mdytoymd2($date)
-    {
-        if ($date) {
-            $datetime = explode(' ', $date);
-            $date = $datetime[0];
-            $time = $datetime[1];
-
-            $date = explode('-', $date);
-            $month = $date[0];
-            $day = $date[1];
-            $year = $date[2];
-            return $year.'-'.$month.'-'.$day .' '.$time;
-        } else {
-            return '0000-00-00 00:00:00';
-        }
-    }
-   
-
     public function send_email($to, $subject, $message, $from = null, $from_name = null, $attachment = null, $cc = null, $bcc = null)
     {
-        // list($user, $domain) = explode('@', $to);
+
+        $result = false;
         $this->load->library('wf_mail');
-        return $this->wf_mail->send_mail($to, $subject, $message, $from, $from_name, $attachment, $cc, $bcc);
+        try {
+            $result = $this->wf_mail->send_mail($to, $subject, $message, $from, $from_name, $attachment, $cc, $bcc);
+        } catch (\Exception $e) {
+            $this->session->set_flashdata('error', 'Mail Error: ' . $e->getMessage());
+        }
+        return $result;
     }
-
-
+ 
   
     public function imgto64($file_name){
         $bc = file_get_contents($file_name);
         $bcimage = base64_encode($bc);
         return $bcimage;
     }
-
-
+  
     public function barcode($text = null, $bcs = 'code128', $height = 74, $stext = 1, $get_be = false, $re = false)
     {
         $drawText = ($stext != 1) ? false : true;
         $this->load->library('wf_barcode', '', 'bc');
         return $this->bc->generate($text, $bcs, $height, $drawText, $get_be, $re);
     }
-    
-    public function qrcode($type = 'text', $text = 'http://otsglobal.org', $size = 80, $level = 'H', $sq = null)
+
+
+    public function qrcode($type = 'text', $text = 'http://otsglobal.org', $size = 2, $level = 'H', $sq = null)
     {
-        $size = 90;
-        $file_name = 'assets/uploads/qrcode/' . $this->session->userdata('user_id') . ($sq ? $sq : '') . '.png' ;
+        $file_name = 'assets/uploads/qrcode' . $this->session->userdata('user_id') . ($sq ? $sq : '') . ($this->mSettings->barcode_img ? '.png' : '.svg');
         if ($type == 'link') {
             $text = urldecode($text);
         }
@@ -262,6 +224,7 @@ class Repairer
         $imagedata = file_get_contents($file_name);
         return "<img src='data:image/png;base64,".base64_encode($imagedata)."' alt='{$text}' class='qrimg' />";
     }
+    
     public function generate_pdf($content, $name = 'download.pdf', $output_type = null, $footer = null, $margin_bottom = null, $header = null, $margin_top = null, $orientation = 'P')
     {
 
@@ -269,10 +232,32 @@ class Repairer
         return $this->pdf->generate($content, $name, $output_type, $footer, $margin_bottom, $header, $margin_top, $orientation);
     }
 
+    public function send_json($data)
+    {
+        header('Content-Type: application/json');
+        die(json_encode($data));
+        exit;
+    }
+
+    function slug($title, $type = NULL, $r = 1)
+    {
+        $this->load->helper('text');
+        $slug = url_title(convert_accented_characters($title), '-', TRUE);
+        $check_slug = $this->checkSlug($slug, $type);
+        if (!empty($check_slug)) {
+            $slug = $slug.$r; $r++;
+            $this->slug($slug, $type, $r);
+        }
+        return $slug;
+    }
+    public function checkSlug($slug, $type = NULL) {
+        return $this->db->get_where('categories', ['code' => $slug], 1)->row();
+    }
+
     public function checkPermissions($action = null, $js = null, $module = null)
     {
         if (!$this->actionPermissions($action, $module)) {
-            $this->session->set_flashdata('error', ("Access Denied! You don't have right to access the requested page. If you think it's by mistake, please contact administrator."));
+            $this->session->set_flashdata('error', lang("access_denied_auth"));
             if ($js) {
                 die("<script type='text/javascript'>setTimeout(function(){ window.top.location.href = '" . (isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : site_url('panel')) . "'; }, 10);</script>");
             } else {
@@ -281,11 +266,15 @@ class Repairer
         }
     }
 
+    public function js_redirect($url = 'panel')
+    {
+        die("<script type='text/javascript'>setTimeout(function(){ window.top.location.href = '" . base_url($url) . "'; }, 10);</script>");
+    }
+
     public function actionPermissions($action = null, $module = null)
     {
 
         if ($this->Admin) {
-
             return true;
         } else {
             if (!$module) {
@@ -303,224 +292,47 @@ class Repairer
         }
 
     }
-     public function logged_in()
+    public function in_group($check_group)
     {
-        return (bool) $this->session->userdata('identity');
-    }   
-    public function in_group($check_group, $id = false)
-    {
-        if (!$this->logged_in()) {
+        if ( !$this->ion_auth->logged_in() ) {
             return false;
         }
-        $id || $id = $this->session->userdata('user_id');
-        $group     = $this->settings_model->getUserGroup($id);
-        if ($group->name === $check_group) {
+        if (($this->ion_auth->get_users_groups()->row()->name) === $check_group) {
             return true;
         }
         return false;
     }
 
-    public function send_json($data)
+
+    public function returnOpenRegisterSets()
     {
-        header('Content-Type: application/json');
-        die(json_encode($data));
-        exit;
-    }
-
-    function time_elapsed_string($datetime, $full = false) {
-        $now = new DateTime;
-        $ago = new DateTime($datetime);
-        $diff = $now->diff($ago);
-
-        $diff->w = floor($diff->d / 7);
-        $diff->d -= $diff->w * 7;
-
-        $string = array(
-            'y' => 'year',
-            'm' => 'month',
-            'w' => 'week',
-            'd' => 'day',
-            'h' => 'hour',
-            'i' => 'minute',
-            's' => 'second',
-        );
-        
-        foreach ($string as $k => &$v) {
-            if ($diff->$k) {
-                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
-            } else {
-                unset($string[$k]);
-            }
-        }
-
-        if (!$full) $string = array_slice($string, 0, 1);
-        return $string ? implode(', ', $string) . ' ago' : 'just now';
-    }
-
-    function getUsedStatus() {
-        $used_status = array(
-            '1' => lang('Ready to Sale'),
-            '2' => lang('Needs Repair'),
-            '3' => lang('On Hold'),
-            '4' => lang('Sold'),
-            '5' => lang('Lost/Damaged'),
-        ); 
-        return $used_status;
-    }
-
-
-    function getUnlockStatus() {
         return array(
-            '0' => lang('no'),
-            '1' => lang('yes'),
-        ); 
-    }
 
+            'n1000' => '100',
 
-     public function getReference($field) {
-        
-        $q = $this->db->get_where('order_ref', array('ref_id' => '1'), 1);
-        if ($q->num_rows() > 0) {
-            $ref = $q->row();
-            switch ($field) {
-                case 'pos':
-                    $prefix = isset($this->mSettings->sales_prefix) ? $this->mSettings->sales_prefix . '/POS/' : '';
-                    break;
-                case 'pay':
-                    $prefix = $this->mSettings->payment_prefix;
-                    break;
-                case 're':
-                    $prefix = $this->mSettings->return_prefix;
-                    break;
-                case 'purchase':
-                    $prefix = $this->mSettings->purchase_prefix ?? 'P';
-                    break;
-                case 'po':
-                    $prefix = $this->mSettings->purchase_prefix ?? 'P';
-                    break;
-                case 'repair':
-                    $prefix = $this->mSettings->repair_prefix ?? 'REPAIR';
-                    break;
-                default:
-                    $prefix = '';
-            }
+            'n500' => '50',
 
-            $ref_no = (!empty($prefix)) ? $prefix . '/' : '';
-            
-            if($field == 'repair' && $this->mSettings->store_wise_reference) {
-                // get active store. and get from the store. 
-                $number = $this->activeStoreData->repair_ref;
-            }else{
-                $number = $ref->{$field};
-            }
+            'n200' => '20',
 
-            if ($this->mSettings->reference_format == 1) {
-                $ref_no .= date('Y') . '/' . sprintf('%04s', $number);
-            } elseif ($this->mSettings->reference_format == 2) {
-                $ref_no .= date('Y') . '/' . date('m') . '/' . sprintf('%04s', $number);
-            } elseif ($this->mSettings->reference_format == 3) {
-                $ref_no .= sprintf('%04s', $number);
-            } else {
-                $ref_no .= $this->getRandomReference();
-            }
+            'n100' => '10',
 
+            'n50' => '5',
 
-            
-            return $ref_no;
-        }
-        return FALSE;
-    }
+            'n20' => '1',
 
+            'n10' => '0.25',
 
-    public function getRandomReference($len = 12)
-    {
-        $result = '';
-        for ($i = 0; $i < $len; $i++) {
-            $result .= mt_rand(0, 9);
-        }
+            'n5' => '0.10',
 
-        if ($this->getSaleByReference($result)) {
-            $this->getRandomReference();
-        }
+            'n2' => '0.05',
 
-        return $result;
-    }
+            'n1' => '0.01',
 
-    public function getSaleByReference($ref)
-    {
-        $this->db->like('reference_no', $ref, 'both');
-        $q = $this->db->get('sales', 1);
-        if ($q->num_rows() > 0) {
-            return $q->row();
-        }
-        return false;
-    }
-
-
-    public function updateReference($field) {
-        $q = $this->db->get_where('order_ref', array('ref_id' => '1'), 1);
-        if ($q->num_rows() > 0) {
-            $ref = $q->row();
-
-            if($field == 'repair' && $this->mSettings->store_wise_reference) {
-                // get active store. and get from the store. 
-                $this->db->update('store', array('repair_ref' => (int)$this->activeStoreData->repair_ref + 1), array('id' => $this->activeStoreData->id));
-            }else{
-                $this->db->update('order_ref', array($field => (int)$ref->{$field} + 1), array('ref_id' => '1'));
-            }
-
-            
-            return TRUE;
-        }
-        return FALSE;
-    }
-
-
-    public function paid_opts($paid_by = null, $empty_opt = '')
-    {
-        $opts = '';
-        if ($empty_opt) {
-            $opts .= '<option value="">'.lang('select').'</option>';
-        }
-        $opts .= '
-        <option value="cash"'.($paid_by && $paid_by == 'cash' ? ' selected="selected"' : '').'>'.lang("cash").'</option>
-        <option value="CC"'.($paid_by && $paid_by == 'CC' ? ' selected="selected"' : '').'>'.lang("CC").'</option>
-        <option value="Cheque"'.($paid_by && $paid_by == 'Cheque' ? ' selected="selected"' : '').'>'.lang("cheque").'</option>
-        <option value="other"'.($paid_by && $paid_by == 'other' ? ' selected="selected"' : '').'>'.lang("other").'</option>';
-        return $opts;
-    }
-
-    
-    public function returnOpenRegisterSets() {
-          return array(
-            'n001' => '0.01',
-            'n002' => '0.02',
-            'n005' => '0.05',
-            'n010' => '0.1',
-            'n020' => '0.2',
-            'n050' => '0.5',
-            'n1' => '1',
-            'n2' => '2',
-            'n5' => '5',
-            'n10' => '10',
-            'n20' => '20',
-            'n50' => '50',
-            'n100' => '100',
-            'n200' => '200',
-            'n500' => '500',
         );
     }
-    
-    public function returnShippingMethods() {
-        return $dp_p = array(
-          '' =>  lang('select_placeholder'),
-          'usps' => 'USPS',
-          'ups' => 'UPS',
-          'fedex' => 'FEDEX',
-          'dhl' => 'DHL',
-          'other' => 'Other',
-      );
-    }
+
+
+
     
     function base30_to_jpeg($base30_string, $output_file) {
         require APPPATH.'libraries/jSignature.php';
@@ -571,8 +383,104 @@ class Repairer
         imagedestroy($im);
         return true;
     }
+
+
+
+
+
+
+     public function getReference($field) {
+        $q = $this->db->get_where('order_ref', array('ref_id' => '1'), 1);
+        if ($q->num_rows() > 0) {
+            $ref = $q->row();
+            switch ($field) {
+                case 'pos':
+                    $prefix = isset($this->mSettings->sales_prefix) ? $this->mSettings->sales_prefix . '/POS/' : '';
+                    break;
+                case 'pay':
+                    $prefix = $this->mSettings->payment_prefix;
+                    break;
+                case 're':
+                    $prefix = $this->mSettings->return_prefix;
+                    break;
+                default:
+                    $prefix = '';
+            }
+
+            $ref_no = (!empty($prefix)) ? $prefix . '/' : '';
+            $format = $this->mSettings->reference_format;
+
+
+            if ($this->mSettings->reference_format !== '') {
+                $ref_no .= date('Y') . "/" . sprintf("%04s", $ref->{$field});
+            } elseif ($this->mSettings->reference_format == 2) {
+                $ref_no .= date('Y') . "/" . date('m') . "/" . sprintf("%04s", $ref->{$field});
+            } elseif ($this->mSettings->reference_format == 3) {
+                $ref_no .= sprintf("%04s", $ref->{$field});
+            } else {
+                $ref_no .= $this->getRandomReference();
+            }
+            
+            return $ref_no;
+        }
+        return FALSE;
+    }
+
+
+
+    public function paid_opts($paid_by = null, $empty_opt = false)
+    {
+        $opts = '';
+        if ($empty_opt) {
+            $opts .= '<option value="">'.lang('select').'</option>';
+        }
+        $opts .= '
+        <option value="cash"'.($paid_by && $paid_by == 'cash' ? ' selected="selected"' : '').'>'.lang("cash").'</option>
+        <option value="CC"'.($paid_by && $paid_by == 'CC' ? ' selected="selected"' : '').'>'.lang("CC").'</option>
+        <option value="Cheque"'.($paid_by && $paid_by == 'Cheque' ? ' selected="selected"' : '').'>'.lang("cheque").'</option>
+        <option value="other"'.($paid_by && $paid_by == 'other' ? ' selected="selected"' : '').'>'.lang("other").'</option>';
+        return $opts;
+    }
+
     
+
+    public function updateReference($field) {
+        $q = $this->db->get_where('order_ref', array('ref_id' => '1'), 1);
+        if ($q->num_rows() > 0) {
+            $ref = $q->row();
+            $this->db->update('order_ref', array($field => $ref->{$field} + 1), array('ref_id' => '1'));
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+     function base64url_encode($data, $pad = null) {
+        $data = str_replace(array('+', '/'), array('-', '_'), base64_encode($data));
+        if (!$pad) {
+            $data = rtrim($data, '=');
+        }
+        return $data;
+    }
+
+    function base64url_decode($data) {
+        return base64_decode(str_replace(array('-', '_'), array('+', '/'), $data));
+    }
     
+    public function getReferencesHear()
+    {
+        return array(
+            'Facebook' => 'Facebook',
+            'Google' => 'Google Search',
+            'Friend' => 'From a Friend',
+            'Other' => 'Other',
+        );
+    }
+    
+    public function md($page = false)
+    {
+        die("<script type='text/javascript'>setTimeout(function(){ window.top.location.href = '" . ($page ? site_url($page) : (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'welcome')) . "'; }, 10);</script>");
+    }
+
     public function get_cal_lang()
     {
         switch ($this->mSettings->language) {
@@ -594,63 +502,41 @@ class Repairer
             case 'russian':
                 $cal_lang = 'ru';
                 break;
-            default:
-                $cal_lang = 'en';
-                break;
-        }
-        return $cal_lang;
-    }   
-
-    public function get_parseley_lang()
-    {
-        switch ($this->mSettings->language) {
-            case 'french':
-                $cal_lang = 'fr';
-                break;
-            case 'german':
-                $cal_lang = 'de';
-                break;
-            case 'italian':
-                $cal_lang = 'it';
-                break;
-            case 'dutch':
-                $cal_lang = 'nl';
-                break;
-            case 'bulgarian':
-                $cal_lang = 'bg';
-                break;
-            case 'russian':
-                $cal_lang = 'ru';
+            case 'turkish':
+                $cal_lang = 'tr-TR';
                 break;
             default:
                 $cal_lang = 'en';
                 break;
         }
         return $cal_lang;
-    }   
+    }
 
 
-    public function updateDefectsTable()
+    
+    public function calculateDiscount($discount = null, $amount = 0, $order = null)
     {
-        $defects = $this->settings_model->getAllRepairDefects();
-        foreach ($defects as $defect) {
-            if (!$this->settings_model->checkIfDefectExists($defect->defect)) {
-                $this->db->insert('defects', ['name'=>$defect->defect]);
-                $insert_id = $this->db->insert_id();
-                $this->db->where_in('id', explode(',', $defect->ids))->update('repair', ['defect_id'=>$insert_id]);
+        if ($discount && ($order || $this->mSettings->product_discount)) {
+            $dpos = strpos($discount, '%');
+            if ($dpos !== false) {
+                $pds = explode('%', $discount);
+                return $this->formatDecimal(((($this->formatDecimal($amount)) * (float) ($pds[0])) / 100), 4);
+            }
+            return $this->formatDecimal($discount, 4);
+        }
+        return 0;
+    }
+
+    public function calculateOrderTax($order_tax_id = null, $amount = 0)
+    {
+        if ($this->mSettings->tax2 != 0 && $order_tax_id) {
+            if ($order_tax_details = $this->site->getTaxRateByID($order_tax_id)) {
+                if ($order_tax_details->type == 1) {
+                    return $this->formatDecimal((($amount * $order_tax_details->rate) / 100), 4);
+                }
+                return $this->formatDecimal($order_tax_details->rate, 4);
             }
         }
-    } 
-
-    // public function updateModelsTable()
-    // {
-    //     $models = $this->settings_model->getAllRepairModels();
-    //     foreach ($models as $model) {
-    //         if (!$this->settings_model->checkIfDefectExists($defect->defect)) {
-    //             $this->db->insert('defects', ['name'=>$defect->defect]);
-    //             $insert_id = $this->db->insert_id();
-    //             $this->db->where_in('id', explode(',', $defect->ids))->update('repair', ['defect_id'=>$insert_id]);
-    //         }
-    //     }
-    // } 
+        return 0;
+    }
 }

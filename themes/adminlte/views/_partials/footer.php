@@ -1,8 +1,8 @@
-<footer class="main-footer no-print">
-    <div class="pull-right hidden-xs">
-      <b><?php echo lang('version'); ?></b> <?php echo $settings->version; ?>
+ <!-- /.content-wrapper -->
+  <footer class="main-footer">
+   	<strong><?= lang('copyright'); ?> &copy; <?= date('Y'); ?> <?= $settings->title; ?>.</strong> 
+    <div class="float-right d-none d-sm-inline-block">
+      <b><?= lang('version'); ?></b> <?= $settings->version; ?>
     </div>
-    <strong><?php echo lang('copyright'); ?> &copy; <?php echo date('Y'); ?> <?php echo $settings->title; ?>.</strong> 
   </footer>
-</div>
-<!-- ./wrapper -->
+
