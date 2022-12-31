@@ -1,0 +1,909 @@
+<!doctype html>
+<!--[if IE 6 ]><html lang="en-us" class="ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en-us" class="ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en-us" class="ie8"> <![endif]-->
+<!--[if (gt IE 7)|!(IE)]><!-->
+<html lang="en-us"><!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+	<title>Advance Repair Shop Management System - Payroll, Timeclock, Accounts, POS, Repairs & more.</title>
+
+	<meta name="description" content="Repairer Advance – Repair/Workshop Management System is carefully developed for easy management of mobile repair shop. It’s actually an innovative, simple and powerful management tool, designed and developed for you. It’s just your trusty employee. It’s a web based system where you can manage reparations, clients, inventory(new phones, used phones, cellular plans, repair parts, accessories, other products), customer purchases, vendor purchases, client relationship management, Point of Sale, Accounts, Payroll, Employee TimeClock etc.
+
+">
+	<meta name="author" content="Open Technology Solutions">
+	<meta name="copyright" content="Open Technology Solutions">
+	<meta name="generator" content="Documenter v2.0 https://evp.to/documenter">
+	<meta name="date" content="2019-09-20T00:00:00+02:00">
+
+	<link rel="stylesheet" href="assets/css/documenter_style.css" media="all">
+	
+	
+	
+	<script src="assets/js/jquery.js"></script>
+	
+	<script src="assets/js/jquery.scrollTo.js"></script>
+	<script src="assets/js/jquery.easing.js"></script>
+
+	<script>document.createElement('section');var duration='1233',easing='swing';</script>
+	<script src="assets/js/script.js"></script>
+
+	<style>
+		html{background-color:#FFFFFF;color:#383838;}
+		::-moz-selection{background:#444444;color:#DDDDDD;}
+		::selection{background:#444444;color:#DDDDDD;}
+		#documenter_sidebar #documenter_logo{background-image:url(assets/images/image_36.png);}
+		a{color:#0000FF;}
+		.btn {
+			border-radius:3px;
+		}
+		.btn-primary {
+			  background-image: -moz-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: -ms-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: -webkit-gradient(linear, 0 0, 0 0088CC%, from(#DDDDDD), to(#0044CC));
+			  background-image: -webkit-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: -o-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: linear-gradient(top, #0088CC, #0044CC);
+			  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088CC', endColorstr='#0044CC', GradientType=0);
+			  border-color: #0044CC #0044CC #bfbfbf;
+			  color:#FFFFFF;
+		}
+		.btn-primary:hover,
+		.btn-primary:active,
+		.btn-primary.active,
+		.btn-primary.disabled,
+		.btn-primary[disabled] {
+		  border-color: #0088CC #0088CC #bfbfbf;
+		  background-color: #0044CC;
+		}
+		hr{border-top:1px solid #EBEBEB;border-bottom:1px solid #FFFFFF;}
+		#documenter_sidebar, #documenter_sidebar ul a{background-color:#DDDDDD;color:#222222;}
+		#documenter_sidebar ul a{-webkit-text-shadow:1px 1px 0px #EEEEEE;-moz-text-shadow:1px 1px 0px #EEEEEE;text-shadow:1px 1px 0px #EEEEEE;}
+		#documenter_sidebar ul{border-top:1px solid #AAAAAA;}
+		#documenter_sidebar ul a{border-top:1px solid #EEEEEE;border-bottom:1px solid #AAAAAA;color:#444444;}
+		#documenter_sidebar ul a:hover{background:#444444;color:#DDDDDD;border-top:1px solid #444444;}
+		#documenter_sidebar ul a.current{background:#444444;color:#DDDDDD;border-top:1px solid #444444;}
+		#documenter_copyright{display:block !important;visibility:visible !important;}
+	</style>
+
+</head>
+<body class="documenter-project-advance-repair-shop-management-system">
+	<div id="documenter_sidebar">
+		<a href="#documenter_cover" id="documenter_logo"></a>
+		<ul id="documenter_nav">
+			<li><a class="current" href="#documenter_cover">Start</a></li>
+				
+			<li><a href="#requirements" title="Requirements">Requirements</a></li>
+			<li><a href="#install_instructions" title="Install Instructions">Install Instructions</a></li>
+			<li><a href="#after_install" title="After Install">After Install</a></li>
+			<li><a href="#request_installation" title="Request Installation">Request Installation</a></li>
+			<li><a href="#support" title="SUPPORT">SUPPORT</a></li>
+			<li><a href="#languages" title="Languages">Languages</a></li>
+			<li><a href="#credits" title="CREDITS">CREDITS</a></li>
+			<li><a href="#frequently_asked_questions" title="Frequently Asked Questions">Frequently Asked Questions</a></li>
+			<li><a href="#user_guide" title="User Guide">User Guide</a></li>
+			<li><a href="#users" title="Users">Users</a></li>
+			<li><a href="#customers_small_crm" title="Customers (small CRM)">Customers (small CRM)</a></li>
+			<li><a href="#suppliers" title="Suppliers">Suppliers</a></li>
+			<li><a href="#stock_inventory" title="Stock/Inventory">Stock/Inventory</a></li>
+			<li><a href="#point_of_sale" title="Point of Sale">Point of Sale</a></li>
+			<li><a href="#purchases" title="Purchases">Purchases</a></li>
+			<li><a href="#accounts" title="Accounts">Accounts</a></li>
+			<li><a href="#timeclock" title="Timeclock">Timeclock</a></li>
+			<li><a href="#payroll" title="Payroll">Payroll</a></li>
+			<li><a href="#reports" title="Reports">Reports</a></li>
+			<li><a href="#settings" title="Settings">Settings</a></li>
+			<li><a href="#commissions" title="Commissions">Commissions</a></li>
+			<li><a href="#stores" title="Stores">Stores</a></li>
+			<li><a href="#tools" title="Tools">Tools</a></li>
+
+		</ul>
+		<div id="documenter_copyright">Copyright Open Technology Solutions 2019<br>
+		made with the <a href="https://evp.to/documenter">Documenter v2.0</a>
+		</div>
+	</div>
+	<div id="documenter_content">
+	<section id="documenter_cover">
+	<h1>Advance Repair Shop Management System</h1>
+	<h2>Payroll, Timeclock, Accounts, POS, Repairs & more.</h2>
+	<div id="documenter_buttons">
+		
+	</div>
+	<hr>
+	<ul>
+	<li>created: 09/01/2019</li>
+	<li>latest update: 09/20/2019</li>
+	<li>by: Open Technology Solutions</li>
+	<li><a href=""></a></li>
+	<li>email: <a href="mailto:&#117;&#115;&#107;&#104;&#97;&#110;&#48;&#57;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#117;&#115;&#107;&#104;&#97;&#110;&#48;&#57;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a></li>
+	</ul>
+	<p></p>
+	</section>
+
+	<section id="requirements">
+	<div class="page-header"><h3>Requirements</h3><hr class="notop"></div>
+<ol>
+	<li>
+		PHP 5.6+ (Recommended: PHP7)&nbsp;</li>
+	<li>
+		PHP Mcrypt Extension</li>
+	<li>
+		PHP MBString Extension</li>
+	<li>
+		PHP DOM Extension</li>
+	<li>
+		PHP GD or GD2 Extension&nbsp;</li>
+	<li>
+		PHP MYSQLi Extension&nbsp;</li>
+	<li>
+		PHP CURL Extension</li>
+	<li>
+		PHP ZIP Extension</li>
+	<li>
+		MYSQL 5.4+ (only_full_group_by should be disabled)&nbsp;</li>
+	<li>
+		URL Rewrite Extension</li>
+	<li>
+		Cronjob (Optional but needed for automated tasks)</li>
+</ol>
+</section>
+<section id="install_instructions">
+	<div class="page-header"><h3>Install Instructions</h3><hr class="notop"></div>
+<div class="page" title="Page 6">
+	<div class="layoutArea">
+		<div class="column">
+			<div>
+				Requirements: Apache 2.2+, Mysql 5.4+ (only_full_group_by should be disabled), PHP 5.6+</div>
+			<div>
+				&nbsp;</div>
+			<ol>
+				<li>
+					Copy/Upload the folder and files to your web server using cPanel or FTP</li>
+				<li>
+					If you are installing in sub folder, please make sure there is no space in folder names</li>
+				<li>
+					Create mysql database, database user and grant all permission to user for this database.</li>
+				<li>
+					Open the http://yourdomain.com/pathtoupload/install/index.php
+					<ol>
+						<li>
+							Step 1: Pre-install system checklist - If there is any issue with checklist, you will need to fix it first to proceed to next step.</li>
+						<li>
+							Step 2: Provide you Envato Username and Purchase Code to validate the purchase.</li>
+						<li>
+							Step 3: Provide the database host, database user, database password and database name to proceed to next step. Please make sure you don&#39;t have $ sign in your password.</li>
+						<li>
+							Step 4: Site Config: Please Fill in you RMS ADVANCE Base URL and select your timezone. You must check the site url as installer might guess it wrong
+							<ul>
+								<li>
+									Base URL for public_html or www/htdocs folder will be http://yourdomain.com/ or</li>
+								<li>
+									Base URL for sub-domain will be&nbsp;</li>
+								<li>
+									Base URL for sub-folder will be</li>
+								<li>
+									Base URL must not have space and it should end with a trailing slash</li>
+							</ul>
+						</li>
+					</ol>
+				</li>
+				<li>
+					If everything goes smooth, you will be redirect to final page with login details.</li>
+				<li>
+					Remove the install folder before start using the RMS ADVANCE.</li>
+				<li>
+					Login using default username and password, and edit user to change login details.</li>
+				<li>
+					RMS ADVANCE is ready to use. Please save system settings before start using it.</li>
+			</ol>
+			<p>
+				&nbsp;</p>
+		</div>
+	</div>
+</div>
+<p>
+	&nbsp;</p>
+</section>
+<section id="after_install">
+	<div class="page-header"><h3>After Install</h3><hr class="notop"></div>
+<ol>
+	<li>
+		Add new owner user before editing/deleting the default owner account (we have disabled the option to edit the logged in user email and user name, you won&#39;t be able edit/delete the default user unless you are logged in with new owner account).</li>
+	<li>
+		Update the system settings, by selecting the default currency and all other necessary things.</li>
+	<li>
+		You are ready to go, start adding repairs, users, customer purchases, vendor purchases, accounts, expenses, deposits, taxes, stores, products, customer, sales and purchase and much more.&nbsp;</li>
+</ol>
+</section>
+<section id="request_installation">
+	<div class="page-header"><h3>Request Installation</h3><hr class="notop"></div>
+<div class="page" title="Page 7">
+	<div class="layoutArea">
+		<div class="column">
+			<p>
+				<span style="font-size: 12.000000pt; font-family: 'Corbel'">We will provide the service to install the item for $20. To request the installation, please send $20 to &#117;&#115;&#107;&#104;&#97;&#110;&#48;&#57;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109; by Skrill and email us your license file and hosting control panel details with reference of your payment to&nbsp;</span><span style="font-family: Corbel; font-size: 16px;">&#117;&#115;&#107;&#104;&#97;&#110;&#48;&#57;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</span></p>
+		</div>
+	</div>
+</div>
+<p>
+	&nbsp;</p>
+</section>
+<section id="support">
+	<div class="page-header"><h3>SUPPORT</h3><hr class="notop"></div>
+<div class="page" title="Page 12">
+	<div class="layoutArea">
+		<div class="column">
+			<p>
+				<span style="font-size: 14.000000pt; font-family: 'Corbel'; font-weight: 700">Officially, we are support and you can post on item comments page, if you can&rsquo;t find answer to your question in this documentation. We will be updating the item time to time for </span></p>
+			<ul>
+				<li>
+					<font face="ArialMT"><span style="font-size: 13.3333px;">F</span></font><span style="font-size: 12.000000pt; font-family: 'Corbel'">ixes for bugs and reported issues with the item </span></li>
+				<li>
+					<span style="font-size: 12.000000pt; font-family: 'Corbel'">Updates to ensure on going compatibility and patch security vulnerabilities </span></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="page" title="Page 12">
+	<div class="layoutArea">
+		<div class="column">
+			<p>
+				<span style="font-size: 16.000000pt; font-family: 'Corbel'; font-weight: 700">No Free Support but only Paid </span></p>
+			<ul>
+				<li>
+					<span style="font-size: 12.000000pt; font-family: 'Corbel'">Any help for customization </span></li>
+				<li>
+					<span style="font-size: 12.000000pt; font-family: 'Corbel'">No Free Installation services </span></li>
+				<li>
+					<span style="font-size: 12.000000pt; font-family: 'Corbel'">No Free help in resolving compatibility issues with 3rd party plug-ins, themes or items. </span></li>
+				<li>
+					<span style="font-size: 12.000000pt; font-family: 'Corbel'">No Free help with included 3rd party items from the 3rd party author (e.g, plug-ins and libraries used in script and theme). </span></li>
+				<li>
+					<span style="font-size: 12.000000pt; font-family: 'Corbel'">No Free help with your web hosting/server environment. </span></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="page" title="Page 12">
+	<div class="layoutArea">
+		<div class="column">
+			<p>
+				<span style="font-size: 16.000000pt; font-family: 'Corbel'; font-weight: 700">Support Hours: </span></p>
+			<p style="margin-left: 40px;">
+				<span style="font-size: 14.000000pt; font-family: 'Corbel'; font-weight: 700">From 0900 &ndash; 1800 (GMT+5), Mondays &ndash; Fridays<br>
+				(Response time: 36 &ndash; 48 Hours)<br>
+				No responses on Saturday, Sunday and Public Holidays in Pakistan</span></p>
+		</div>
+	</div>
+</div>
+<div class="page" title="Page 12">
+	<div class="layoutArea">
+		<div class="column">
+			<p>
+				<span style="font-size: 18.000000pt; font-family: 'Corbel'; font-weight: 700">Custom Modifications </span></p>
+			<p>
+				<span style="font-size: 12.000000pt; font-family: 'Corbel'">Yes, we do provide customization services to modify/enhance the item functionality to suit your needs. We charge $35 per hour. Please email to &#117;&#115;&#107;&#104;&#97;&#110;&#48;&#57;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109; to check availability, estimated cost and time. </span></p>
+		</div>
+	</div>
+</div>
+<div class="page" title="Page 12">
+	<div class="layoutArea">
+		<div class="column">
+			<p>
+				<span style="font-size: 18.000000pt; font-family: 'Corbel'; font-weight: 700">Feature Request </span></p>
+			<p>
+				<span style="font-size: 12.000000pt; font-family: 'Corbel'">Yes, we would love to listen your requests/feedback. Please prepare the details with examples before emailing to&nbsp;</span><span style="font-family: Corbel; font-size: 16px;">uskhan099</span><span style="font-size: 12pt; font-family: Corbel;">@gmail.com </span></p>
+		</div>
+	</div>
+</div>
+<p>
+	&nbsp;</p>
+</section>
+<section id="languages">
+	<div class="page-header"><h3>Languages</h3><hr class="notop"></div>
+<div class="page" title="Page 13">
+	<div class="layoutArea">
+		<div class="column">
+			<p>
+				<span style="font-size: 12pt; font-family: Corbel; font-weight: 700;">Available Languages </span><span style="font-size: 12pt; font-family: Corbel;">(Complete/Partial)</span></p>
+			<ul style="list-style-type: none">
+				<li>
+					<p>
+						<span style="font-size: 10.000000pt; font-family: 'ArialMT'">● &nbsp;</span><span style="font-size: 12.000000pt; font-family: 'Corbel'; font-weight: 700">English </span><span style="font-size: 12.000000pt; font-family: 'Corbel'">- default language </span></p>
+				</li>
+				<li>
+					<p>
+						<span style="font-family: Corbel; font-size: 12pt;">If you have translated the files and willing to contribute so that others can enjoy your generosity, please email the translated files to &#117;&#115;&#107;&#104;&#97;&#110;&#48;&#57;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</span></p>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<p>
+	&nbsp;</p>
+</section>
+<section id="credits">
+	<div class="page-header"><h3>CREDITS</h3><hr class="notop"></div>
+<div>
+	Thanks to all great people who are developing open source software.</div>
+<div>
+	&nbsp;</div>
+<div>
+	<div>
+		CodeIgniter - PHP-Framework under MIT License</div>
+	<div>
+		Ion_auth - A simple, lightweight authentication library by Ben Edmunds - Apache License v2</div>
+	<div>
+		mPDF - A PHP class to generate PDF under GNU General Public License version 2</div>
+	<div>
+		Bootstrap - Most popular HTML, CSS, and JS framework under MIT License</div>
+	<div>
+		jQuery - A fast, small, and feature-rich JavaScript library under MIT License</div>
+	<div>
+		Font Awesome - The iconic font and CSS toolkit under GPL License.</div>
+	<div>
+		DataTables - A plug-in for the jQuery - GPL v2 license or a BSD (3-point) License</div>
+	<div>
+		PHPSpreadSheet- A simple PHP to Excel conversion - GNU Library General Public License (LGPLv2.1)</div>
+	<div>
+		Zend Framework 1 (barcode library) - under New BSD License</div>
+	<div>
+		PHP QR Code - Generator for 2-D QR barcode - GNU Library or (LGPLv3)</div>
+	<div>
+		Bootstrap-datetimepicker - Date and Time picker widget based on bootstrap - Apache License V2</div>
+	<div>
+		Bootstrap-daterangepicker - Date range picker component for Bootstrap under MIT License V2</div>
+	<div>
+		iCheck - Highly customizable checkboxes and radio buttons under MIT License</div>
+	<div>
+		Accounting.js - A tiny JavaScript library for number, money and currency formatting - MIT License</div>
+	<div>
+		jQuery Cookie - A simple, lightweight jQuery plugin to manage cookies under MIT License</div>
+</div>
+<p>	&nbsp;</p>
+</section>
+<section id="frequently_asked_questions">
+	<div class="page-header"><h3>Frequently Asked Questions</h3><hr class="notop"></div>
+<div>
+	General</div>
+<div>
+	&nbsp;</div>
+<ul>	<li>		How many products can be managed with this Stock Manager?</li>
+</ul>
+<div style="margin-left: 80px;">
+	You can have any number of products ranging from 1 to 20,000 or more.</div>
+<div>
+	&nbsp;</div>
+<ul>	<li>		How to enable SSL/HTTPS support?</li>
+</ul>
+<div style="margin-left: 80px;">
+	You can easily enable https by editing the 2 lines in config file</div>
+<div style="margin-left: 80px;">
+	&nbsp;</div>
+<div style="margin-left: 80px;">
+	(application/config/config.php) as following:</div>
+<div style="margin-left: 80px;">
+	&nbsp;</div>
+<div style="margin-left: 80px;">
+	1. Update base url from http://yoursite.com to https://yoursite.com</div>
+<div>
+	&nbsp;</div>
+<div style="margin-left: 80px;">
+	2. Set $config[&#39;cookie_secure&#39;] to TRUE</div>
+<div>
+	&nbsp;</div>
+<ul>	<li>		Can I modify the item?</li>
+</ul>
+<div style="margin-left: 80px;">
+	Yes, you can modify the script as per your needs and license.</div>
+<div style="margin-left: 80px;">
+	&nbsp;</div>
+<div style="margin-left: 80px;">
+	We offer Regular License only that allows you to use the Item to create one single End Product for yourself or for one client (a &ldquo;single application&rdquo;). If you have more than once clients, you will need to purchase separate license for each client.</div>
+<div style="margin-left: 80px;">
+	&nbsp;</div>
+<div style="margin-left: 80px;">
+	You can visit this link to licensing faqs page of Envato marketplace.</div>
+<div>
+	&nbsp;</div>
+<div>
+	<ul>		<li>			Can I manage multiple warehouses/stores?</li>
+	</ul>
+	<div style="margin-left: 80px;">
+		Yes, you can easily manage multiple stores.</div>
+	<div style="margin-left: 80px;">
+		However, if you have different products in each store, you can add all products for each store.</div>
+	<div style="margin-left: 80px;">
+		OR</div>
+	<div style="margin-left: 80px;">
+		You can buy separate license and install RMS ADVANCE separately for each store.</div>
+</div>
+<div style="margin-left: 80px;">
+	&nbsp;</div>
+<div>
+	&nbsp;</div>
+</section>
+<section id="user_guide">
+	<div class="page-header"><h3>User Guide</h3><hr class="notop"></div>
+<div class="page" title="Page 27">
+	<div class="section">
+		<div class="layoutArea">
+			<div class="column">
+				<p>					<span style="font-size: 12.000000pt; font-family: 'Corbel'">let me explain the main sections of the home screen. We are adding image of the dashboard and on right with overlay to name the main sections of the page. These sections are same for each page. Only the main content area will be different for pages and will be displaying the view files from your theme folder. </span></p>
+			</div>
+		</div>
+	</div>
+</div>
+<p>	<img alt="" src="assets/images/image_17.png" style="width: 600px; height: 699px;"></p>
+<p>	<img alt="" src="assets/images/image_25.png" style="width: 600px; height: 699px;"></p>
+<p>	&nbsp;</p>
+<div class="page" title="Page 28">
+	<div class="section">
+		<div class="layoutArea">
+			<div class="column">
+				<p>					<span style="font-size: 12.000000pt; font-family: 'Corbel'">New listing pages comes with new page menu position, select row column and Image column (where applicable). We have added the listing page and overlay page to explain the new sections. You can see the new menu position in top left of main content area.&nbsp;</span></p>
+			</div>
+		</div>
+	</div>
+</div>
+<p>	<img alt="" src="assets/images/image_29.png" style="width: 600px; height: 349px;"></p>
+<p>	<img alt="" src="assets/images/image_30.png" style="width: 600px; height: 349px;"></p>
+<p>	&nbsp;</p>
+</section>
+<section id="users">
+	<div class="page-header"><h3>Users</h3><hr class="notop"></div>
+<div>
+	Users are the staff members (your employees). You can add any number of users and assign them group (manager groups and permissions in settings).</div>
+<div>
+	Admin user groups are with fixed permissions and any other user group added by you, can have custom permissions.</div>
+<div>
+	Please check the edit user page for some user related permission such as view/edit rights.</div>
+<div>
+	<img alt="" src="assets/images/image_33.png" style="width: 600px; height: 349px;"></div>
+</section>
+<section id="customers_small_crm">
+	<div class="page-header"><h3>Customers (small CRM)</h3><hr class="notop"></div>
+<div class="page" title="Page 29">
+	<div class="layoutArea">
+		<div class="column">
+			<div>
+				Customers are the clients of your companies/organizations. They purchase the items that you/your companies/organizations sell.</div>
+			<div>
+				Company, Name (Contact Person), Email, Phone, Address and City input fields are required. you can edit mandatory fields in settings. and also, add multiple data for customers ie. Activities, Internal Notes. view all the purchases, refunds, repairs history</div>
+			<div>
+				The inputs for customer in other modules are no more select/drop down but ajax calls, you can type in search filed to get the suggestions and select any suggestion available in database for customers. You can add customer by clicking the Add Customer from any page. The interface is quite easy to understand.</div>
+			<div>
+				&nbsp;</div>
+			<div>
+				&nbsp;</div>
+		</div>
+	</div>
+</div>
+<p>	<img alt="" src="assets/images/image_11.png" style="width: 600px; height: 349px;"></p>
+<p>	<img alt="" src="assets/images/image_12.png" style="width: 600px; height: 349px;"></p>
+<p>	&nbsp;</p>
+<p>	<img alt="" src="assets/images/image_13.png" style="width: 600px; height: 349px;"></p>
+<p>	&nbsp;</p>
+<p>	<img alt="" src="assets/images/image_14.png" style="width: 600px; height: 349px;"></p>
+<p>	&nbsp;</p>
+<p>	<img alt="" src="assets/images/image_15.png" style="width: 600px; height: 349px;"></p>
+<p>	&nbsp;</p>
+<p>	<img alt="" src="assets/images/image_16.png" style="width: 600px; height: 349px;"></p>
+<p>	&nbsp;</p>
+</section>
+<section id="suppliers">
+	<div class="page-header"><h3>Suppliers</h3><hr class="notop"></div>
+<div>
+	Suppliers are the vendors/supplying companies, the companies you buy your stock/items from.</div>
+<div>
+	Company, Name (Contact Person), Email, Phone, Address and City input fields are required.&nbsp;</div>
+<div>
+	The inputs for supplier in other modules (purchases and products) are no more select/drop down but ajax calls, you can type in search field to get the suggestions and select any suggestion available in database for supplier. You can add supplier by clicking the Add Supplier menu under People from any page. The interface is almost same as customers, easy to use.</div>
+<div>
+	<img alt="" src="assets/images/image_32.png" style="width: 600px; height: 442px;"></div>
+</section>
+<section id="stock_inventory">
+	<div class="page-header"><h3>Stock/Inventory</h3><hr class="notop"></div>
+<p>	Repair Parts</p>
+<p>	<img alt="" src="assets/images/image_29.png" style="width: 600px; height: 349px;"></p>
+<p>	New Phones</p>
+<p>	<img alt="" src="assets/images/image_20.png" style="width: 600px; height: 349px;"></p>
+<p>	Used Phones</p>
+<p>	<img alt="" src="assets/images/image_24.png" style="width: 600px; height: 349px;"></p>
+<p>	Cellular Plans</p>
+<p>	<img alt="" src="assets/images/image_22.png" style="width: 600px; height: 349px;"></p>
+<p>	Accessories</p>
+<p>	<img alt="" src="assets/images/image_18.png" style="width: 600px; height: 349px;"></p>
+<p>	Other Products</p>
+<p>	<img alt="" src="assets/images/image_21.png" style="width: 600px; height: 349px;"></p>
+<p>	Transfer Stock</p>
+<p>	<img alt="" src="assets/images/image_23.png" style="width: 600px; height: 349px;"></p>
+<p>	Count Stock</p>
+<p>	<img alt="" src="assets/images/image_19.png" style="width: 600px; height: 349px;"></p>
+</section>
+<section id="point_of_sale">
+	<div class="page-header"><h3>Point of Sale</h3><hr class="notop"></div>
+<p>	<img alt="" src="assets/images/image_28.png" style="width: 600px; height: 371px;"></p>
+</section>
+<section id="purchases">
+	<div class="page-header"><h3>Purchases</h3><hr class="notop"></div>
+<h1>
+	Vendor Purchases</h1>
+<div class="page" title="Page 34">
+	<div class="section">
+		<div class="layoutArea">
+			<div class="column">
+				<p>					<span style="font-size: 12.000000pt; font-family: 'Corbel'">Purchases (Inventories) to update the stock of your products. Adding purchase will automatically increase the product quantity. List purchases page have these drop down menus in the actions column. </span></p>
+				<ol>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<p>							<span style="font-size: 12pt; font-weight: 700;">View Purchase</span><span style="font-size: 12pt;">:<br>
+							To view the details of the purchase.</span></p>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<p>							<span style="font-size: 12pt; font-weight: 700;">Edit Purchase</span><span style="font-size: 12pt;">:</span><br>
+							<span style="font-size: 12pt;">To edit the purchase.</span></p>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<p>							<strong><span style="font-size: 12pt;">Recieve Purchase:&nbsp;</span></strong><br>
+							<span style="font-size: 12pt;">Recieve the purchase (add to stock)</span></p>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<p>							<span style="font-size: 12pt; font-weight: 700;">Download as PDF</span><span style="font-size: 12pt;">:</span><br>
+							<span style="font-size: 12pt;">To download the purchase as pdf.</span></p>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<p>							<span style="font-size: 12pt; font-weight: 700;">Email Purchase</span><span style="font-size: 12pt;">:</span><br>
+							<span style="font-size: 12pt;">To email this to supplier.</span></p>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<p>							<span style="font-size: 12pt; font-weight: 700;">Delete Purchase</span><span style="font-size: 12pt;">:</span><br>
+							<span style="font-size: 12pt;">To delete the purchase.</span></p>
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page" title="Page 35">
+	<div class="section">
+		<div class="layoutArea">
+			<div class="column">
+				<p>					<span style="font-size: 12.000000pt; font-family: 'Corbel'; font-weight: 700">Add Purchase </span><span style="font-size: 12.000000pt; font-family: 'Corbel'">&nbsp;There is only single input field to add the products to order list. You can type the product name or code to get the suggestion and the select the suggestion or just scan the barcode with your barcode scanner to add product to the order list. If there is only 1 suggestion for your typed characters, then it will automatically have added to the order list. </span></p>
+				<p>					<span style="font-size: 12.000000pt; font-family: 'Corbel'">Add product to order list and the totals will be automatically stick top and bottom once the order list reached the number that you have in settings for Product counts to fix for barcode input. </span></p>
+				<p>					<img alt="" src="assets/images/image_34.png" style="width: 600px; height: 349px;"></p>
+			</div>
+		</div>
+	</div>
+</div>
+<h1>
+	Customer Purchases</h1>
+<p>	these are the purchases done from a customer (for example you bought a mobile from a customer)</p>
+<p>	<img alt="" src="assets/images/image_10.png" style="width: 600px; height: 349px;"></p>
+<p>	<img alt="" src="assets/images/image_9.png" style="width: 600px; height: 349px;"></p>
+</section>
+<section id="accounts">
+	<div class="page-header"><h3>Accounts</h3><hr class="notop"></div>
+<p>	Bank Accounts</p>
+<p>	<img alt="" src="assets/images/image_1.png" style="width: 600px; height: 349px;"></p>
+<p>	Expenses</p>
+<p>	<img alt="" src="assets/images/image_3.png" style="width: 600px; height: 349px;"></p>
+<p>	Deposits</p>
+<p>	<img alt="" src="assets/images/image_2.png" style="width: 600px; height: 349px;"></p>
+<p>	Expense/Deposit Types</p>
+<p>	<img alt="" src="assets/images/image_4.png" style="width: 600px; height: 349px;"></p>
+</section>
+<section id="timeclock">
+	<div class="page-header"><h3>Timeclock</h3><hr class="notop"></div>
+<div class="alert alert-info">
+	on top bar you have a clock icon, to quickly clock in/out from the system. when you are clocked in, it will clock you out, otherwise clock you in.&nbsp;</div>
+<p>	<img alt="" src="assets/images/image_5.png" style="width: 600px; height: 349px;"></p>
+<div class="alert alert-info">
+	Here, you can see all the records. edit/delete entries only if you an admin(super user)</div>
+<p>	<img alt="" src="assets/images/image_35.png" style="width: 600px; height: 349px;"></p>
+</section>
+<section id="payroll">
+	<div class="page-header"><h3>Payroll</h3><hr class="notop"></div>
+<p>	manage employee payrolls.</p>
+<p>	1. add/edit payrolls</p>
+<p>	2. make payroll slip</p>
+<p>	3. download payroll slip</p>
+<p>	4. manage payroll templates</p>
+<p>	&nbsp;</p>
+<p>	<img alt="" src="assets/images/image_26.png" style="width: 600px; height: 349px;"></p>
+<p>	<img alt="" src="assets/images/image_27.png" style="width: 600px; height: 349px;"></p>
+</section>
+<section id="reports">
+	<div class="page-header"><h3>Reports</h3><hr class="notop"></div>
+<div class="page" title="Page 39">
+	<div class="section">
+		<div class="layoutArea">
+			<div class="column">
+				<p>					<span style="font-size: 18.000000pt; font-family: 'Corbel'; font-weight: 700">Reports </span></p>
+				<p>					<span style="font-size: 12.000000pt; font-family: 'Corbel'">The following reports are available </span></p>
+				<ol>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong>Stock Report:&nbsp;</strong><span style="font-size: 12pt;">The chart for&nbsp;stock value</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Finance Report:&nbsp;</span></strong><span style="font-size: 12pt;">The record for&nbsp;finance</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Sales Report:&nbsp;</span></strong><span style="display: none;">&nbsp;</span><span style="font-size: 12pt;"><span id="cke_bm_466S" style="display: none;">&nbsp;</span>The record for sales<span id="cke_bm_466E" style="display: none;">&nbsp;</span></span><span style="display: none;">&nbsp;</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Returned Sales:&nbsp;</span></strong><span style="font-size: 12pt;">The record for&nbsp;<span style="font-size: 12pt;">Returned</span>&nbsp;sales</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Profit Report: </span></strong><span style="font-size: 12pt;">Profit and/or Loss report for the selected time frame (date range).</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Tax Report:&nbsp;</span></strong><span style="display: none;">&nbsp;</span><span style="font-size: 12pt;"><span id="cke_bm_463S" style="display: none;">&nbsp;</span>&nbsp;The record for each tax on all sales</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Vendor Purchases:<span id="cke_bm_462S" style="display: none;">&nbsp;</span></span></strong><span style="display: none;">&nbsp;</span><span style="font-size: 12pt;">&nbsp;The record for Vendor&nbsp;Purchases<span id="cke_bm_462E" style="display: none;">&nbsp;</span></span><span style="display: none;">&nbsp;</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Customer Purchases:</span></strong><span style="font-size: 12pt;">&nbsp;<strong><span style="font-size: 12pt;">&nbsp;</span></strong><span style="font-size: 12pt;">The record for </span>Customer Purchases</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Drawer Report:</span></strong><span style="font-size: 12pt;">&nbsp;</span><span style="font-size: 12pt;">All record of register/counters for POS.</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">General Ledger:&nbsp;</span></strong><span style="font-size: 12pt;">General Ledger Report</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Activities: </span></strong><span style="font-size: 12pt;">Customer Activities&nbsp;</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Commission Report:&nbsp;</span></strong><span style="font-size: 12pt;">Employee Commisions record on each item.&nbsp;</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Quantity Alerts:&nbsp;</span></strong><span style="font-size: 12pt;">The items that have reached the low stock (alert&nbsp;</span><span style="font-size: 12pt;">quantity).</span></div>
+					</li>
+					<li style="font-size: 12.000000pt; font-family: 'Corbel'">
+						<div>
+							<strong><span style="font-size: 12pt;">Counted Stock:&nbsp;</span></strong><span style="font-size: 12pt;">The record for items that have been counted</span><span style="font-size: 12pt;">.</span></div>
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+</div>
+<p>	&nbsp;</p>
+</section>
+<section id="settings">
+	<div class="page-header"><h3>Settings</h3><hr class="notop"></div>
+<h3>
+	General Settigns</h3>
+<ol>
+	<li>		<strong>Company Name</strong> - Enter your company name</li>
+	<li>		<strong>Language</strong> - select the language to enable/disable</li>
+	<li>		<strong>Currency Symbol -</strong> enter your default currency symbol</li>
+	<li>		<strong>Purchase Reference Prefix</strong> - Option to set purchase payment reference prefix</li>
+	<li>		<strong>Reference Format</strong> - Option to select the reference format.</li>
+	<li>		<strong>Require pin number at checkout</strong> - Option to enable/disable pin number at checkout in POS</li>
+	<li>		<strong>Labor Cost</strong> - Enable/Disable Labor Cost for repairs</li>
+	<li>		<strong>Next Sale Number</strong> - Next starting sale invoice ID</li>
+	<li>		<strong>Invoice Template</strong> - Select the Invoice Template to use</li>
+	<li>		<strong>Report Template</strong> - Select the Report Template to use</li>
+	<li>		<strong>Require Clock In</strong> - Enable/Disable Require Clock-in to use the software</li>
+	<li>		<strong>Auto Clock Out</strong> - Auto clock user out</li>
+	<li>		<strong>Make all customers universal</strong> - Option to make all customers universal (available in all stores)</li>
+	<li>		<strong>Make all accessories universal</strong> - Option to make all accessories universal (available in all stores)</li>
+	<li>		<strong>Make all plans universal</strong> - Option to make all plans universal (available in all stores)</li>
+	<li>		<strong>Make all products universal</strong> - Option to make all products universal (available in all stores)</li>
+	<li>		<strong>Make all Manufacturers universal</strong> - Option to make all Manufacturers universal (available in all stores)</li>
+	<li>		<strong>Make all Carriers universal</strong> - Option to make all Carriers universal (available in all stores)</li>
+	<li>		<strong>Make all Suppliers universal</strong> - Option to make all Suppliers universal (available in all stores)</li>
+</ol>
+<h3>
+	Custom Repair Settings</h3>
+<ol>
+	<li>		<strong>Add repair categories that you can select from when adding a repair.&nbsp;</strong></li>
+	<li>		<strong>Custom Text Boxes These will show up and allow you to type custom values when receiving a repair.&nbsp;</strong></li>
+	<li>		<strong>Custom Checkmarks&nbsp;</strong></li>
+	<li>		<strong>Repair Checklist - What should be checked before a repair is received?&nbsp;</strong></li>
+</ol>
+<h3>
+	Invoice</h3>
+<ol>
+	<li>		<strong>Invoice Name</strong></li>
+	<li>		<strong>Invoice Email</strong></li>
+	<li>		<strong>Invoice Telephone</strong></li>
+	<li>		<strong>Address</strong></li>
+	<li>		<strong>Reparation Custom Fields</strong></li>
+	<li>		<strong>City</strong></li>
+	<li>		<strong>State/Province</strong></li>
+	<li>		<strong>Postal/Zip Code</strong></li>
+	<li>		<strong>Disclaimer</strong></li>
+</ol>
+<h3>
+	SMS &amp; Email</h3>
+<ol>
+	<li>		SMTP EMAIL - PHPMAILER</li>
+	<li>		SMS
+		<ol>
+			<li>				Nexmo</li>
+			<li>				Twilio</li>
+			<li>				SMS Gateway Android API</li>
+			<li>				SMS API GATEWAYS (CURL)</li>
+		</ol>
+	</li>
+	<li>		Customer Purchase - Email</li>
+</ol>
+<h3>
+	Point Of Sale</h3>
+<ol>
+	<li>		Set Drawer Amount - Minimum Open Cash Amount</li>
+	<li>		Set Max Drawer Amount - Max allowed amount in the drawer</li>
+	<li>		Time to Auto Close Drawer</li>
+	<li>		Sell Repair Parts - Option to enable/disable selling repair parts in POS</li>
+	<li>		Accepted Payment Methods - Option to select payment methods</li>
+	<li>		Receipt Footer - Reciept Footer for POS Sales</li>
+</ol>
+<h3>
+	Notifications</h3>
+<div>
+	the notifications to be send to employee when ever a new record is added for:</div>
+<ul>	<li>		Sale</li>
+	<li>		Sale Refund<span style="white-space:pre"> </span></li>
+	<li>		Repair Recieved<span style="white-space:pre"> </span></li>
+	<li>		Inventory Ordered<span style="white-space:pre"> </span></li>
+	<li>		Inventory Recieved<span style="white-space:pre"> </span></li>
+	<li>		Customer Purchase</li>
+</ul>
+<div>
+	&nbsp;</div>
+<h3>
+	Customer Notifications</h3>
+<ol>
+	<li>		When should customer receive the notification for the plan renewal? x days before</li>
+	<li>		What time of the day are the text messages sent to the customer for renewal?</li>
+	<li>		What should the text say limit 160 characters</li>
+</ol>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Upload LOGO</strong></div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Tax Rates</strong></div>
+<div>
+	manage taxrates, percetage or fixed.&nbsp;</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Manufacturers</strong></div>
+<div>
+	here you can manage the mobile manufacturers</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Carriers</strong></div>
+<div>
+	here you can manage mobile carriers.&nbsp;</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Suppliers</strong></div>
+<div>
+	Suppliers are the vendors/supplying companies, the companies you buy your stock/items from.</div>
+<div>
+	Company, Name (Contact Person), Email, Phone, Address and City input fields are required.&nbsp;</div>
+<div>
+	The inputs for supplier in other modules (purchases and products) are select/drop down, you can type in search field to get the suggestions and select any suggestion available in database for supplier. The interface is almost same as customers, easy to use.&nbsp;</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Importer</strong></div>
+<div>
+	import customers to the system.</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Stores</strong></div>
+<div>
+	manage store (view/add/edit/delete)&nbsp;</div>
+<div>
+	assign default taxes for this store</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Activites</strong></div>
+<div>
+	manage activites (view/add/edit/delete)</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Categories</strong></div>
+<div>
+	manage product categories and subcategories</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Mandatory Fields</strong></div>
+<div>
+	here you can manage the mandatory fields required to submit the form for the main forms. ie. Clients, Repairs</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Warranties</strong></div>
+<div>
+	you can manage warranty durations your company offers. ie. 5 days after buying etc</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Activation Plans</strong></div>
+<div>
+	Bundle activation Plans (when a customer buy a new phone) these products will add automatically.&nbsp;</div>
+<div>
+	to assign a plan to a new phone, goto inventory-&gt;new phones and in actions, you have this button to &quot;Assign Activation Plan&quot;. select the plan and click save.</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Discount Codes</strong></div>
+<div>
+	add discount codes. there are 3 types of discount codes&nbsp;</div>
+<ul>	<li>		Master (can apply to all products)</li>
+	<li>		Category (can apply to products of certain category)</li>
+	<li>		Product Code (can apply to single product)</li>
+</ul>
+<div>
+	<strong>-- SMS Gateways</strong></div>
+<div>
+	Add/Edit SMS Gateways</div>
+<div>
+	Add/Edit Parameters</div>
+<div>
+	&nbsp;</div>
+<div>
+	<strong>-- Repair Statuses</strong></div>
+<div>
+	Manage Repair Statuses, Email/SMS Text for these statuses</div>
+</section>
+<section id="commissions">
+	<div class="page-header"><h3>Commissions</h3><hr class="notop"></div>
+<p>	here you can manage the commisions on categories or individual products. and you can assign the commision plans to user groups. whatever employee in the following group will be applied this commision plan.&nbsp;</p>
+<p>	<img alt="" src="assets/images/image_6.png" style="width: 600px; height: 349px;"></p>
+<p>	<img alt="" src="assets/images/image_7.png" style="width: 600px; height: 143px;"></p>
+<p>	<img alt="" src="assets/images/image_8.png" style="width: 600px; height: 237px;"></p>
+<p>	&nbsp;</p>
+</section>
+<section id="stores">
+	<div class="page-header"><h3>Stores</h3><hr class="notop"></div>
+<p>
+	<img alt="" src="assets/images/image_31.png"  ></p>
+<p>
+	&nbsp;</p>
+<p>
+	Add/Edit/View stores</p>
+<p>
+	you can add the store details, which will be displayed in invoices.&nbsp;</p>
+<p>
+	and manage the universal taxes, that should apply to different product types. can check multiple, if needed.&nbsp;</p>
+</section>
+<section id="tools">
+	<div class="page-header"><h3>Tools</h3><hr class="notop"></div>
+<p>	1. MEID Converter</p>
+<p>	2. Emailer (send emails to customers)</p>
+<p>	&nbsp;</p>
+</section>
+
+	</div>
+</body>
+</html>
